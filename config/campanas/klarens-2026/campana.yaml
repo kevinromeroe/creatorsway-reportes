@@ -23,21 +23,21 @@ piezas:
     titulo: 20 almuerzos que parecen fat pero son fit
     corto: 20 almuerzos fit
     nota: >-
-      La pieza más fuerte de la campaña: generó el 72 % de todas las interacciones.
-      En TikTok se guardó casi el doble de lo que se compartió (92 K guardados contra 48 K compartidos).
+      La pieza más fuerte de la campaña: generó el 71 % de todas las interacciones.
+      En TikTok se guardó casi el doble de lo que se compartió (92.551 guardados contra 48.500 compartidos).
   - slug: cheesecake
     fecha: 2026-08-23
     titulo: Cheesecake de bocadillo con queso
     corto: Cheesecake
     nota: >-
-      Segunda mejor pieza. Mantiene una tasa alta (13,2 %) con un postre que usa
+      Segunda mejor pieza. Mantiene una tasa alta (13,3 %) con un postre que usa
       el producto como ingrediente principal.
   - slug: suero-costeno
     fecha: 2026-09-27
     titulo: Cómo se fabrica el suero costeño
     corto: Suero costeño
     nota: >-
-      El único video de proceso de planta. Tuvo la tasa más baja (4,9 %) y casi no se guardó:
+      El único video de proceso de planta. Tuvo la tasa más baja (5,0 %) y casi no se guardó:
       al público le sirve más una receta que pueda hacer en casa.
   - slug: ossobuco
     fecha: 2026-10-13
@@ -46,7 +46,7 @@ piezas:
     colaboracion: "@charliepessellini"
     nota: >-
       Colaboración con @charliepessellini. Duplicó las visualizaciones de la pieza anterior
-      y recuperó una tasa alta (10,2 %).
+      y recuperó una tasa alta (10,3 %).
 
 # Nombre visible de cada historia (en el mismo orden del Excel).
 historias:
@@ -62,19 +62,19 @@ textos:
   subtitulo: Cuatro recetas en Instagram y TikTok y siete historias, del 9 de julio al 13 de octubre de 2026.
   redes:
     titulo: TikTok trae público nuevo
-    texto: el 80 % de quienes vieron los videos no seguía a Juan. Instagram interactuó más, con 16,7 % frente a 14,6 % de TikTok.
+    texto: el 80 % de quienes vieron los videos no seguía a Juan. Instagram interactuó más, con 16,7 % frente a 14,7 % de TikTok.
   historias: La mención directa es la que lleva tráfico a la marca
   hallazgos:
     - valor: top_share_inter
       titulo: Una receta concentró la campaña
       texto: >-
-        20 almuerzos fit sumó 4,6 M de visualizaciones y 542.629 interacciones entre las dos redes.
+        20 almuerzos fit sumó 4,6 M de visualizaciones y 574.400 interacciones entre Instagram, TikTok y Facebook.
         El formato de lista con recetas útiles es el que conviene repetir.
     - valor: saves_share_inter
       titulo: La gente guarda las recetas
       texto: >-
-        29 de cada 100 interacciones fueron guardados. En TikTok, 20 almuerzos fit tuvo 92 K guardados
-        frente a 48 K compartidos: el producto queda en la lista de compras.
+        En Instagram y TikTok, 29 de cada 100 interacciones fueron guardados. En TikTok, 20 almuerzos fit
+        tuvo 92.551 guardados frente a 48.500 compartidos: el producto queda en la lista de compras.
     - valor: min_er
       titulo: El video de planta rindió menos
       texto: >-

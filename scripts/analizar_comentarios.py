@@ -80,7 +80,7 @@ def tema(t: str) -> str:
     n = norm(t)
     letras = re.sub(r"[^a-z]", "", re.sub(r"@\S+", "", n))
     if not letras:  # solo emojis, menciones o signos
-        if re.fullmatch(r"(@\S+\s*)+", n):
+        if re.fullmatch(r"(@\S*\s*)+", n):  # "@" solo: etiqueta anonimizada
             return "etiqueta"
         chars = set(t)
         if chars & EMOJI_HUMOR:
@@ -127,7 +127,7 @@ def cargar(cid: str) -> dict[str, list[dict]]:
     out = {}
     for f in sorted(base.glob("klarens-*-*.json")):
         d = json.loads(f.read_text(encoding="utf-8"))
-        out[f"{'ig' if d['red'] == 'instagram' else 'tt'}|{d['fecha']}"] = d
+        out[f"{ {'instagram': 'ig', 'tiktok': 'tt', 'facebook': 'fb'}[d['red']] }|{d['fecha']}"] = d
     return out
 
 

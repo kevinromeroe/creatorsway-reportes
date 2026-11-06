@@ -13,9 +13,11 @@ Sitio: **https://creatorsway.datalitica.com.co** · Repo público `kevinromeroe/
 ```
 config/cliente.yaml                     agencia, umbrales de la tasa y `portada` (campaña que se ve en la raíz)
 config/campanas/<id>/campana.yaml       marca, creador, piezas, nombres de historias y textos curados
-config/campanas/<id>/metricas.yaml      cifras importadas del Excel (no se edita a mano)
+config/campanas/<id>/metricas.yaml      cifras privadas importadas del Excel (no se edita a mano)
+config/campanas/<id>/publicas.yaml      cifras públicas de Instagram, TikTok y Facebook (las captura Datalítica)
+config/campanas/<id>/conversacion.yaml  resumen de comentarios (scripts/analizar_comentarios.py)
 assets/                                 logos (sin fondo)
-templates/reporte.html                  diseño aprobado: Resumen, Instagram y TikTok
+templates/reporte.html                  diseño aprobado: Resumen, Instagram, TikTok y Facebook
 index.html                              la raíz muestra la campaña de `portada`
 <id>/index.html y <id>/pdf/             reporte y PDF de cada campaña
 legal/                                  términos de uso y política de datos (Ley 1581 de 2012)
@@ -38,9 +40,33 @@ Un archivo con tres hojas, con la fila de encabezados empezando en «ID contenid
 - Si cambia el nombre de una columna, el importador se detiene y dice cuál falta.
 - El Excel **nunca** se sube al repo: se guarda en `Dashboard Comapan/Juan-Food-Time/insumos/datos/` (o la carpeta del creador).
 
+## Fuentes de datos: tres redes, dos orígenes
+
+Cada pieza de contenido fijo se publica el mismo día en **Instagram** (reel), **TikTok** (video) y **Facebook** (el mismo reel, por publicación cruzada desde Instagram, en la página oficial del creador; para Juan Food Time es «Juan FoodTime», `facebook.com/foodtimecali`).
+
+| Dato | De dónde sale | Archivo |
+|---|---|---|
+| Visualizaciones, me gusta o reacciones, comentarios y compartidos de las 3 redes; guardados de TikTok | **Público**, lo lee Datalítica en cada plataforma con Claude en Chrome | `publicas.yaml` |
+| Alcance de Instagram y TikTok, guardados y reposts de Instagram, tiempo de reproducción, seguidores nuevos, audiencia de TikTok e historias | **Privado**, del Excel del creador (Instagram Insights y TikTok Studio) | `metricas.yaml` |
+| Comentarios de las 3 redes | **Público**, captura local | `datos/capturas/` (no se sube) → `conversacion.yaml` |
+
+Reglas:
+
+- **Las cifras públicas mandan.** Si una métrica existe en las dos fuentes, el reporte usa la pública (es exacta; el Excel copia valores abreviados como 156 K).
+- **Ojo con la publicación cruzada.** En Instagram Insights, «Visualizaciones» suma Instagram + Facebook. Por eso las visualizaciones de Instagram se toman de la cifra pública **solo de Instagram** (`ig_play_count`) y las de Facebook (`fb_play_count`) van en su propia red. Con esto la validación del 6 de noviembre de 2026 encontró que el 38 % de lo que el Excel atribuía a Instagram era de Facebook (`docs/VALIDACION_2026-11-06.md`).
+- **Facebook no publica alcance ni guardados.** Su tasa es interacciones ÷ visualizaciones y no entra en la tasa de la campaña, que se calcula con Instagram y TikTok. Sus reacciones desde 10 mil vienen abreviadas (se marcan con ≈).
+
+### Cómo se capturan las cifras públicas (Claude en Chrome)
+
+- **Instagram** (sesión iniciada en Chrome): `/api/v1/media/<id>/info/` con el encabezado `x-ig-app-id: 936619743392459`; el `<id>` sale del código del enlace del reel. Campos: `ig_play_count`, `fb_play_count`, `like_count`, `comment_count`, `reshare_count`. Los guardados no son públicos.
+- **TikTok** (sin sesión): la página de cada video trae `__UNIVERSAL_DATA_FOR_REHYDRATION__` → `itemStruct.statsV2` (`playCount`, `diggCount`, `commentCount`, `shareCount`, `collectCount`). Los enlaces `vt.tiktok.com` redirigen al video.
+- **Facebook** (sesión iniciada en Chrome): en `facebook.com/<página>/reels/` se ubican los reels por fecha y por las visualizaciones que da `fb_play_count`. En `facebook.com/reel/<id>`, los botones traen el dato en su `aria-label`: «Me gusta, N reacciones», «Comentario, N comentarios», «Compartir, N veces compartido».
+
+Las cifras se escriben en `publicas.yaml` con la fecha de captura.
+
 ## A. Actualizar las cifras de una campaña existente
 
-1. Guardar el Excel nuevo en la carpeta de insumos del creador.
+1. Capturar las cifras públicas de las 3 redes y actualizar `publicas.yaml` (sección «Fuentes de datos»). Guardar el Excel nuevo en la carpeta de insumos del creador.
 2. Importar (en **PowerShell**, porque la ruta tiene tildes):
    ```powershell
    cd C:\Users\kevin\Documents\GitHub\creatorsway-reportes
@@ -91,11 +117,12 @@ Los textos curados (hallazgos, notas por pieza, texto de redes e historias) sí 
 
 Las secciones "Lo que dice la gente" (Resumen) y "Conversación en Instagram/TikTok" salen de los comentarios públicos de cada publicación.
 
-1. **Captura con Claude en Chrome** (sesión de Instagram iniciada en Chrome; TikTok no la necesita). Claude abre cada publicación y, desde la misma página, lee los comentarios y sus respuestas con la API interna del sitio:
+1. **Captura con Claude en Chrome** (sesión de Instagram y Facebook iniciada en Chrome; TikTok no la necesita). Claude abre cada publicación y, desde la misma página, lee los comentarios y sus respuestas con la API interna del sitio:
    - Instagram: `/api/v1/media/<id>/comments/` y `/child_comments/` (el `<id>` sale del código del enlace del reel), con pausas entre páginas.
    - TikTok: `/api/comment/list/` y `/api/comment/list/reply/` con el `aweme_id` del video (los enlaces `vt.tiktok.com` redirigen al video).
+   - Facebook: en `facebook.com/reel/<id>` se abre el panel de comentarios, se cambia el orden a «Todos los comentarios», se pulsan los «Ver respuestas» y se leen los `div[role="article"]`. Se quitan los nombres de quien comenta y de las personas etiquetadas (las etiquetas quedan como «@»).
    Se guarda texto, me gusta y si es respuesta. **No se guardan nombres de usuario.**
-2. **Guardado:** Chrome descarga un JSON por publicación (`klarens-ig-<fecha>.json`, `klarens-tt-<fecha>.json`) a Descargas (Chrome pide permitir varias descargas). Se mueven a `datos/capturas/<campaña>/`, que **no** se sube al repo.
+2. **Guardado:** Chrome descarga un JSON por publicación (`klarens-ig-<fecha>.json`, `klarens-tt-<fecha>.json`, `klarens-fb-<fecha>.json`) a Descargas. Chrome pide permitir varias descargas por sitio, y solo descarga si la descarga se lanza en una llamada aparte de la captura (no después de una espera larga). Si bloquea, se leen los comentarios como texto y se escribe el archivo a mano. Se mueven a `datos/capturas/<campaña>/`, que **no** se sube al repo.
 3. **Análisis:**
    ```powershell
    python scripts/analizar_comentarios.py klarens-2026 --muestra

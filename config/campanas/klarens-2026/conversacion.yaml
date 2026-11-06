@@ -8,6 +8,25 @@ temas:
   etiqueta: Etiquetan a otra persona
   otros: Otros
 redes:
+  fb:
+    capturados: 157
+    total_plataforma: 169
+    temas:
+      humor: 33
+      receta: 16
+      antojo: 21
+      otros: 39
+      marca: 19
+      fit: 6
+      etiqueta: 23
+    tono_marca:
+      duda: 7
+      duda_fuera: 3
+      neutro: 4
+      negativo: 2
+      neg_autenticidad: 1
+      positivo: 4
+      neg_salud: 1
   ig:
     capturados: 548
     total_plataforma: 769
@@ -48,6 +67,21 @@ redes:
       neg_autenticidad: 10
 piezas:
   almuerzos-fit:
+    fb:
+      capturados: 76
+      total_plataforma: 81
+      temas:
+        humor: 26
+        receta: 4
+        antojo: 9
+        otros: 14
+        marca: 4
+        fit: 5
+        etiqueta: 14
+      tono_marca:
+        duda: 2
+        duda_fuera: 1
+        neutro: 3
     ig:
       capturados: 290
       total_plataforma: 391
@@ -85,6 +119,22 @@ piezas:
         neutro: 3
         neg_autenticidad: 2
   cheesecake:
+    fb:
+      capturados: 56
+      total_plataforma: 60
+      temas:
+        otros: 18
+        humor: 4
+        receta: 9
+        antojo: 8
+        marca: 10
+        etiqueta: 7
+      tono_marca:
+        negativo: 1
+        neg_autenticidad: 1
+        duda: 4
+        duda_fuera: 1
+        positivo: 1
     ig:
       capturados: 137
       total_plataforma: 217
@@ -116,6 +166,22 @@ piezas:
         duda: 14
         duda_fuera: 4
   suero-costeno:
+    fb:
+      capturados: 9
+      total_plataforma: 10
+      temas:
+        otros: 3
+        marca: 3
+        humor: 1
+        fit: 1
+        antojo: 1
+      tono_marca:
+        duda: 1
+        duda_fuera: 1
+        positivo: 1
+        neutro: 1
+        negativo: 1
+        neg_salud: 1
     ig:
       capturados: 61
       total_plataforma: 82
@@ -144,6 +210,18 @@ piezas:
         duda: 2
         neutro: 2
   ossobuco:
+    fb:
+      capturados: 16
+      total_plataforma: 18
+      temas:
+        humor: 2
+        receta: 3
+        otros: 4
+        marca: 2
+        antojo: 3
+        etiqueta: 2
+      tono_marca:
+        positivo: 2
     ig:
       capturados: 60
       total_plataforma: 79
@@ -175,24 +253,24 @@ piezas:
         neg_autenticidad: 2
         positivo: 3
 total:
-  capturados: 1136
-  total_plataforma: 1399
+  capturados: 1293
+  total_plataforma: 1568
   temas:
-    humor: 258
-    fit: 119
-    antojo: 266
-    marca: 167
-    otros: 210
-    etiqueta: 14
-    receta: 102
+    humor: 291
+    receta: 118
+    antojo: 287
+    otros: 249
+    marca: 186
+    fit: 125
+    etiqueta: 37
   tono_marca:
-    negativo: 29
-    neg_salud: 6
-    positivo: 61
-    duda: 51
-    duda_fuera: 13
-    neutro: 8
-    neg_autenticidad: 23
+    duda: 58
+    duda_fuera: 16
+    neutro: 12
+    negativo: 31
+    neg_autenticidad: 24
+    positivo: 65
+    neg_salud: 7
 destacados:
   humor:
   - texto: el tenedor sacó un dedo para no quemarse
@@ -207,20 +285,23 @@ destacados:
     me_gusta: 812
     red: tt
     pieza: cheesecake
-  fit:
-  - texto: Jajajaja súper saludable con exceso de grasas saturadas
-    me_gusta: 307
+  receta:
+  - texto: La hice ayer y así me quedo, lo único fue que tenía unas guayabas y hice
+      el dulce, y así me quedo, gracias por compartir estas delias, bendiciones para
+      ti.
+    me_gusta: 111
     red: tt
-    pieza: almuerzos-fit
-  - texto: Se ve delicioso, las quieroooo, pero no es nada fit, sin mentiras
-    me_gusta: 153
+    pieza: cheesecake
+  - texto: se imagina que en vez de galleta sea achiras??? Ahora si hay que hacer
+      esa receta !!!!!
+    me_gusta: 43
     red: ig
-    pieza: almuerzos-fit
-  - texto: Puedes cambiar el suero por yogur griego, y te aseguro sabe igual o más
-      rico, y aparte saludable 🫶🏻
-    me_gusta: 120
-    red: tt
-    pieza: almuerzos-fit
+    pieza: cheesecake
+  - texto: Lo deberias hacer con queso crema Philadelphia es original y no necesita
+      gelatina.
+    me_gusta: 18
+    red: ig
+    pieza: cheesecake
   antojo:
   - texto: Porqué cuando uno tiene hambre el Algoritmo no colabora? 🤣
     me_gusta: 23
@@ -248,20 +329,17 @@ destacados:
     me_gusta: 66
     red: tt
     pieza: suero-costeno
-  receta:
-  - texto: La hice ayer y así me quedo, lo único fue que tenía unas guayabas y hice
-      el dulce, y así me quedo, gracias por compartir estas delias, bendiciones para
-      ti.
-    me_gusta: 111
+  fit:
+  - texto: Jajajaja súper saludable con exceso de grasas saturadas
+    me_gusta: 307
     red: tt
-    pieza: cheesecake
-  - texto: se imagina que en vez de galleta sea achiras??? Ahora si hay que hacer
-      esa receta !!!!!
-    me_gusta: 43
+    pieza: almuerzos-fit
+  - texto: Se ve delicioso, las quieroooo, pero no es nada fit, sin mentiras
+    me_gusta: 153
     red: ig
-    pieza: cheesecake
-  - texto: Lo deberias hacer con queso crema Philadelphia es original y no necesita
-      gelatina.
-    me_gusta: 18
-    red: ig
-    pieza: cheesecake
+    pieza: almuerzos-fit
+  - texto: Puedes cambiar el suero por yogur griego, y te aseguro sabe igual o más
+      rico, y aparte saludable 🫶🏻
+    me_gusta: 120
+    red: tt
+    pieza: almuerzos-fit

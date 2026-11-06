@@ -1,0 +1,28 @@
+# Cifras públicas de cada publicación, leídas por Datalítica con Claude en Chrome.
+# Son la fuente de visualizaciones, me gusta/reacciones, comentarios y compartidos.
+# Del Excel del creador solo se usa lo que no es público (alcance, guardados y reposts de
+# Instagram, tiempo de reproducción, seguidores nuevos, audiencia de TikTok e historias).
+#
+# Instagram: /api/v1/media/<id>/info/  → ig_play_count (solo Instagram), like_count,
+#            comment_count, reshare_count. La cifra "Visualizaciones" del Excel suma
+#            Instagram + Facebook (publicación cruzada); aquí se separan.
+# TikTok:    datos de la página del video (statsV2).
+# Facebook:  página oficial "Juan FoodTime" (facebook.com/foodtimecali). Visualizaciones =
+#            fb_play_count de la API de Instagram; reacciones, comentarios y compartidos de la
+#            página del reel. Facebook muestra abreviadas las reacciones desde 10 mil.
+capturado: 2026-11-06
+instagram:
+  2026-07-09: {views: 1708776, likes: 113461, comments: 391, shares: 56481}
+  2026-08-23: {views: 523775, likes: 33357, comments: 217, shares: 10638}
+  2026-09-27: {views: 223762, likes: 5947, comments: 82, shares: 327}
+  2026-10-13: {views: 459147, likes: 22238, comments: 79, shares: 4728}
+tiktok:
+  2026-07-09: {views: 2000000, likes: 156300, comments: 338, shares: 48500, saves: 92551}
+  2026-08-23: {views: 612600, likes: 41300, comments: 168, shares: 11100, saves: 17363}
+  2026-09-27: {views: 173400, likes: 8542, comments: 75, shares: 355, saves: 405}
+  2026-10-13: {views: 285200, likes: 15400, comments: 51, shares: 2304, saves: 7075}
+facebook:
+  2026-07-09: {url: "https://www.facebook.com/reel/1010693765049546", views: 902589, likes: 27300, likes_aprox: true, comments: 81, shares: 2497}
+  2026-08-23: {url: "https://www.facebook.com/reel/1072008728719076", views: 546687, likes: 10000, likes_aprox: true, comments: 60, shares: 950}
+  2026-09-27: {url: "https://www.facebook.com/reel/1598567345083231", views: 62224, likes: 951, comments: 10, shares: 15}
+  2026-10-13: {url: "https://www.facebook.com/reel/1055885497485358", views: 271712, likes: 8065, comments: 18, shares: 688}

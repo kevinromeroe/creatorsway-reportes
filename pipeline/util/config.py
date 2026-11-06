@@ -34,6 +34,12 @@ def load_conversation(campaign_id: str) -> dict[str, Any]:
     return _load(path) if path.exists() else {}
 
 
+def load_public(campaign_id: str) -> dict[str, Any]:
+    """Cifras públicas por red (Claude en Chrome). Vacío si no se han capturado."""
+    path = CAMPAIGNS_DIR / campaign_id / "publicas.yaml"
+    return _load(path) if path.exists() else {}
+
+
 def campaign_ids() -> list[str]:
     return sorted(p.name for p in CAMPAIGNS_DIR.iterdir() if (p / "campana.yaml").exists())
 

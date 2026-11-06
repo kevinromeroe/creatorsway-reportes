@@ -14,7 +14,7 @@
 :root{
   --fondo:#F2F2EF; --tarjeta:#FFFFFF; --negro:#000000; --barra:#0A0A0A;
   --amarillo:#E3E935; --amarillo-suave:#F4F7B8; --pista:#ECECE8; --linea:#ECECE8; --gris-tabla:#D9D9D9;
-  --klarens:#0B1F8F; --ig:#0A0A0A; --tt:#E3E935;
+  --klarens:#0B1F8F; --ig:#0A0A0A; --tt:#E3E935; --fb:#1877F2;
   --sube:#2F7A3B; --sube-bg:#E5F1E6; --baja:#C2410C; --baja-bg:#FBE9DF; --media-bg:#F0F0EC;
   --sombra:0 1px 2px rgba(0,0,0,.04),0 6px 20px rgba(0,0,0,.04);
   --r:22px; --f:"Plus Jakarta Sans",system-ui,"Segoe UI",sans-serif;
@@ -52,6 +52,10 @@ a{color:inherit}
 .pbadge svg{width:22px;height:22px}
 .pbadge.ig{background:radial-gradient(circle at 30% 107%,#FDF497 0%,#FD5949 45%,#D6249F 60%,#285AEB 90%)}
 .pbadge.tt{background:#000}
+.pbadge.fb{background:var(--fb)}
+.fill.fb{background:var(--fb)}
+.sbar .fb{background:var(--fb)}
+.aprox{font-size:12px;font-weight:600;margin-left:4px}
 .pbadge.tt svg{filter:drop-shadow(-1px -1px 0 #25F4EE) drop-shadow(1px 1px 0 #FE2C55)}
 .sec-t{display:grid;gap:4px;margin-top:12px}
 .sec-t h2{font-size:22px;font-weight:800;letter-spacing:-.02em}
@@ -245,7 +249,7 @@ const fechaLarga=iso=>{const [y,m,d]=String(iso).split('-').map(Number);return `
 const pctAuto=v=>pct(v,v>=.1?0:1);
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const LVL={alta:'Alta',media:'Media',baja:'Baja'};
-const NET={ig:'Instagram',tt:'TikTok'};
+const NET={ig:'Instagram',tt:'TikTok',fb:'Facebook'};
 const IC={
  eye:'<path d="M1 8s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="2" fill="currentColor"/>',
  users:'<circle cx="6" cy="5" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M1.5 14c0-2.5 2-4 4.5-4s4.5 1.5 4.5 4M11 3.2a2.4 2.4 0 010 4.6M12.5 10.3c1.3.5 2 1.8 2 3.7" fill="none" stroke="currentColor" stroke-width="1.5"/>',
@@ -255,6 +259,7 @@ const IC={
  save:'<path d="M4 1.8h8v12.4L8 11l-4 3.2z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>',
  tap:'<path d="M6 7V3a1.3 1.3 0 012.6 0v4l3.4.8a1.5 1.5 0 011.1 1.7L12.5 14H6.8L3.6 10a1.2 1.2 0 011.8-1.5L6 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>',
  ig:'<rect x="1.5" y="1.5" width="13" height="13" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="11.9" cy="4.1" r=".9" fill="currentColor"/>',
+ fb:'<path d="M9.2 15V8.6h2.1l.3-2.5H9.2V4.5c0-.7.2-1.2 1.2-1.2h1.3V1.1c-.2 0-1-.1-1.9-.1-1.9 0-3.2 1.2-3.2 3.3v1.8H4.5v2.5h2.1V15z" fill="currentColor"/>',
  tt:'<path d="M8.6 1.5h2.3c.2 1.4 1.2 2.4 2.6 2.6v2.3c-1 0-1.9-.3-2.6-.8v4.6a3.6 3.6 0 11-3.6-3.6c.2 0 .4 0 .6.1v2.3a1.4 1.4 0 10.7 1.2z" fill="currentColor"/>',
  grid:'<rect x="1" y="1" width="6" height="6" rx="1" fill="currentColor"/><rect x="9" y="1" width="6" height="6" rx="1" fill="currentColor"/><rect x="1" y="9" width="6" height="6" rx="1" fill="currentColor"/><rect x="9" y="9" width="6" height="6" rx="1" fill="currentColor"/>'
 };
@@ -270,7 +275,7 @@ const LEGAL=`<div class="legal">
   <p><strong>© ${new Date().getFullYear()} Datalítica Colombia S.A.S.</strong> · NIT 901.957.313-6 · Todos los derechos reservados. Reporte confidencial preparado para CreatorsWay y ${esc(D.marca.nombre)}; su reproducción o distribución sin autorización está prohibida (Ley 23 de 1982).</p>
   <nav aria-label="Información legal"><a href="../legal/terminos.html">Términos y condiciones de uso</a><a href="../legal/datos-personales.html">Política de tratamiento de datos personales</a><a href="../legal/datos-personales.html#aviso">Aviso de privacidad</a><a href="../legal/datos-personales.html#cookies">Cookies</a><a href="mailto:comercial@datalitica.com.co">comercial@datalitica.com.co</a></nav>
 </div>`;
-const footer=()=>`<footer class="foot"><div class="foot-top"><span>Fuente: datos de Instagram Insights y TikTok Studio, y comentarios públicos de las publicaciones.</span><img src="../assets/logo-creatorsway-negro.png" alt="CreatorsWay"></div>${LEGAL}</footer>`;
+const footer=()=>`<footer class="foot"><div class="foot-top"><span>Fuente: cifras públicas de Instagram, TikTok y Facebook leídas por Datalítica; alcance, guardados y audiencia de Instagram Insights y TikTok Studio; comentarios públicos de las publicaciones.</span><img src="../assets/logo-creatorsway-negro.png" alt="CreatorsWay"></div>${LEGAL}</footer>`;
 const tabhead=(k,s)=>`<div class="tabhead"><span class="pbadge ${k}">${svg(k)}</span><h2>${NET[k]}</h2><span class="s">${s}</span></div>`;
 const legend=ks=>`<div class="legend">${ks.map(k=>`<span><i class="${k}" style="background:var(--${k})"></i>${NET[k]}</span>`).join('')}</div>`;
 const insight=(t,b)=>`<p class="callout">${t?`<b>${t}:</b> `:''}${b}</p>`;
@@ -281,14 +286,15 @@ const dec=(v,d=1)=>v.toLocaleString('es-CO',{minimumFractionDigits:d,maximumFrac
 function piecesChart(ks){
   const P=D.pieces,max=Math.max(...P.flatMap(p=>ks.map(k=>p[k].v)));
   const bar=(k,o)=>`<div class="b" tabindex="0" data-tip="${NET[k]}: ${nf.format(o.v)} visualizaciones, ${nf.format(o.i)} interacciones, ${nf.format(o.s)} guardados"><div class="track"><div class="fill ${k}" style="width:${(o.v/max*100).toFixed(1)}%"></div></div><span class="num">${short(o.v)}</span></div>`;
+  const soloFb=ks.length===1&&ks[0]==='fb';
   return `<div class="chart" id="chart">${P.map(p=>{const er=ks.length>1?p.er:p[ks[0]].er,l=ks.length>1?p.lvl:lvl(er);
     const href=(ks.length>1?p.ig.url:p[ks[0]].url)||'';
     const th=p.img?`<a class="thumb" href="${esc(href)}" target="_blank" rel="noopener" aria-label="Ver ${esc(p.s)}"><img src="../${esc(p.img)}" alt="" loading="eager"></a>`:'';
-    return `<div class="crow"><div class="cname">${th}<div><strong>${esc(p.t)}</strong><span>${p.f}${p.collab?', con '+esc(p.collab):''}</span></div></div><div class="bars">${ks.map(k=>bar(k,p[k])).join('')}</div><div class="er"><span class="v num">${pct(er)}</span>${pill(l)}</div></div>`;}).join('')}<div class="tip" id="tip" hidden></div></div>`;
+    return `<div class="crow"><div class="cname">${th}<div><strong>${esc(p.t)}</strong><span>${p.f}${p.collab?', con '+esc(p.collab):''}</span></div></div><div class="bars">${ks.map(k=>bar(k,p[k])).join('')}</div><div class="er"><span class="v num">${pct(er)}</span>${soloFb?'':pill(l)}</div></div>`;}).join('')}<div class="tip" id="tip" hidden></div></div>`;
 }
 
 /* ---------- conversación (comentarios) ---------- */
-const NETL={ig:'Instagram',tt:'TikTok'};
+const NETL={ig:'Instagram',tt:'TikTok',fb:'Facebook'};
 const temaBars=(temas,color)=>{const mx=Math.max(...temas.map(t=>t.share));
   return `<div class="share">${temas.map(t=>`<div class="srow"><div class="t"><b>${esc(t.label)}</b><span class="num">${nf.format(t.n)} · ${pct(t.share,0)}</span></div><div class="sbar" style="background:var(--pista)"><div style="width:${t.share/mx*100}%;background:${color}"></div></div></div>`).join('')}</div>`;};
 const tonoBars=t=>{const rows=[['Positivos',t.positivo,'var(--sube)'],['Negativos',t.negativo,'var(--baja)'],['Dudas: qué es, dónde se consigue, con qué reemplazarlo',t.duda,'#9A9A95']];const mx=Math.max(...rows.map(r=>r[1]));
@@ -296,7 +302,7 @@ const tonoBars=t=>{const rows=[['Positivos',t.positivo,'var(--sube)'],['Negativo
 function convResumen(){
   const C=D.conv;if(!C)return '';const T=C.tono,th=Object.fromEntries(C.temas.map(t=>[t.k,t]));
   const quotes=C.destacados.map(q=>`<figure class="card quote"><span class="qt">${esc(q.tema)}</span><blockquote>“${esc(q.texto)}”</blockquote><figcaption class="num">${nf.format(q.me_gusta)} me gusta · ${NETL[q.red]} · ${esc(q.pieza)}</figcaption></figure>`).join('');
-  return sh('Lo que dice la gente',`Leímos ${nf.format(C.n)} comentarios de las ${D.pieces.length*2} publicaciones (el ${pct(C.coverage,0)} de los que reportan las plataformas) y los clasificamos por tema.`)+
+  return sh('Lo que dice la gente',`Leímos ${nf.format(C.n)} comentarios de las ${D.pieces.length*D.netList.length} publicaciones (el ${pct(C.coverage,0)} de los que reportan las plataformas) y los clasificamos por tema.`)+
   `<div class="duo">
     <section class="card"><div class="card-h"><div><h2>Temas de la conversación</h2><p>Comentarios y respuestas, por tema principal</p></div></div>${temaBars(C.temas,'#000')}
       ${insight('',`${pct(th.antojo.share,0)} es antojo y elogio, y otro ${pct(th.humor.share,0)} reacciona a los detalles del video, como el tenedor o el celular en la nevera: esos comentarios son los que más me gusta reciben. El ${pct(C.fit_top_share,0)} del debate sobre si la comida es fit se dio en ${esc(C.fit_top_piece)}.`)}</section>
@@ -307,7 +313,7 @@ function convResumen(){
   <section class="quotes" aria-label="Comentarios destacados">${quotes}</section>`;
 }
 function convRed(k){
-  const C=D.conv;if(!C||!C.redes[k])return '';const R=C.redes[k],o=k==='ig'?'tt':'ig',O=C.redes[o];
+  const C=D.conv;if(!C||!C.redes[k])return '';const R=C.redes[k],o=k==='tt'?'ig':k==='ig'?'tt':'ig',O=C.redes[o];
   const so=Object.fromEntries(O.temas.map(t=>[t.k,t.share]));
   const mas=R.temas.filter(t=>!['otros','etiqueta'].includes(t.k)).map(t=>({...t,d:t.share-(so[t.k]||0)})).sort((a,b)=>b.d-a.d).filter(t=>t.d>0.02).slice(0,2);
   const T=R.tono,opin=(T.positivo||0)+(T.negativo||0);
@@ -323,31 +329,32 @@ function convRed(k){
 function vResumen(){
   const T=D.totals,P=D.pieces,I=D.insights,N=D.nets;
   const kpiI=(k,v,d,ic,ins,hi)=>`<article class="card kpi${hi?' hi':''}"><div class="row"><span class="k">${k}</span><span class="ic">${svg(ic)}</span></div><span class="v num">${v}</span><span class="d">${d}</span><p class="ins">${ins}</p></article>`;
-  const share=D.share.map(s=>{const a=s.ig/(s.ig+s.tt)*100;return `<div class="srow"><div class="t"><b>${s.k}</b><span class="num">${Math.round(a)} % · ${Math.round(100-a)} %</span></div><div class="sbar"><div class="ig" style="width:${a}%"></div><div class="tt" style="width:${100-a}%"></div></div></div>`;}).join('');
+  const share=D.share.map(s=>{const ks=Object.keys(s.vals),tot=ks.reduce((a,k)=>a+s.vals[k],0);
+    return `<div class="srow"><div class="t"><b>${s.k}${ks.length<D.netList.length?' <span class="aprox">(sin Facebook)</span>':''}</b><span class="num">${ks.map(k=>Math.round(s.vals[k]/tot*100)+' %').join(' · ')}</span></div><div class="sbar">${ks.map(k=>`<div class="${k}" style="width:${s.vals[k]/tot*100}%"></div>`).join('')}</div></div>`;}).join('');
   let det='';
-  P.forEach(p=>['ig','tt'].forEach((k,j)=>{const o=p[k];det+=`<tr class="${p.best?'hl':''}"><td>${j?'':`<strong>${esc(p.t)}</strong>`}</td><td class="l"><span class="dot ${k}" style="background:var(--${k})"></span>${NET[k]}</td><td class="num">${nf.format(o.v)}</td><td class="num">${nf.format(o.r)}</td><td class="num">${nf.format(o.i)}</td><td class="num">${pct(o.er)}</td><td class="num">${nf.format(o.s)}</td></tr>`;}));
+  P.forEach(p=>D.netList.forEach((k,j)=>{const o=p[k],fb=k==='fb';det+=`<tr class="${p.best?'hl':''}"><td>${j?'':`<strong>${esc(p.t)}</strong>`}</td><td class="l"><span class="dot ${k}" style="background:var(--${k})"></span>${NET[k]}</td><td class="num">${nf.format(o.v)}</td><td class="num">${fb?'—':nf.format(o.r)}</td><td class="num">${nf.format(o.i)}${o.likes_aprox?'<span class="aprox">≈</span>':''}</td><td class="num">${fb?'—':pct(o.er)}</td><td class="num">${fb?'—':nf.format(o.s)}</td></tr>`;}));
   const ttw=I.tt_wins_er_pieces;
   return header()+
   sh('La campaña en cifras','Qué tanto se vio el contenido, cuánta gente lo vio y cómo reaccionó. Debajo de cada cifra, lo que significa.')+
   `<section class="kpis" aria-label="Resumen de la campaña">${
-    kpiI('Visualizaciones',short(T.views_all),'Reels, videos e historias','eye',`Cada cuenta vio el contenido <b>${dec(I.views_per_reach)} veces</b> en promedio.`,1)+
-    kpiI('Alcance',short(T.reach_all),'Cuentas alcanzadas, sumadas por pieza','users',`TikTok aportó el <b>${pct(I.tt_reach_share,0)}</b> del alcance de las recetas.`)+
-    kpiI('Interacciones',nf.format(T.inter_all),'Likes, comentarios, compartidos y guardados','heart',`<b>${pct(T.saves_share_inter,0)}</b> fueron guardados: la gente se lleva la receta.`)+
-    kpiI('Tasa de interacción',pct(T.er),'Interacciones ÷ alcance','rate',`Por cada 100 cuentas alcanzadas hubo <b>${Math.round(I.inter_per_100)} interacciones</b>.`)+
+    kpiI('Visualizaciones',short(T.views_all),`Instagram, TikTok y Facebook, e historias`,'eye',`<b>${short(I.fb_views)}</b> llegaron por Facebook: el ${pct(I.fb_share_meta,0)} de lo que se vio en Meta.`,1)+
+    kpiI('Alcance',short(T.reach_all),'Instagram y TikTok, sumado por pieza (Facebook no lo publica)','users',`TikTok aportó el <b>${pct(I.tt_reach_share,0)}</b> del alcance de las recetas.`)+
+    kpiI('Interacciones',nf.format(T.inter_all),'Me gusta, comentarios, compartidos y guardados en las 3 redes','heart',`En Instagram y TikTok, <b>${pct(T.saves_share_inter,0)}</b> fueron guardados: la gente se lleva la receta.`)+
+    kpiI('Tasa de interacción',pct(T.er),'Interacciones ÷ alcance, Instagram y TikTok','rate',`Por cada 100 cuentas alcanzadas hubo <b>${Math.round(I.inter_per_100)} interacciones</b>.`)+
     kpiI('Seguidores nuevos',nf.format(T.newf_ig),'En Instagram','plus',`El <b>${pct(I.newf_best_share,0)}</b> llegó con ${esc(I.newf_best_piece)}.`)}</section>
   ${sh('Pieza por pieza y red por red','Cuál receta funcionó mejor y qué aportó cada plataforma.')}
   <div class="duo">
-    <section class="card"><div class="card-h"><div><h2>Visualizaciones por pieza</h2><p>A la derecha, la tasa de interacción de cada receta en las dos redes.</p></div>${legend(['ig','tt'])}</div>${piecesChart(['ig','tt'])}
-      ${insight('',`${esc(I.top_piece)} tuvo ${dec(I.top_vs_second)} veces las visualizaciones de ${esc(I.second_piece)}, la segunda pieza. ${esc(I.low_piece)} fue la de menos visualizaciones${I.low_is_last_in_both?' en las dos redes':''}: el formato de receta útil supera al video de proceso.`)}</section>
+    <section class="card"><div class="card-h"><div><h2>Visualizaciones por pieza</h2><p>A la derecha, la tasa de interacción de cada receta en Instagram y TikTok.</p></div>${legend(D.netList)}</div>${piecesChart(D.netList)}
+      ${insight('',`${esc(I.top_piece)} tuvo ${dec(I.top_vs_second)} veces las visualizaciones de ${esc(I.second_piece)}, la segunda pieza. ${esc(I.low_piece)} fue la de menos visualizaciones${I.low_is_last_in_both?' en todas las redes':''}: el formato de receta útil supera al video de proceso.`)}</section>
     <section class="card"><div class="card-h"><div><h2>Resultados por red</h2><p>Participación de cada red en el total</p></div></div>
-      <div class="share">${legend(['ig','tt'])}${share}</div>
+      <div class="share">${legend(D.netList)}${share}</div>
       ${insight(esc(D.textos.redes.titulo),esc(D.textos.redes.texto))}</section>
   </div>
   ${convResumen()}
   ${sh('Hallazgos','Lo que la marca debería llevarse de esta campaña.')}
   <section class="finds" aria-label="Hallazgos">${D.hallazgos.map((h,i)=>`<article class="card find${i?'':' hi'}"><span class="v num">${pctAuto(h.v)}</span><h3>${esc(h.titulo)}</h3><p>${esc(h.texto)}</p></article>`).join('')}</section>
   ${sh('Detalle','Todas las cifras por pieza y por red, para consultar.')}
-  <section class="card"><div class="card-h"><div><h2>Detalle por pieza y red</h2><p>Resaltada, la pieza con mejor resultado.</p></div></div>
+  <section class="card"><div class="card-h"><div><h2>Detalle por pieza y red</h2><p>Resaltada, la pieza con mejor resultado. Facebook no publica alcance ni guardados (—); sus reacciones desde 10 mil vienen abreviadas (≈). Alcance, tasa y guardados del total: Instagram y TikTok.</p></div></div>
     <div class="tbl"><table><thead><tr><th>Pieza</th><th class="l">Red</th><th>Visualizaciones</th><th>Alcance</th><th>Interacciones</th><th>Tasa</th><th>Guardados</th></tr></thead><tbody>${det}</tbody>
     <tfoot><tr><td>Total</td><td></td><td class="num">${nf.format(T.views)}</td><td class="num">${nf.format(T.reach)}</td><td class="num">${nf.format(T.inter)}</td><td class="num">${pct(T.er)}</td><td class="num">${nf.format(T.saves)}</td></tr></tfoot></table></div>
     ${insight('',`Instagram tuvo mejor tasa de interacción en ${I.ig_wins_er} de las ${I.n_pieces} piezas${ttw.length?`; TikTok solo ganó en ${ttw.map(esc).join(' y ')}`:''}. TikTok compensa con más alcance: llega a más cuentas, aunque reaccionan menos.`)}</section>
@@ -378,7 +385,7 @@ function vInstagram(){
   return header()+tabhead('ig',`${P.length} reels y ${D.stories.length} historias`)+
   sh('Instagram en cifras','Resultados de los reels. Debajo de cada cifra, lo que significa.')+
   `<section class="kpis">${
-    kpiN('Visualizaciones',short(N.v),'De los '+P.length+' reels','eye',`El <b>${pct(I.top_share_views,0)}</b> vino de ${esc(I.top_piece)}.`,1)+
+    kpiN('Visualizaciones',short(N.v),'De los '+P.length+' reels, solo Instagram','eye',`El <b>${pct(I.top_share_views,0)}</b> vino de ${esc(I.top_piece)}.`,1)+
     kpiN('Alcance',short(N.r),'Cuentas alcanzadas','users',`Cada cuenta vio los reels <b>${dec(I.views_per_reach)} veces</b> en promedio.`)+
     kpiN('Interacciones',nf.format(N.i),'Likes, comentarios, compartidos y guardados','heart',`<b>${pct(I.saves_share,0)}</b> fueron guardados.`)+
     kpiN('Tasa de interacción',pct(N.er),'Interacciones ÷ alcance','rate',`<b>${pts(I.er_diff_pts)} ${I.er_diff_pts>=0?'más':'menos'}</b> que TikTok (${pct(D.nets.tt.er)}).`)+
@@ -437,8 +444,37 @@ function vTiktok(){
   ${footer()}`;
 }
 
+
+/* ---------- Facebook ---------- */
+function vFacebook(){
+  const N=D.nets.fb,P=D.pieces,I=D.insFb,ig=D.nets.ig;if(!N)return '';
+  const meta=P.map(p=>{const w=p.ig.v/(p.ig.v+p.fb.v)*100;return `<div class="srow"><div class="t"><b>${esc(p.s)}</b><span class="num">Instagram ${Math.round(w)} % · Facebook ${Math.round(100-w)} %</span></div><div class="sbar"><div class="ig" style="width:${w}%"></div><div class="fb" style="width:${100-w}%"></div></div></div>`;}).join('');
+  const det=P.map(p=>{const o=p.fb;return `<tr class="${p.best?'hl':''}"><td><strong>${esc(p.t)}</strong></td><td class="num">${nf.format(o.v)}</td><td class="num">${nf.format(o.likes)}${o.likes_aprox?'<span class="aprox">≈</span>':''}</td><td class="num">${nf.format(o.comments)}</td><td class="num">${nf.format(o.shares)}</td><td class="num">${nf.format(o.i)}</td><td class="num">${pct(o.er)}</td><td class="l">${o.url?`<a href="${esc(o.url)}" target="_blank" rel="noopener">Ver reel</a>`:''}</td></tr>`;}).join('');
+  return header()+tabhead('fb',`${P.length} reels en la página Juan FoodTime, publicados junto con Instagram`)+
+  sh('Facebook en cifras','Los mismos reels de Instagram, publicados también en Facebook. Debajo de cada cifra, lo que significa.')+
+  `<section class="kpis">${
+    kpiN('Visualizaciones',short(N.v),'De los '+P.length+' reels','eye',`El <b>${pct(I.share_meta,0)}</b> de lo que se vio en Meta llegó por Facebook.`,1)+
+    kpiN('Reacciones',(N.likes_aprox?'≈ ':'')+short(N.likes),'Me gusta y demás reacciones','heart',`Facebook muestra abreviadas las reacciones desde 10 mil, por eso la cifra es aproximada.`)+
+    kpiN('Comentarios',nf.format(N.comments),'En los '+P.length+' reels','users',`Instagram tuvo <b>${nf.format(ig.comments)}</b>: en Facebook la gente mira más de lo que comenta.`)+
+    kpiN('Compartidos',nf.format(N.shares),'Veces compartido','plus',`El <b>${pct(I.shares_share,0)}</b> de las interacciones en Facebook fueron compartidos.`)+
+    kpiN('Interacción por visualización',pct(N.er),'Interacciones ÷ visualizaciones','rate',`Instagram, medido igual, tiene <b>${pct(I.ig_er_views)}</b>. Facebook no publica alcance.`)}</section>
+  ${sh('Reel por reel','Cuánto se vio cada reel en Facebook y cuánto pesó frente a Instagram.')}
+  <div class="duo">
+    <section class="card"><div class="card-h"><div><h2>Visualizaciones por reel</h2><p>A la derecha, interacciones ÷ visualizaciones de cada reel.</p></div></div>${piecesChart(['fb'])}
+      ${insight('',`${esc(I.top_piece)} reunió el ${pct(I.top_share_views,0)} de las visualizaciones en Facebook.`)}</section>
+    <section class="card"><div class="card-h"><div><h2>Facebook frente a Instagram</h2><p>Reparto de las visualizaciones de cada reel en Meta</p></div></div>
+      <div class="share">${legend(['ig','fb'])}${meta}</div>
+      ${insight('',I.over_ig.length?`En ${I.over_ig.map(esc).join(' y ')}, Facebook superó a Instagram: el ${pct(I.top_meta_share,0)} de sus visualizaciones en Meta llegó por Facebook.`:`Instagram superó a Facebook en todos los reels.`)}</section>
+  </div>
+  ${convRed('fb')}
+  <section class="card"><div class="card-h"><div><h2>Detalle por reel</h2><p>≈ cifra abreviada por Facebook. Interacciones = reacciones + comentarios + compartidos.</p></div></div>
+    <div class="tbl"><table><thead><tr><th>Reel</th><th>Visualizaciones</th><th>Reacciones</th><th>Comentarios</th><th>Compartidos</th><th>Interacciones</th><th>Interacción por visualización</th><th class="l">Enlace</th></tr></thead><tbody>${det}</tbody>
+    <tfoot><tr><td>Total</td><td class="num">${nf.format(N.v)}</td><td class="num">${nf.format(N.likes)}</td><td class="num">${nf.format(N.comments)}</td><td class="num">${nf.format(N.shares)}</td><td class="num">${nf.format(N.i)}</td><td class="num">${pct(N.er)}</td><td></td></tr></tfoot></table></div></section>
+  ${footer()}`;
+}
+
 /* ---------- navegación ---------- */
-const TABS=[{id:'resumen',label:'Resumen',icon:'grid'},{id:'instagram',label:'Instagram',icon:'ig'},{id:'tiktok',label:'TikTok',icon:'tt'}];
+const TABS=[{id:'resumen',label:'Resumen',icon:'grid'},{id:'instagram',label:'Instagram',icon:'ig'},{id:'tiktok',label:'TikTok',icon:'tt'},{id:'facebook',label:'Facebook',icon:'fb'}].filter(t=>D.tabs.includes(t.id));
 window.REPORT_TABS=TABS.map(t=>t.id);
 document.getElementById('nav').innerHTML=TABS.map(t=>`<button type="button" id="tab-${t.id}" data-tab="${t.id}">${t.icon?svg(t.icon):''}${esc(t.label)}</button>`).join('');
 document.getElementById('period').textContent=D.periodo;
@@ -452,7 +488,7 @@ function bindTips(){
 }
 function go(id){
   if(!window.REPORT_TABS.includes(id)) id='resumen';
-  document.getElementById('view').innerHTML=id==='instagram'?vInstagram():id==='tiktok'?vTiktok():vResumen();
+  document.getElementById('view').innerHTML=id==='instagram'?vInstagram():id==='tiktok'?vTiktok():id==='facebook'?vFacebook():vResumen();
   document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.tab===id));
   document.getElementById('pdf').href=`${D.pdfBase||'pdf'}/${id}.pdf`;
   bindTips();

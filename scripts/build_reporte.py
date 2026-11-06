@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from pipeline.metrics import build_data  # noqa: E402
-from pipeline.util.config import PROJECT_ROOT, campaign_ids, load_campaign, load_client, load_conversation, load_metrics  # noqa: E402
+from pipeline.util.config import PROJECT_ROOT, campaign_ids, load_campaign, load_client, load_conversation, load_metrics, load_public  # noqa: E402
 from pipeline.util.log import get_logger  # noqa: E402
 
 log = get_logger("build_reporte")
@@ -38,7 +38,8 @@ def render(data: dict, pdf_base: str) -> str:
 
 
 def build(campaign_id: str, client: dict) -> dict:
-    data = build_data(client, load_campaign(campaign_id), load_metrics(campaign_id), load_conversation(campaign_id))
+    data = build_data(client, load_campaign(campaign_id), load_metrics(campaign_id), load_conversation(campaign_id),
+                      load_public(campaign_id))
     out = PROJECT_ROOT / campaign_id / "index.html"
     out.parent.mkdir(exist_ok=True)
     out.write_text(render(data, "pdf"), encoding="utf-8")
