@@ -1,0 +1,74 @@
+# =============================================================
+# Modelo whitelist: se ignora TODO por defecto y solo se permite
+# lo que debe versionarse. Cero filtraciones de datos.
+# =============================================================
+
+/*
+
+# -------------------------------------------------------------
+# Sitio publicado en GitHub Pages
+# -------------------------------------------------------------
+!/index.html
+!/CNAME
+!/robots.txt
+!/.gitignore
+!/README.md
+
+# Reporte de cada campaña (HTML + PDF por pestaña): carpetas <marca>-<año>
+!/*-20[0-9][0-9]/
+!/*-20[0-9][0-9]/**
+
+# Assets visuales: logos, favicons y fotos de perfil
+!/assets/
+!/assets/**
+
+# Páginas legales (Ley 1581 de 2012 y términos de uso)
+!/legal/
+!/legal/**
+
+# -------------------------------------------------------------
+# Código, plantillas, configuración y documentación
+# -------------------------------------------------------------
+!/pipeline/
+!/pipeline/**
+!/scripts/
+!/scripts/**
+!/templates/
+!/templates/**
+!/config/
+!/config/**
+!/tests/
+!/tests/**
+!/docs/
+!/docs/**
+!/.github/
+!/.github/**
+
+!/requirements.txt
+
+# -------------------------------------------------------------
+# BLOQUEOS ABSOLUTOS — nunca commitear
+# -------------------------------------------------------------
+**/data/
+**/raw/
+**/*.csv
+**/*.xlsx
+**/*.sqlite
+**/*.db
+**/.env
+**/.env.local
+**/.env.*.local
+**/secrets.*
+**/credentials.*
+**/*.pem
+**/*.key
+**/__pycache__/
+**/*.pyc
+**/.venv/
+**/venv/
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.log
+*.tmp

@@ -1,0 +1,15 @@
+# Cliente de Datalítica: CreatorsWay (agencia de talentos).
+# Cada campaña es la relación de un creador de CreatorsWay con una marca.
+agencia:
+  nombre: CreatorsWay
+  logo_claro: assets/logo-creatorsway-blanco.png   # sobre la barra negra
+  logo_oscuro: assets/logo-creatorsway-negro.png   # sobre fondo claro
+
+# Etiqueta de la tasa de interacción (interacciones ÷ alcance) de cada pieza.
+tasa:
+  alta_desde: 0.10   # 10 % o más → "Alta"
+  baja_bajo: 0.06    # menos de 6 % → "Baja"; en medio → "Media"
+
+# EMV y ROI quedan apagados hasta tener el benchmark de la marca y el pago.
+# El benchmark de LCI (like 7.200, comentario 10.500…) da cifras irreales aquí.
+emv: null

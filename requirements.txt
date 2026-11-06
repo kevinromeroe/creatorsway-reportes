@@ -1,0 +1,6 @@
+# Pipeline (importar + build)
+pyyaml>=6.0.1
+openpyxl>=3.1
+
+# El PDF usa Playwright; el workflow lo instala aparte:
+#   pip install playwright && python -m playwright install --with-deps chromium

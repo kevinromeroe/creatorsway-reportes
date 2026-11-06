@@ -1,0 +1,77 @@
+name: Pruebas + PDF
+
+# El sitio (<campaña>/index.html) se genera y se revisa en local con la captura
+# más reciente, que vive solo en datos/ (no se versiona). Por eso este workflow
+# NO reconstruye el HTML: corre las pruebas y regenera los PDF a partir del
+# HTML que se subió.
+
+on:
+  workflow_dispatch:
+    inputs:
+      campaign:
+        description: "Campaña a renderizar (vacío = todas, ej. klarens-2026)"
+        required: false
+        default: ""
+  push:
+    branches: [main]
+    paths:
+      - "*-20*/index.html"
+      - "templates/**"
+      - "pipeline/**"
+      - "tests/**"
+
+concurrency:
+  group: creatorsway-pdf
+  cancel-in-progress: false
+
+jobs:
+  pdf:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11", cache: pip }
+      - run: pip install -r requirements.txt
+
+      - name: Pruebas de cuadre
+        run: python -m unittest discover tests -v
+
+      - name: Instalar Playwright + Chromium
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Renderizar PDF por pestaña
+        run: |
+          python -m http.server 8000 >/dev/null 2>&1 &
+          sleep 3
+          python scripts/render_pdf.py ${{ github.event.inputs.campaign }}
+
+      - name: Commit & push
+        run: |
+          git config user.email "bot@datalitica.com.co"
+          git config user.name "Datalitica Bot"
+          git add -A -- "*-20*/pdf"
+          git diff --quiet --cached && echo "Sin cambios" && exit 0
+          git commit -m "PDF automático ($(date -u +%Y-%m-%d))"
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push && break
+            sleep 3
+          done
+
+      - name: Smoke test — el sitio publicado responde
+        run: |
+          [ -f CNAME ] || { echo "Sin dominio propio todavía"; exit 0; }
+          DOMAIN="$(tr -d '[:space:]' < CNAME)"
+          URL="http://$DOMAIN/"
+          for i in $(seq 1 6); do
+            sleep 45
+            code=$(curl -s -o /dev/null -w "%{http_code}" -L "$URL")
+            echo "Intento $i → HTTP $code"
+            [ "$code" = "200" ] && exit 0
+          done
+          echo "::warning::$URL aún no responde 200 (DNS o Pages pendientes)"

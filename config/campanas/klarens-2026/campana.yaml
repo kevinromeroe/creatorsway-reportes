@@ -1,0 +1,80 @@
+# Campaña curada: identidad, piezas y textos. Las cifras viven en metricas.yaml,
+# que genera scripts/importar_excel.py a partir del Excel que entrega el creador.
+id: klarens-2026
+marca:
+  nombre: KLAREN'S
+  handle: klarenscol
+  logo: assets/logo-klarens-sin-fondo.png
+creador:
+  nombre: Juan Food Time
+periodo:
+  desde: 2026-07-09
+  hasta: 2026-10-13
+  texto: Jul a oct 2026
+pago_cop: null          # lo que pagó la marca; activa ROI cuando exista
+
+# Piezas de contenido fijo: cada una se publicó el mismo día en Instagram (reel) y TikTok (video).
+# `fecha` une la pieza con sus filas del Excel.
+piezas:
+  - slug: almuerzos-fit
+    fecha: 2026-07-09
+    titulo: 20 almuerzos que parecen fat pero son fit
+    corto: 20 almuerzos fit
+    nota: >-
+      La pieza más fuerte de la campaña: generó el 72 % de todas las interacciones.
+      En TikTok se guardó casi el doble de lo que se compartió (92 K guardados contra 48 K compartidos).
+  - slug: cheesecake
+    fecha: 2026-08-23
+    titulo: Cheesecake de bocadillo con queso
+    corto: Cheesecake
+    nota: >-
+      Segunda mejor pieza. Mantiene una tasa alta (13,2 %) con un postre que usa
+      el producto como ingrediente principal.
+  - slug: suero-costeno
+    fecha: 2026-09-27
+    titulo: Cómo se fabrica el suero costeño
+    corto: Suero costeño
+    nota: >-
+      El único video de proceso de planta. Tuvo la tasa más baja (4,9 %) y casi no se guardó:
+      al público le sirve más una receta que pueda hacer en casa.
+  - slug: ossobuco
+    fecha: 2026-10-13
+    titulo: Ossobuco con puré
+    corto: Ossobuco
+    colaboracion: "@charliepessellini"
+    nota: >-
+      Colaboración con @charliepessellini. Duplicó las visualizaciones de la pieza anterior
+      y recuperó una tasa alta (10,2 %).
+
+# Nombre visible de cada historia (en el mismo orden del Excel).
+historias:
+  - Mención a @klarenscol
+  - Contenido KLAREN'S
+  - Contenido KLAREN'S
+  - Evento, historia 1
+  - Evento, historia 2
+  - Evento, historia 3
+  - Evento, historia 4
+
+textos:
+  subtitulo: Cuatro recetas en Instagram y TikTok y siete historias, del 9 de julio al 13 de octubre de 2026.
+  redes:
+    titulo: TikTok trae público nuevo
+    texto: el 80 % de quienes vieron los videos no seguía a Juan. Instagram interactuó más, con 16,7 % frente a 14,6 % de TikTok.
+  historias: La mención directa es la que lleva tráfico a la marca
+  hallazgos:
+    - valor: top_share_inter
+      titulo: Una receta concentró la campaña
+      texto: >-
+        20 almuerzos fit sumó 4,6 M de visualizaciones y 542.629 interacciones entre las dos redes.
+        El formato de lista con recetas útiles es el que conviene repetir.
+    - valor: saves_share_inter
+      titulo: La gente guarda las recetas
+      texto: >-
+        29 de cada 100 interacciones fueron guardados. En TikTok, 20 almuerzos fit tuvo 92 K guardados
+        frente a 48 K compartidos: el producto queda en la lista de compras.
+    - valor: min_er
+      titulo: El video de planta rindió menos
+      texto: >-
+        Cómo se fabrica el suero costeño tuvo la tasa más baja y solo 770 guardados. Las tres recetas
+        superan el 10 %: al público le sirve más cocinar con el producto que ver cómo se hace.
