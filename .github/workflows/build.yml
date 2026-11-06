@@ -55,7 +55,7 @@ jobs:
         run: |
           git config user.email "bot@datalitica.com.co"
           git config user.name "Datalitica Bot"
-          git add -A -- "*-20*/pdf"
+          git add -A -- *-20*/pdf
           git diff --quiet --cached && echo "Sin cambios" && exit 0
           git commit -m "PDF automático ($(date -u +%Y-%m-%d))"
           for i in 1 2 3; do
