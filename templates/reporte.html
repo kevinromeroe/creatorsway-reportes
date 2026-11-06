@@ -139,6 +139,12 @@ a{color:inherit}
 .find.hi{background:#000;color:#fff}
 .find.hi .v{color:var(--amarillo)}
 
+.quotes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.quote{margin:0;display:grid;gap:10px;align-content:start}
+.quote .qt{font-size:12px;font-weight:700;background:var(--fondo);border-radius:999px;padding:3px 10px;justify-self:start}
+.quote blockquote{margin:0;font-size:17px;font-weight:600;line-height:1.4}
+.quote figcaption{font-size:13px}
+.duo.inner{gap:32px}
 .nets{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .net-h{display:flex;align-items:center;gap:12px;margin-bottom:18px}
 .badge{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font:800 13px var(--f);flex:0 0 auto}
@@ -189,7 +195,7 @@ tfoot td{font-weight:800;border-top:2px solid #000}
 @media (max-width:1000px){
   .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
   .kpi.hi{grid-column:1 / -1}
-  .duo,.nets,.finds{grid-template-columns:minmax(0,1fr)}
+  .duo,.nets,.finds,.quotes{grid-template-columns:minmax(0,1fr)}
     .period{display:none}
   .btn.yel{padding:9px 12px}
 }
@@ -259,7 +265,7 @@ const LEGAL=`<div class="legal">
   <nav aria-label="Información legal"><a href="../legal/terminos.html">Términos y condiciones de uso</a><a href="../legal/datos-personales.html">Política de tratamiento de datos personales</a><a href="../legal/datos-personales.html#aviso">Aviso de privacidad</a><a href="../legal/datos-personales.html#cookies">Cookies</a><a href="mailto:comercial@datalitica.com.co">comercial@datalitica.com.co</a></nav>
   <p>Instagram y TikTok son marcas de sus respectivos titulares; se mencionan solo como fuente de los datos. Este sitio no está afiliado a ellas.</p>
 </div>`;
-const footer=()=>`<footer class="foot"><div class="foot-top"><span>Fuente: datos de Instagram Insights y TikTok Studio.</span><img src="../assets/logo-creatorsway-negro.png" alt="CreatorsWay"></div>${LEGAL}</footer>`;
+const footer=()=>`<footer class="foot"><div class="foot-top"><span>Fuente: datos de Instagram Insights y TikTok Studio, y comentarios públicos de las publicaciones.</span><img src="../assets/logo-creatorsway-negro.png" alt="CreatorsWay"></div>${LEGAL}</footer>`;
 const tabhead=(k,s)=>`<div class="tabhead"><span class="pbadge ${k}">${svg(k)}</span><h2>${NET[k]}</h2><span class="s">${s}</span></div>`;
 const legend=ks=>`<div class="legend">${ks.map(k=>`<span><i class="${k}" style="background:var(--${k})"></i>${NET[k]}</span>`).join('')}</div>`;
 const insight=(t,b)=>`<p class="callout">${t?`<b>${t}:</b> `:''}${b}</p>`;
@@ -272,6 +278,38 @@ function piecesChart(ks){
   const bar=(k,o)=>`<div class="b" tabindex="0" data-tip="${NET[k]}: ${nf.format(o.v)} visualizaciones, ${nf.format(o.i)} interacciones, ${nf.format(o.s)} guardados"><div class="track"><div class="fill ${k}" style="width:${(o.v/max*100).toFixed(1)}%"></div></div><span class="num">${short(o.v)}</span></div>`;
   return `<div class="chart" id="chart">${P.map(p=>{const er=ks.length>1?p.er:p[ks[0]].er,l=ks.length>1?p.lvl:lvl(er);
     return `<div class="crow"><div class="cname"><strong>${esc(p.t)}</strong><span>${p.f}${p.collab?', con '+esc(p.collab):''}</span></div><div class="bars">${ks.map(k=>bar(k,p[k])).join('')}</div><div class="er"><span class="v num">${pct(er)}</span>${pill(l)}</div></div>`;}).join('')}<div class="tip" id="tip" hidden></div></div>`;
+}
+
+/* ---------- conversación (comentarios) ---------- */
+const NETL={ig:'Instagram',tt:'TikTok'};
+const temaBars=(temas,color)=>{const mx=Math.max(...temas.map(t=>t.share));
+  return `<div class="share">${temas.map(t=>`<div class="srow"><div class="t"><b>${esc(t.label)}</b><span class="num">${nf.format(t.n)} · ${pct(t.share,0)}</span></div><div class="sbar" style="background:var(--pista)"><div style="width:${t.share/mx*100}%;background:${color}"></div></div></div>`).join('')}</div>`;};
+const tonoBars=t=>{const rows=[['Positivos',t.positivo,'var(--sube)'],['Negativos',t.negativo,'var(--baja)'],['Dudas: qué es, dónde se consigue, con qué reemplazarlo',t.duda,'#9A9A95']];const mx=Math.max(...rows.map(r=>r[1]));
+  return `<div class="share">${rows.map(r=>`<div class="srow"><div class="t"><b>${r[0]}</b><span class="num">${nf.format(r[1])}</span></div><div class="sbar" style="background:var(--pista)"><div style="width:${r[1]/mx*100}%;background:${r[2]}"></div></div></div>`).join('')}</div>`;};
+function convResumen(){
+  const C=D.conv;if(!C)return '';const T=C.tono,th=Object.fromEntries(C.temas.map(t=>[t.k,t]));
+  const quotes=C.destacados.map(q=>`<figure class="card quote"><span class="qt">${esc(q.tema)}</span><blockquote>“${esc(q.texto)}”</blockquote><figcaption class="num">${nf.format(q.me_gusta)} me gusta · ${NETL[q.red]} · ${esc(q.pieza)}</figcaption></figure>`).join('');
+  return sh('Lo que dice la gente',`Leímos ${nf.format(C.n)} comentarios de las ${D.pieces.length*2} publicaciones (el ${pct(C.coverage,0)} de los que reportan las plataformas) y los clasificamos por tema.`)+
+  `<div class="duo">
+    <section class="card"><div class="card-h"><div><h2>Temas de la conversación</h2><p>Comentarios y respuestas, por tema principal</p></div></div>${temaBars(C.temas,'#000')}
+      ${insight('',`${pct(th.antojo.share,0)} es antojo y elogio, y otro ${pct(th.humor.share,0)} reacciona a los detalles del video, como el tenedor o el celular en la nevera: esos comentarios son los que más me gusta reciben. El ${pct(C.fit_top_share,0)} del debate sobre si la comida es fit se dio en ${esc(C.fit_top_piece)}.`)}</section>
+    <section class="card"><div class="card-h"><div><h2>El suero y ${esc(D.marca.nombre)}</h2><p>${nf.format(T.positivo+T.negativo+T.duda+T.neutro)} comentarios que hablan del suero o de la marca</p></div></div>${tonoBars(T)}
+      ${insight(`${C.opinion_pos>=.6?'2 de cada 3':pct(C.opinion_pos,0)} opiniones son positivas`,`de las ${T.negativo} críticas, ${T.neg_autenticidad} cuestionan que sea suero costeño auténtico y ${T.neg_salud} señalan los sellos de advertencia. ${esc(C.marca_top_piece)} fue la pieza con más conversación de marca: el ${pct(C.marca_top_share,0)} de sus comentarios habla del suero.`)}
+      <p class="callout"><b>${nf.format(T.duda)} dudas sobre el producto:</b> ${nf.format(T.duda_fuera)} vienen de fuera de Colombia y preguntan qué es el suero costeño o con qué reemplazarlo.</p></section>
+  </div>
+  <section class="quotes" aria-label="Comentarios destacados">${quotes}</section>`;
+}
+function convRed(k){
+  const C=D.conv;if(!C||!C.redes[k])return '';const R=C.redes[k],o=k==='ig'?'tt':'ig',O=C.redes[o];
+  const so=Object.fromEntries(O.temas.map(t=>[t.k,t.share]));
+  const mas=R.temas.filter(t=>!['otros','etiqueta'].includes(t.k)).map(t=>({...t,d:t.share-(so[t.k]||0)})).sort((a,b)=>b.d-a.d).filter(t=>t.d>0.02).slice(0,2);
+  const T=R.tono,opin=(T.positivo||0)+(T.negativo||0);
+  const txt=mas.length?`Frente a ${NETL[o]}, aquí hay más ${mas.map(t=>`${t.label.toLowerCase()} (${pct(t.share,0)} contra ${pct(so[t.k]||0,0)})`).join(' y ')}.`:'';
+  return sh(`Conversación en ${NETL[k]}`,`${nf.format(R.n)} comentarios leídos de ${nf.format(R.total)} que reporta la plataforma.`)+
+  `<section class="card"><div class="duo inner">
+    <div><div class="card-h"><div><h2>Temas</h2></div></div>${temaBars(R.temas,`var(--${k})`)}</div>
+    <div><div class="card-h"><div><h2>El suero y ${esc(D.marca.nombre)}</h2></div></div>${tonoBars({positivo:T.positivo||0,negativo:T.negativo||0,duda:T.duda||0})}</div>
+  </div>${insight('',`${txt} Sobre la marca: ${T.positivo||0} opiniones positivas y ${T.negativo||0} negativas${opin?` (${pct((T.positivo||0)/opin,0)} positivas)`:''}, y ${T.duda||0} dudas sobre el producto.`)}</section>`;
 }
 
 /* ---------- resumen ---------- */
@@ -298,6 +336,7 @@ function vResumen(){
       <div class="share">${legend(['ig','tt'])}${share}</div>
       ${insight(esc(D.textos.redes.titulo),esc(D.textos.redes.texto))}</section>
   </div>
+  ${convResumen()}
   ${sh('Hallazgos','Lo que la marca debería llevarse de esta campaña.')}
   <section class="finds" aria-label="Hallazgos">${D.hallazgos.map((h,i)=>`<article class="card find${i?'':' hi'}"><span class="v num">${pctAuto(h.v)}</span><h3>${esc(h.titulo)}</h3><p>${esc(h.texto)}</p></article>`).join('')}</section>
   ${sh('Detalle','Todas las cifras por pieza y por red, para consultar.')}
@@ -349,6 +388,7 @@ function vInstagram(){
     <div class="tbl"><table><thead><tr><th>Reel</th><th>Visualizaciones</th><th>Alcance</th><th>Me gusta</th><th>Comentarios</th><th>Compartidos</th><th>Guardados</th><th>Tasa</th><th>Reproducción</th><th>Seguidores</th></tr></thead><tbody>${det}</tbody>
     <tfoot><tr><td>Total</td><td class="num">${nf.format(N.v)}</td><td class="num">${nf.format(N.r)}</td><td class="num">${nf.format(P.reduce((a,p)=>a+p.ig.likes,0))}</td><td class="num">${nf.format(I.comments)}</td><td class="num">${nf.format(N.shares)}</td><td class="num">${nf.format(N.s)}</td><td class="num">${pct(N.er)}</td><td class="num">${sec(N.watch_s)}</td><td class="num">${nf.format(N.newf)}</td></tr></tfoot></table></div>
     ${insight('',`Solo ${nf.format(I.comments)} comentarios en los ${P.length} reels (${pct(I.comments_share)} de las interacciones): el público no conversa, guarda y comparte. Es contenido de consulta.`)}</section>
+  ${convRed('ig')}
   ${sh('Historias',`${D.stories.length} historias de Instagram y su efecto en la cuenta de la marca.`)}
   <section class="card">
     <div class="stories"><div class="sfigs"><div><span class="v num">${short(ST.views)}</span><span>visualizaciones en ${D.stories.length} historias</span></div>
@@ -382,6 +422,7 @@ function vTiktok(){
       <div class="share">${aud}</div>
       ${insight(`${pct(N.women,0)} mujeres y ${pct(N.men,0)} hombres`,`en promedio por video. Las recetas atraen más público femenino: ${pct(I.women_max,0)} en ${esc(I.women_max_piece)} frente a ${pct(I.women_min,0)} en ${esc(I.women_min_piece)}.`)}</section>
   </div>
+  ${convRed('tt')}
   <section class="card"><div class="card-h"><div><h2>Detalle por video</h2><p>Resaltado, el video con mejor resultado.</p></div></div>
     <div class="tbl"><table><thead><tr><th>Video</th><th>Duración</th><th>Visualizaciones</th><th>Alcance</th><th>Me gusta</th><th>Comentarios</th><th>Compartidos</th><th>Guardados</th><th>Tasa</th><th>No seguidores</th><th>Mujeres</th></tr></thead><tbody>${det}</tbody>
     <tfoot><tr><td>Total</td><td class="num">${sec(N.dur_s)}</td><td class="num">${nf.format(N.v)}</td><td class="num">${nf.format(N.r)}</td><td class="num">${nf.format(P.reduce((a,p)=>a+p.tt.likes,0))}</td><td class="num">${nf.format(I.comments)}</td><td class="num">${nf.format(N.shares)}</td><td class="num">${nf.format(N.s)}</td><td class="num">${pct(N.er)}</td><td class="num">${pct(N.non_followers,0)}</td><td class="num">${pct(N.women,0)}</td></tr></tfoot></table></div>

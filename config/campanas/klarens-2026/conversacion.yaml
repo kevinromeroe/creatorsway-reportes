@@ -1,0 +1,267 @@
+# Generado por scripts/analizar_comentarios.py — no editar a mano.
+temas:
+  antojo: Antojo y elogio
+  humor: Humor y detalles del video
+  receta: Preguntas y adaptaciones de la receta
+  fit: Debate sobre si es fit
+  marca: El suero y la marca
+  etiqueta: Etiquetan a otra persona
+  otros: Otros
+redes:
+  ig:
+    capturados: 548
+    total_plataforma: 769
+    temas:
+      humor: 138
+      fit: 44
+      antojo: 156
+      marca: 75
+      otros: 92
+      etiqueta: 8
+      receta: 35
+    tono_marca:
+      negativo: 17
+      neg_salud: 4
+      positivo: 26
+      duda: 25
+      duda_fuera: 8
+      neutro: 3
+      neg_autenticidad: 13
+  tt:
+    capturados: 588
+    total_plataforma: 630
+    temas:
+      fit: 75
+      humor: 120
+      antojo: 110
+      marca: 92
+      receta: 67
+      otros: 118
+      etiqueta: 6
+    tono_marca:
+      duda: 26
+      positivo: 35
+      negativo: 12
+      neg_salud: 2
+      duda_fuera: 5
+      neutro: 5
+      neg_autenticidad: 10
+piezas:
+  almuerzos-fit:
+    ig:
+      capturados: 290
+      total_plataforma: 391
+      temas:
+        humor: 110
+        fit: 42
+        antojo: 67
+        marca: 11
+        otros: 43
+        etiqueta: 5
+        receta: 12
+      tono_marca:
+        negativo: 4
+        neg_salud: 4
+        positivo: 6
+        duda: 6
+        duda_fuera: 3
+    tt:
+      capturados: 311
+      total_plataforma: 338
+      temas:
+        fit: 73
+        humor: 78
+        antojo: 47
+        marca: 16
+        receta: 43
+        otros: 50
+        etiqueta: 4
+      tono_marca:
+        duda: 8
+        positivo: 4
+        negativo: 4
+        neg_salud: 2
+        duda_fuera: 1
+        neutro: 3
+        neg_autenticidad: 2
+  cheesecake:
+    ig:
+      capturados: 137
+      total_plataforma: 217
+      temas:
+        otros: 26
+        humor: 21
+        marca: 18
+        receta: 20
+        antojo: 47
+        fit: 2
+        etiqueta: 3
+      tono_marca:
+        duda: 12
+        neutro: 2
+        duda_fuera: 4
+        positivo: 2
+    tt:
+      capturados: 163
+      total_plataforma: 168
+      temas:
+        humor: 27
+        receta: 20
+        antojo: 38
+        otros: 51
+        marca: 23
+        fit: 2
+        etiqueta: 2
+      tono_marca:
+        duda: 14
+        duda_fuera: 4
+  suero-costeno:
+    ig:
+      capturados: 61
+      total_plataforma: 82
+      temas:
+        marca: 38
+        antojo: 17
+        humor: 3
+        otros: 3
+      tono_marca:
+        negativo: 11
+        neg_autenticidad: 11
+        positivo: 16
+        duda: 4
+    tt:
+      capturados: 66
+      total_plataforma: 75
+      temas:
+        marca: 46
+        antojo: 10
+        otros: 9
+        receta: 1
+      tono_marca:
+        positivo: 28
+        negativo: 6
+        neg_autenticidad: 6
+        duda: 2
+        neutro: 2
+  ossobuco:
+    ig:
+      capturados: 60
+      total_plataforma: 79
+      temas:
+        otros: 20
+        antojo: 25
+        humor: 4
+        marca: 8
+        receta: 3
+      tono_marca:
+        duda: 3
+        negativo: 2
+        neg_autenticidad: 2
+        neutro: 1
+        positivo: 2
+        duda_fuera: 1
+    tt:
+      capturados: 48
+      total_plataforma: 49
+      temas:
+        receta: 3
+        antojo: 15
+        marca: 7
+        humor: 15
+        otros: 8
+      tono_marca:
+        duda: 2
+        negativo: 2
+        neg_autenticidad: 2
+        positivo: 3
+total:
+  capturados: 1136
+  total_plataforma: 1399
+  temas:
+    humor: 258
+    fit: 119
+    antojo: 266
+    marca: 167
+    otros: 210
+    etiqueta: 14
+    receta: 102
+  tono_marca:
+    negativo: 29
+    neg_salud: 6
+    positivo: 61
+    duda: 51
+    duda_fuera: 13
+    neutro: 8
+    neg_autenticidad: 23
+destacados:
+  humor:
+  - texto: el tenedor sacó un dedo para no quemarse
+    me_gusta: 2052
+    red: tt
+    pieza: almuerzos-fit
+  - texto: 'El tenedor: Ya no aguantooooooo maaaaaaaas 😂😂😂'
+    me_gusta: 1566
+    red: ig
+    pieza: almuerzos-fit
+  - texto: Por que nadie habla del celular dentro de la nevera
+    me_gusta: 812
+    red: tt
+    pieza: cheesecake
+  fit:
+  - texto: Jajajaja súper saludable con exceso de grasas saturadas
+    me_gusta: 307
+    red: tt
+    pieza: almuerzos-fit
+  - texto: Se ve delicioso, las quieroooo, pero no es nada fit, sin mentiras
+    me_gusta: 153
+    red: ig
+    pieza: almuerzos-fit
+  - texto: Puedes cambiar el suero por yogur griego, y te aseguro sabe igual o más
+      rico, y aparte saludable 🫶🏻
+    me_gusta: 120
+    red: tt
+    pieza: almuerzos-fit
+  antojo:
+  - texto: Porqué cuando uno tiene hambre el Algoritmo no colabora? 🤣
+    me_gusta: 23
+    red: ig
+    pieza: ossobuco
+  - texto: Se ven de locos 😍🔥
+    me_gusta: 10
+    red: ig
+    pieza: almuerzos-fit
+  - texto: Ufff se me hizo agua la boca🙌🔥
+    me_gusta: 8
+    red: ig
+    pieza: ossobuco
+  marca:
+  - texto: Valledupar no solo produce vallenato. Klarens, orgullo del Valle.
+    me_gusta: 183
+    red: tt
+    pieza: suero-costeno
+  - texto: no es normal, el cheesecake tradicional cuando has visto que lleve suero
+      y bocadillo?
+    me_gusta: 66
+    red: ig
+    pieza: cheesecake
+  - texto: no señor, ese suero es mil veces mejor
+    me_gusta: 66
+    red: tt
+    pieza: suero-costeno
+  receta:
+  - texto: La hice ayer y así me quedo, lo único fue que tenía unas guayabas y hice
+      el dulce, y así me quedo, gracias por compartir estas delias, bendiciones para
+      ti.
+    me_gusta: 111
+    red: tt
+    pieza: cheesecake
+  - texto: se imagina que en vez de galleta sea achiras??? Ahora si hay que hacer
+      esa receta !!!!!
+    me_gusta: 43
+    red: ig
+    pieza: cheesecake
+  - texto: Lo deberias hacer con queso crema Philadelphia es original y no necesita
+      gelatina.
+    me_gusta: 18
+    red: ig
+    pieza: cheesecake

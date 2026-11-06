@@ -6,14 +6,14 @@ import re
 import unittest
 
 from pipeline.metrics import build_data
-from pipeline.util.config import load_campaign, load_client, load_metrics
+from pipeline.util.config import load_campaign, load_client, load_conversation, load_metrics
 
 
 class CuadreKlarens(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.camp = load_campaign("klarens-2026")
-        cls.d = build_data(load_client(), cls.camp, load_metrics("klarens-2026"))
+        cls.d = build_data(load_client(), cls.camp, load_metrics("klarens-2026"), load_conversation("klarens-2026"))
         cls.by = {p["slug"]: p for p in cls.d["pieces"]}
 
     def test_totales_de_la_campana(self):
@@ -49,6 +49,19 @@ class CuadreKlarens(unittest.TestCase):
         self.assertEqual(st["event"]["views"], 291_754)
         self.assertTrue(self.d["stories"][0]["top"])
         self.assertEqual(self.d["tabs"], ["resumen", "instagram", "tiktok"])
+
+    def test_conversacion(self):
+        c = self.d["conv"]
+        self.assertEqual(c["n"], 1_136)
+        self.assertEqual(c["total"], 1_399)
+        t = c["tono"]
+        self.assertEqual((t["positivo"], t["negativo"], t["duda"]), (61, 29, 51))
+        self.assertEqual(t["neg_autenticidad"] + t["neg_salud"], t["negativo"])
+        self.assertGreaterEqual(c["opinion_pos"], 0.6)          # el texto dice "2 de cada 3"
+        self.assertEqual(c["fit_top_piece"], "20 almuerzos fit")
+        self.assertEqual(round(c["fit_top_share"] * 100), 97)
+        self.assertEqual(c["marca_top_piece"], "Suero costeño")
+        self.assertEqual(c["destacados"][0]["tema"], "Humor y detalles del video")
 
     def test_insights_de_redes(self):
         ig, tt = self.d["insIg"], self.d["insTt"]

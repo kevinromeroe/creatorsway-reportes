@@ -7,9 +7,9 @@ Hecho por Datalítica. Primera campaña: **Juan Food Time × KLAREN'S** (julio a
 
 | Pestaña | Contenido |
 |---|---|
-| **Resumen** | 5 cifras de la campaña, visualizaciones por pieza en las dos redes, resultados por red, hallazgos y detalle por pieza y red |
-| **Instagram** | Cifras de los reels, visualizaciones y tasa por reel, retención y seguidores nuevos, detalle por reel e historias |
-| **TikTok** | Cifras de los videos, visualizaciones y tasa por video, audiencia (no seguidores, mujeres y hombres) y detalle por video |
+| **Resumen** | 5 cifras de la campaña, visualizaciones por pieza en las dos redes, resultados por red, lo que dice la gente (comentarios por tema y tono hacia la marca), hallazgos y detalle por pieza y red |
+| **Instagram** | Cifras de los reels, visualizaciones y tasa por reel, retención y seguidores nuevos, conversación, detalle por reel e historias |
+| **TikTok** | Cifras de los videos, visualizaciones y tasa por video, audiencia (no seguidores, mujeres y hombres), conversación y detalle por video |
 
 La raíz `/` muestra la campaña de `portada` (config/cliente.yaml); cada campaña también vive en su carpeta (`/klarens-2026/`).
 Cada pestaña tiene su PDF en `/<campaña>/pdf/<pestaña>.pdf`, que baja el botón **Descargar PDF**.

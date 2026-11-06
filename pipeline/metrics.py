@@ -68,7 +68,51 @@ def level(er: float, cfg: dict[str, float]) -> str:
     return "media"
 
 
-def build_data(client: dict[str, Any], camp: dict[str, Any], met: dict[str, Any]) -> dict[str, Any]:
+ORDEN_TEMAS = ["antojo", "humor", "marca", "fit", "receta", "etiqueta", "otros"]
+
+
+def _temas(t: dict[str, int], nombres: dict[str, str]) -> list[dict[str, Any]]:
+    n = sum(t.values()) or 1
+    return [{"k": k, "label": nombres[k], "n": t.get(k, 0), "share": t.get(k, 0) / n}
+            for k in ORDEN_TEMAS if t.get(k, 0)]
+
+
+def build_conversation(conv: dict[str, Any], pieces: list[dict[str, Any]]) -> dict[str, Any] | None:
+    """Cifras e insights de la conversación a partir de conversacion.yaml."""
+    if not conv:
+        return None
+    nombres = conv["temas"]
+    tot = conv["total"]
+    tono = tot["tono_marca"]
+    opin = tono.get("positivo", 0) + tono.get("negativo", 0)
+    slug_name = {p["slug"]: p["s"] for p in pieces}
+    fit_by_piece = {slug: sum(r["temas"].get("fit", 0) for r in d.values()) for slug, d in conv["piezas"].items()}
+    fit_top = max(fit_by_piece, key=fit_by_piece.get)
+    marca_share = {slug: sum(r["temas"].get("marca", 0) for r in d.values()) / max(1, sum(r["capturados"] for r in d.values()))
+                   for slug, d in conv["piezas"].items()}
+    marca_top = max(marca_share, key=marca_share.get)
+    redes = {}
+    for k, r in conv["redes"].items():
+        redes[k] = {"n": r["capturados"], "total": r["total_plataforma"], "temas": _temas(r["temas"], nombres),
+                    "tono": r["tono_marca"]}
+    dest = conv.get("destacados", {})
+    return {
+        "n": tot["capturados"], "total": tot["total_plataforma"], "coverage": tot["capturados"] / tot["total_plataforma"],
+        "temas": _temas(tot["temas"], nombres),
+        "tono": {"positivo": tono.get("positivo", 0), "negativo": tono.get("negativo", 0), "duda": tono.get("duda", 0),
+                 "neutro": tono.get("neutro", 0), "neg_autenticidad": tono.get("neg_autenticidad", 0),
+                 "neg_salud": tono.get("neg_salud", 0), "duda_fuera": tono.get("duda_fuera", 0)},
+        "opinion_pos": tono.get("positivo", 0) / opin if opin else None,
+        "fit_top_piece": slug_name[fit_top], "fit_top_share": fit_by_piece[fit_top] / max(1, tot["temas"].get("fit", 0)),
+        "marca_top_piece": slug_name[marca_top], "marca_top_share": marca_share[marca_top],
+        "redes": redes,
+        "destacados": [{**d, "tema": nombres[k], "pieza": slug_name.get(d["pieza"], d["pieza"])}
+                       for k in ("humor", "marca", "fit") for d in dest.get(k, [])[:1]],
+    }
+
+
+def build_data(client: dict[str, Any], camp: dict[str, Any], met: dict[str, Any],
+               conv: dict[str, Any] | None = None) -> dict[str, Any]:
     tasa = client["tasa"]
     ig_by = {r["fecha"]: r for r in met["instagram"]}
     tt_by = {r["fecha"]: r for r in met["tiktok"]}
@@ -230,7 +274,7 @@ def build_data(client: dict[str, Any], camp: dict[str, Any], met: dict[str, Any]
         "textos": {"subtitulo": camp["textos"]["subtitulo"], "redes": camp["textos"]["redes"],
                    "historias": camp["textos"]["historias"]},
         "agencia": client["agencia"]["nombre"],
-        "totals": totals, "insights": insights, "insIg": ins_ig, "insTt": ins_tt, "nets": {"ig": ig_t, "tt": tt_t}, "share": share, "pieces": pieces,
+        "totals": totals, "insights": insights, "conv": build_conversation(conv or {}, pieces), "insIg": ins_ig, "insTt": ins_tt, "nets": {"ig": ig_t, "tt": tt_t}, "share": share, "pieces": pieces,
         "stories": stories, "storiesTotal": st_t, "hallazgos": hallazgos, "tabs": tabs,
         "pago": camp.get("pago_cop"), "fuente": met.get("fuente"), "importado": met.get("importado"),
     }

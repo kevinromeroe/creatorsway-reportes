@@ -87,6 +87,25 @@ Los textos curados (hallazgos, notas por pieza, texto de redes e historias) sí 
 5. **Qué se ve en la raíz:** si la campaña nueva debe ser la que se abre en `https://creatorsway.datalitica.com.co/`, cambiar `portada` en `config/cliente.yaml`. Las demás quedan en `https://creatorsway.datalitica.com.co/<marca>-<año>/`.
 6. **Revisar en local y subir** (pasos 4 y 5 de la sección A).
 
+## D. Comentarios de las publicaciones (conversación)
+
+Las secciones "Lo que dice la gente" (Resumen) y "Conversación en Instagram/TikTok" salen de los comentarios públicos de cada publicación.
+
+1. **Captura con Claude en Chrome** (sesión de Instagram iniciada en Chrome; TikTok no la necesita). Claude abre cada publicación y, desde la misma página, lee los comentarios y sus respuestas con la API interna del sitio:
+   - Instagram: `/api/v1/media/<id>/comments/` y `/child_comments/` (el `<id>` sale del código del enlace del reel), con pausas entre páginas.
+   - TikTok: `/api/comment/list/` y `/api/comment/list/reply/` con el `aweme_id` del video (los enlaces `vt.tiktok.com` redirigen al video).
+   Se guarda texto, me gusta y si es respuesta. **No se guardan nombres de usuario.**
+2. **Guardado:** Chrome descarga un JSON por publicación (`klarens-ig-<fecha>.json`, `klarens-tt-<fecha>.json`) a Descargas (Chrome pide permitir varias descargas). Se mueven a `datos/capturas/<campaña>/`, que **no** se sube al repo.
+3. **Análisis:**
+   ```powershell
+   python scripts/analizar_comentarios.py klarens-2026 --muestra
+   ```
+   Clasifica cada comentario en un tema (antojo y elogio, humor del video, el suero y la marca, debate fit, preguntas de receta, etiquetas, otros; las respuestas heredan el tema de su hilo) y, si habla del suero o de la marca, su tono (positivo, negativo, duda). Con `--muestra` imprime ejemplos por tema para revisar que las reglas clasifiquen bien; si algo queda mal, se ajustan las reglas del script.
+4. Escribe `config/campanas/<campaña>/conversacion.yaml` con cifras agregadas y tres comentarios destacados sin usuario: es lo único que se publica.
+5. Pruebas, build, revisión y subida (pasos 3 a 5 de la sección A). Las pruebas verifican las cifras que citan los textos.
+
+Las plataformas no exponen todos los comentarios (borrados, filtrados u ocultos): el reporte dice cuántos se leyeron frente al total que reporta cada plataforma.
+
 ## EMV y ROI
 
 Están apagados (`emv: null` en `cliente.yaml`, `pago_cop: null` en la campaña). Se activan cuando se tenga el pago de la marca y el benchmark de EMV acordado para ella.
