@@ -7,6 +7,8 @@ marca:
   logo: assets/logo-klarens-sin-fondo.png
 creador:
   nombre: Juan Food Time
+  avatar: assets/klarens-2026/avatar-juanfoodtime.jpg
+# Miniatura de cada pieza: assets/<id>/<slug>.jpg (portada del reel)
 periodo:
   desde: 2026-07-09
   hasta: 2026-10-13

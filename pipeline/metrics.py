@@ -14,8 +14,11 @@ from __future__ import annotations
 
 import re
 from datetime import date
+from pathlib import Path
 from statistics import mean
 from typing import Any
+
+ROOT = Path(__file__).resolve().parents[1]
 
 MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto",
          "septiembre", "octubre", "noviembre", "diciembre"]
@@ -130,6 +133,8 @@ def build_data(client: dict[str, Any], camp: dict[str, Any], met: dict[str, Any]
             "v": ig["v"] + tt["v"], "r": ig["r"] + tt["r"], "i": ig["i"] + tt["i"], "sv": ig["s"] + tt["s"],
             "sh": ig["shares"] + tt["shares"],
         }
+        img = f"assets/{camp['id']}/{pz['slug']}.jpg"
+        p["img"] = img if (ROOT / img).exists() else None
         p["er"] = p["i"] / p["r"]
         p["lvl"] = level(p["er"], tasa)
         pieces.append(p)
