@@ -70,7 +70,7 @@ jobs:
           URL="http://$DOMAIN/"
           for i in $(seq 1 6); do
             sleep 45
-            code=$(curl -s -o /dev/null -w "%{http_code}" -L "$URL")
+            code=$(curl -s -o /dev/null -w "%{http_code}" -L "$URL" || true)
             echo "Intento $i → HTTP $code"
             [ "$code" = "200" ] && exit 0
           done
