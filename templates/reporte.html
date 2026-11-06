@@ -406,7 +406,7 @@ function go(id){
   if(!window.REPORT_TABS.includes(id)) id='resumen';
   document.getElementById('view').innerHTML=id==='instagram'?vInstagram():id==='tiktok'?vTiktok():vResumen();
   document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.tab===id));
-  document.getElementById('pdf').href=`pdf/${id}.pdf`;
+  document.getElementById('pdf').href=`${D.pdfBase||'pdf'}/${id}.pdf`;
   bindTips();
 }
 document.getElementById('nav').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;

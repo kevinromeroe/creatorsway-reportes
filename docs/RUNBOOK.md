@@ -1,45 +1,107 @@
 # RUNBOOK · Reportes CreatorsWay
 
+Sitio: **https://creatorsway.datalitica.com.co** · Repo público `kevinromeroe/creatorsway-reportes` (GitHub Pages).
+
 ## Roles
 
-- **Claude** edita los archivos en el clon local (`~/Documents/GitHub/creatorsway-reportes`) y los valida.
-- **Tú** haces Commit + Push en GitHub Desktop.
-- El HTML se genera y se revisa **en local**; el workflow **Pruebas + PDF** corre las pruebas y regenera los PDF al subirlo.
+- **Kevin** recibe el Excel del creador, hace el DNS y revisa el reporte y los PDF antes de compartirlos.
+- **Claude** importa, edita, prueba, construye y sube los cambios desde el clon local (`Documents/GitHub/creatorsway-reportes`).
+- El workflow **Pruebas + PDF** corre en GitHub al subir cambios: pasa las pruebas, regenera los PDF y los sube.
 
-## Actualizar las cifras de una campaña
+## Cómo está organizado
 
-1. Guardar el Excel nuevo del creador en `Dashboard Comapan/Juan-Food-Time/insumos/datos/` (nunca en el repo).
-2. `python scripts/importar_excel.py klarens-2026 "<ruta del Excel>"` (en PowerShell si la ruta tiene tildes).
-3. Revisar que los textos de `campana.yaml` (notas y hallazgos) sigan cuadrando: `python -m unittest discover tests`.
-   Si una prueba falla por un porcentaje citado, actualizar el texto.
-4. `python scripts/build_reporte.py` y revisar en `http://localhost:8812/klarens-2026/`.
-5. Commit + Push. El workflow regenera los PDF.
+```
+config/cliente.yaml                     agencia, umbrales de la tasa y `portada` (campaña que se ve en la raíz)
+config/campanas/<id>/campana.yaml       marca, creador, piezas, nombres de historias y textos curados
+config/campanas/<id>/metricas.yaml      cifras importadas del Excel (no se edita a mano)
+assets/                                 logos (sin fondo)
+templates/reporte.html                  diseño aprobado: Resumen, Instagram y TikTok
+index.html                              la raíz muestra la campaña de `portada`
+<id>/index.html y <id>/pdf/             reporte y PDF de cada campaña
+legal/                                  términos de uso y política de datos (Ley 1581 de 2012)
+```
 
-## Agregar una pieza
+El `<id>` de una campaña es `<marca>-<año>`, por ejemplo `klarens-2026`.
 
-1. En `campana.yaml`, agregar la pieza con `slug`, `fecha` (la misma del Excel), `titulo`, `corto`, `nota` y, si aplica, `colaboracion`.
-2. Importar el Excel, correr pruebas y build.
+## Formato del Excel que entrega el creador
 
-## Agregar una campaña nueva (otra marca u otro creador)
+Un archivo con tres hojas, con la fila de encabezados empezando en «ID contenido» o «ID historia»:
 
-1. Crear `config/campanas/<marca>-<año>/campana.yaml` copiando el de KLAREN'S.
-2. Logo de la marca sin fondo en `assets/`.
-3. Importar, probar, construir y revisar.
+| Hoja | Columnas que se leen (por nombre) |
+|---|---|
+| **Instagram reels** | ID contenido, Fecha publicación, Enlace, Visualizaciones, Alcance / espectadores, Me gusta, Comentarios, Reposts, Compartidos, Guardados, Tiempo promedio reproducción (s), Nuevos seguidores, Colaboración, Precisión |
+| **TikTok videos** | ID contenido, Fecha publicación, Hora, Enlace, Duración (s), Visualizaciones, Alcance / total espectadores, Me gusta, Comentarios, Compartidos, Guardados, Espectadores nuevos %, Espectadores recurrentes %, No seguidores %, Seguidores %, Hombres %, Mujeres %, Precisión |
+| **Instagram stories** | ID historia, Fecha, Descripción, Espectadores, Visualizaciones, Interacciones, Me gusta, Respuestas, Compartidos, Toques en sticker, Toques en enlace, Avances, Retrocesos, Abandonos, Siguiente historia, Visitas al perfil, Nuevos seguidores, Seguidores %, No seguidores %, Notas |
+
+- Una pieza de contenido fijo es un reel y un video publicados **el mismo día**: la fecha los une.
+- En **Notas** de cada historia va el sticker, por ejemplo `Sticker: @klarenscol`. Así el reporte cuenta solo los toques al sticker de la marca.
+- Si cambia el nombre de una columna, el importador se detiene y dice cuál falta.
+- El Excel **nunca** se sube al repo: se guarda en `Dashboard Comapan/Juan-Food-Time/insumos/datos/` (o la carpeta del creador).
+
+## A. Actualizar las cifras de una campaña existente
+
+1. Guardar el Excel nuevo en la carpeta de insumos del creador.
+2. Importar (en **PowerShell**, porque la ruta tiene tildes):
+   ```powershell
+   cd C:\Users\kevin\Documents\GitHub\creatorsway-reportes
+   python scripts/importar_excel.py klarens-2026 "<ruta completa del Excel>"
+   ```
+3. Correr las pruebas:
+   ```powershell
+   python -m unittest discover tests
+   ```
+   Las pruebas comparan los porcentajes escritos a mano en `campana.yaml` (notas y hallazgos) con las cifras nuevas.
+   Si una falla, actualizar ese texto y, si cambió una cifra esperada, la prueba correspondiente en `tests/test_metrics.py`.
+4. Construir y revisar en local:
+   ```powershell
+   python scripts/build_reporte.py
+   python -m http.server 8812
+   ```
+   Abrir `http://localhost:8812/` y revisar Resumen, Instagram y TikTok.
+5. Subir: commit + push a `main`. El workflow regenera los PDF y GitHub Pages publica en uno o dos minutos.
+
+Los insights que acompañan cada cifra se calculan solos desde los datos (`pipeline/metrics.py`), así que se actualizan con el Excel.
+Los textos curados (hallazgos, notas por pieza, texto de redes e historias) sí se revisan a mano.
+
+## B. Agregar una pieza o una historia a la campaña
+
+1. Agregar la fila en el Excel (mismo día en Instagram y TikTok si es contenido fijo).
+2. En `campana.yaml`:
+   - pieza nueva: `slug`, `fecha`, `titulo`, `corto`, `nota` y, si aplica, `colaboracion`;
+   - historia nueva: su nombre visible en la lista `historias`, en el mismo orden del Excel.
+3. Seguir los pasos 2 a 5 de la sección A.
+
+## C. Campaña nueva (otra marca u otro creador)
+
+1. **Insumos:** Excel con el formato de arriba y el logo de la marca **sin fondo** (PNG transparente) en `assets/logo-<marca>-sin-fondo.png`.
+2. **Carpeta de la campaña:** copiar `config/campanas/klarens-2026/` a `config/campanas/<marca>-<año>/` y editar `campana.yaml`:
+   - `id`, `marca` (nombre, handle sin @, logo), `creador`, `periodo`, `pago_cop: null`;
+   - `piezas`, `historias` y `textos` (subtítulo, redes, historias y los tres hallazgos).
+   Borrar el `metricas.yaml` copiado: lo genera el importador.
+3. **Importar y construir:**
+   ```powershell
+   python scripts/importar_excel.py <marca>-<año> "<ruta del Excel>"
+   python scripts/build_reporte.py <marca>-<año>
+   ```
+4. **Pruebas:** agregar en `tests/test_metrics.py` una clase de cuadre para la campaña nueva, copiando la de KLAREN'S con las cifras del Excel nuevo. Correr `python -m unittest discover tests`.
+5. **Qué se ve en la raíz:** si la campaña nueva debe ser la que se abre en `https://creatorsway.datalitica.com.co/`, cambiar `portada` en `config/cliente.yaml`. Las demás quedan en `https://creatorsway.datalitica.com.co/<marca>-<año>/`.
+6. **Revisar en local y subir** (pasos 4 y 5 de la sección A).
+
+## EMV y ROI
+
+Están apagados (`emv: null` en `cliente.yaml`, `pago_cop: null` en la campaña). Se activan cuando se tenga el pago de la marca y el benchmark de EMV acordado para ella.
 
 ## PDF en local
 
-Con el servidor local corriendo en el puerto 8812:
+Con el servidor local en el puerto 8812:
 
 ```bash
 PYTHONIOENCODING=utf-8 PDF_BASE_URL=http://localhost:8812 python scripts/render_pdf.py klarens-2026
 ```
 
-## Publicación
-
-Sitio: `https://creatorsway.datalitica.com.co` (repo público `kevinromeroe/creatorsway-reportes`, igual que LCI).
-`robots.txt` y la etiqueta `noindex` bloquean a los buscadores.
+## Publicación (hecha el 6 de noviembre de 2026)
 
 1. DNS de `datalitica.com.co`: registro `CNAME  creatorsway  →  kevinromeroe.github.io` (lo hace Kevin).
-2. Repo publicado en GitHub como `kevinromeroe/creatorsway-reportes`.
+2. Repo público `kevinromeroe/creatorsway-reportes`. `robots.txt` y la etiqueta `noindex` bloquean a los buscadores.
 3. *Settings → Pages → Deploy from a branch → main / (root)*. El dominio se toma del archivo `CNAME`.
-4. Cuando GitHub muestre el dominio verificado: marcar *Enforce HTTPS*.
+4. Cuando GitHub emite el certificado: *Enforce HTTPS*.

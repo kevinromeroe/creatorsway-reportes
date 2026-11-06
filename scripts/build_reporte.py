@@ -3,7 +3,9 @@
 
 Lee config/cliente.yaml y config/campanas/<id>/{campana,metricas}.yaml, calcula las
 cifras con pipeline/metrics.py y escribe <id>/index.html desde templates/reporte.html.
-La raíz del sitio (index.html) redirige a la campaña indicada o a la última.
+La raíz del sitio (index.html) muestra directamente la campaña de `portada`
+(config/cliente.yaml) o, si no está definida, la última; así el enlace que se comparte
+es solo el dominio.
 
 Uso:
     python scripts/build_reporte.py                  # todas las campañas
@@ -27,37 +29,39 @@ TEMPLATE = PROJECT_ROOT / "templates" / "reporte.html"
 MARKER = "/*__DATA__*/null"
 
 
-def build(campaign_id: str, client: dict) -> Path:
-    data = build_data(client, load_campaign(campaign_id), load_metrics(campaign_id))
+def render(data: dict, pdf_base: str) -> str:
     html = TEMPLATE.read_text(encoding="utf-8")
     if MARKER not in html:
         raise RuntimeError(f"La plantilla no tiene el marcador {MARKER}")
-    payload = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    payload = json.dumps({**data, "pdfBase": pdf_base}, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    return html.replace(MARKER, payload)
+
+
+def build(campaign_id: str, client: dict) -> dict:
+    data = build_data(client, load_campaign(campaign_id), load_metrics(campaign_id))
     out = PROJECT_ROOT / campaign_id / "index.html"
     out.parent.mkdir(exist_ok=True)
-    out.write_text(html.replace(MARKER, payload), encoding="utf-8")
+    out.write_text(render(data, "pdf"), encoding="utf-8")
     log.info("reporte_ok", extra={"campaign": campaign_id, "tabs": data["tabs"],
                                    "views_all": data["totals"]["views_all"]})
-    return out
+    return data
 
 
-def write_root_redirect(target: str) -> None:
-    (PROJECT_ROOT / "index.html").write_text(
-        '<!doctype html><html lang="es"><head><meta charset="utf-8">'
-        f'<meta http-equiv="refresh" content="0; url={target}/">'
-        '<meta name="robots" content="noindex"><title>Reportes CreatorsWay</title></head>'
-        f'<body><a href="{target}/">Ir al reporte</a></body></html>',
-        encoding="utf-8",
-    )
+def write_root(campaign_id: str, data: dict) -> None:
+    """La raíz muestra el reporte de portada; sus PDF siguen en <campaña>/pdf/."""
+    (PROJECT_ROOT / "index.html").write_text(render(data, f"{campaign_id}/pdf"), encoding="utf-8")
+    log.info("portada_ok", extra={"campaign": campaign_id})
 
 
 def main() -> int:
     client = load_client()
     ids = sys.argv[1:] or campaign_ids()
-    for cid in ids:
-        build(cid, client)
-    write_root_redirect(campaign_ids()[-1])
-    print(f"[DONE] Reportes generados: {', '.join(ids)}")
+    portada = client.get("portada") or campaign_ids()[-1]
+    built = {cid: build(cid, client) for cid in ids}
+    if portada not in built:
+        built[portada] = build(portada, client)
+    write_root(portada, built[portada])
+    print(f"[DONE] Reportes generados: {', '.join(ids)} · portada: {portada}")
     return 0
 
 

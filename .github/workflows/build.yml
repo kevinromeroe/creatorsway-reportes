@@ -15,6 +15,7 @@ on:
   push:
     branches: [main]
     paths:
+      - "index.html"
       - "*-20*/index.html"
       - "templates/**"
       - "pipeline/**"

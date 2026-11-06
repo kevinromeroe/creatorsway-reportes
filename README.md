@@ -11,7 +11,7 @@ Hecho por Datalítica. Primera campaña: **Juan Food Time × KLAREN'S** (julio a
 | **Instagram** | Cifras de los reels, visualizaciones y tasa por reel, retención y seguidores nuevos, detalle por reel e historias |
 | **TikTok** | Cifras de los videos, visualizaciones y tasa por video, audiencia (no seguidores, mujeres y hombres) y detalle por video |
 
-Cada campaña vive en su carpeta (`/klarens-2026/`) y la raíz `/` redirige a la más reciente.
+La raíz `/` muestra la campaña de `portada` (config/cliente.yaml); cada campaña también vive en su carpeta (`/klarens-2026/`).
 Cada pestaña tiene su PDF en `/<campaña>/pdf/<pestaña>.pdf`, que baja el botón **Descargar PDF**.
 
 ## Fórmulas

@@ -5,6 +5,9 @@ agencia:
   logo_claro: assets/logo-creatorsway-blanco.png   # sobre la barra negra
   logo_oscuro: assets/logo-creatorsway-negro.png   # sobre fondo claro
 
+# Campaña que se muestra en la raíz del dominio (https://creatorsway.datalitica.com.co/).
+portada: klarens-2026
+
 # Etiqueta de la tasa de interacción (interacciones ÷ alcance) de cada pieza.
 tasa:
   alta_desde: 0.10   # 10 % o más → "Alta"
