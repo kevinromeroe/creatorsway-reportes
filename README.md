@@ -32,9 +32,9 @@ Cada pestaña tiene su PDF en `/<campaña>/pdf/<pestaña>.pdf`, que baja el bot�
 
 ## Fuentes
 
-- **Cifras públicas** (visualizaciones, me gusta o reacciones, comentarios, compartidos) de Instagram, TikTok y Facebook: las lee Datalítica con Claude en Chrome → `config/campanas/<id>/publicas.yaml`.
+- **Cifras públicas** (visualizaciones, me gusta o reacciones, comentarios, compartidos) de Instagram, TikTok y Facebook: las lee Datalítica con Claude en Chrome → `config/campanas/<id>/publicas.yaml` → se escriben en el Excel.
 - **Cifras privadas** (alcance, guardados de Instagram, tiempo de reproducción, seguidores nuevos, audiencia de TikTok e historias): Excel del creador → `metricas.yaml`.
-- **Campañas con varios creadores (Canola):** el Excel es la fuente única. Las cifras públicas se escriben dentro del Excel con `scripts/actualizar_excel.py` (con respaldo y el valor anterior en un comentario) y el reporte lee solo el Excel.
+- **El Excel es la fuente única** en todas las campañas. Las cifras públicas se escriben dentro del Excel con `scripts/actualizar_excel.py` (con respaldo y el valor anterior en un comentario; en KLAREN'S también la hoja «Facebook reels») y el reporte lee solo el Excel.
 - Las visualizaciones de Instagram en el Excel incluyen las de Facebook (publicación cruzada); el reporte las separa. Detalle en [`docs/RUNBOOK.md`](docs/RUNBOOK.md#fuentes-de-datos-tres-redes-dos-orígenes).
 
 ## Fórmulas

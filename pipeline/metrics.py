@@ -3,12 +3,12 @@
 Todas las cifras salen de `build_data()`; la plantilla solo las formatea, así que el
 mismo número es idéntico en cada pestaña y en el PDF.
 
-Fuentes:
-  publicas.yaml  visualizaciones, me gusta/reacciones, comentarios y compartidos (y guardados de TikTok),
-                 leídos por Datalítica en cada plataforma. Instagram queda sin las visualizaciones de
-                 Facebook, que el Excel suma por la publicación cruzada; Facebook es su propia red.
-  metricas.yaml  (Excel del creador) solo lo que no es público: alcance, guardados y reposts de
-                 Instagram, tiempo de reproducción, seguidores nuevos, audiencia de TikTok e historias.
+Fuente única: el Excel de la campaña (metricas.yaml), para darle continuidad al dato.
+  - Lo que se ve en línea (visualizaciones solo de Instagram, me gusta o reacciones, comentarios,
+    compartidos y guardados de TikTok, y la hoja «Facebook reels») se actualiza dentro del Excel con
+    scripts/actualizar_excel.py a partir de la captura de publicas.yaml. Facebook es su propia red.
+  - Lo que no es público (alcance, guardados y reposts de Instagram, tiempo de reproducción, seguidores
+    nuevos, audiencia de TikTok e historias) viene del Excel tal cual.
 
 Definiciones:
   interacciones (reel/video) = me gusta o reacciones + comentarios + compartidos + guardados (+ reposts en Instagram)
@@ -65,12 +65,9 @@ def _post(m: dict[str, Any], net: str) -> dict[str, Any]:
     return out
 
 
-def _merge(excel, pub):
-    """Cifras públicas encima de las del Excel; del Excel queda solo lo que no es público."""
-    m = dict(excel or {})
-    for k, v in (pub or {}).items():
-        m[k] = v
-    return m
+def _fb(m: dict[str, Any]) -> dict[str, Any]:
+    """Fila de la hoja «Facebook reels»: reacciones aproximadas si así lo dice la columna Precisión."""
+    return {**m, "likes_aprox": "aprox" in str(m.get("precision") or "").lower()}
 
 
 def _sticker_handle(nota: Any) -> str | None:
@@ -139,9 +136,8 @@ def build_data(client: dict[str, Any], camp: dict[str, Any], met: dict[str, Any]
     pub = pub or {}
     ig_by = {r["fecha"]: r for r in met["instagram"]}
     tt_by = {r["fecha"]: r for r in met["tiktok"]}
-    pub_by = {k: {str(f): v for f, v in (pub.get(name) or {}).items()}
-              for k, name in (("ig", "instagram"), ("tt", "tiktok"), ("fb", "facebook"))}
-    nets = ["ig", "tt"] + (["fb"] if pub_by["fb"] else [])
+    fb_by = {r["fecha"]: _fb(r) for r in met.get("facebook") or []}
+    nets = ["ig", "tt"] + (["fb"] if fb_by else [])
 
     pieces = []
     for pz in camp["piezas"]:
@@ -151,11 +147,11 @@ def build_data(client: dict[str, Any], camp: dict[str, Any], met: dict[str, Any]
         p = {
             "slug": pz["slug"], "t": pz["titulo"], "s": pz["corto"], "fecha": f, "f": fecha_larga(f),
             "collab": pz.get("colaboracion"), "nota": " ".join(str(pz.get("nota", "")).split()),
-            "ig": _post(_merge(ig_by[f], pub_by["ig"].get(f)), "ig"),
-            "tt": _post(_merge(tt_by[f], pub_by["tt"].get(f)), "tt"),
+            "ig": _post(ig_by[f], "ig"),
+            "tt": _post(tt_by[f], "tt"),
         }
         if "fb" in nets:
-            p["fb"] = _post(pub_by["fb"][f], "fb")
+            p["fb"] = _post(fb_by[f], "fb")
         p["v"] = sum(p[k]["v"] for k in nets)
         p["i"] = sum(p[k]["i"] for k in nets)
         p["r"] = p["ig"]["r"] + p["tt"]["r"]
@@ -336,5 +332,5 @@ def build_data(client: dict[str, Any], camp: dict[str, Any], met: dict[str, Any]
         "totals": totals, "insights": insights, "conv": build_conversation(conv or {}, pieces), "insIg": ins_ig, "insTt": ins_tt, "insFb": ins_fb, "nets": nt, "netList": nets, "share": share, "pieces": pieces,
         "stories": stories, "storiesTotal": st_t, "hallazgos": hallazgos, "tabs": tabs,
         "pago": camp.get("pago_cop"), "fuente": met.get("fuente"), "importado": met.get("importado"),
-        "publicasCapturado": str(pub.get("capturado")) if pub else None,
+        "publicasCapturado": next((str(r["corte"]) for r in met["instagram"] if r.get("corte")), None),
     }

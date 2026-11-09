@@ -48,6 +48,10 @@ TT = {"id": "id contenido", "fecha": "fecha publicacion", "hora": "hora", "nombr
 KPI = {"fecha": "fecha publicacion", "creador": "creador", "plataforma": "plataforma", "formato": "formato",
        "tipo": "tipo de accion", "alcance": "alcance verificado", "proyeccion": "proyeccion",
        "alcance_proyectado": "alcance proyectado", "kpi": "kpi alcance", "estado": "estado kpi verificado"}
+# Hoja opcional de Facebook (campaña de un creador con página propia; la escribe scripts/actualizar_excel.py)
+FB = {"id": "id contenido", "fecha": "fecha publicacion", "nombre": "nombre / descripcion", "url": "enlace",
+      "views": "visualizaciones", "likes": "reacciones", "comments": "comentarios", "shares": "compartidos",
+      "precision": "precision", "corte": "fecha corte cifras publicas", "fuente_dato": "fuente"}
 REQUERIDAS = {"id", "fecha"}
 ISO = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
@@ -123,6 +127,8 @@ def main() -> int:
         "tiktok": read_sheet(wb, "TikTok videos", TT),
         "historias": read_sheet(wb, "Instagram stories", ST),
     }
+    if "Facebook reels" in wb.sheetnames:
+        data["facebook"] = read_sheet(wb, "Facebook reels", FB)
     if "Cumplimiento KPI" in wb.sheetnames:
         data["kpi"] = read_sheet(wb, "Cumplimiento KPI", KPI, header_first="fecha publicacion")
     out = CAMPAIGNS_DIR / cid / "metricas.yaml"
@@ -130,6 +136,7 @@ def main() -> int:
                    + yaml.safe_dump(data, allow_unicode=True, sort_keys=False), encoding="utf-8")
     print(f"[OK] {out.relative_to(ROOT)}: {len(data['instagram'])} reels, "
           f"{len(data['tiktok'])} videos, {len(data['historias'])} historias"
+          + (f", {len(data['facebook'])} reels de Facebook" if "facebook" in data else "")
           + (f", {len(data['kpi'])} filas de KPI" if "kpi" in data else ""))
     return 0
 

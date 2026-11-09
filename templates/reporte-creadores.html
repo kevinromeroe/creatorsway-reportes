@@ -123,6 +123,7 @@ const insight=(t,b)=>`<p class="callout">${t?`<b>${t}:</b> `:''}${b}</p>`;
 const sh=(t,p)=>`<div class="sec-t"><h2>${t}</h2>${p?`<p>${p}</p>`:''}</div>`;
 const tabhead=(k,s)=>`<div class="tabhead"><span class="pbadge ${k}">${svg(k)}</span><h2>${NET[k]}</h2><span class="s">${s}</span></div>`;
 const legend=ks=>`<div class="legend">${ks.map(k=>`<span><i class="${k}" style="background:var(--${k})"></i>${NET[k]}</span>`).join('')}</div>`;
+const FMT=()=>[{l:'reels de Instagram',L:'Los reels de Instagram',c:'contratados',a:I.ig_cumplen,b:I.n_ig_kpi},{l:'videos de TikTok',L:'Los videos de TikTok',c:'contratados',a:I.tt_cumplen,b:I.n_tt_kpi},{l:'historias',L:'Las historias',c:'contratadas',a:I.st_cumplen,b:I.n_st_kpi}].map(f=>({...f,r:f.a/f.b})).sort((x,y)=>y.r-x.r);
 const lista=a=>a.length<2?a.join(''):a.slice(0,-1).join(', ')+' y '+a[a.length-1];
 
 function header(){
@@ -192,14 +193,14 @@ function vResumen(){
   const rows=[...D.pieces.map(p=>({...p,tipoF:p.red==='ig'?'Reel':'Video'})),...D.stories.map(s=>({...s,red:'hist',tipoF:'Historia',t:'Historia',r:s.viewers}))].filter(x=>x.kpi).sort((a,b)=>C[a.creador].nombre.localeCompare(C[b.creador].nombre,'es')||a.fecha.localeCompare(b.fecha));
   const det=rows.map(x=>{const k=x.kpi;return `<tr class="${k.cumple?'hl':''}"><td><strong>${esc(C[x.creador].nombre)}</strong><span class="hand">${esc(x.t)}</span></td><td class="l">${x.red==='hist'?'Historia de Instagram':redTag(x.red)}</td><td class="l">${x.f}</td><td class="l">${esc(k.tipo)}</td><td class="num">${k.kpi==null?'—':nf.format(k.kpi)}</td><td class="num">${nf.format(k.alcance)}</td><td class="num">${k.pct==null?'—':pct0(k.pct)}</td><td class="l">${okPill(k)}</td><td class="num">${nf.format(k.proyectado)}</td></tr>`;}).join('');
   const H=[
-    {v:I.macro_reach_share,t:`${esc(I.macro_nombre)} aportó un tercio del alcance contratado`,p:`Con un KPI de ${nf.format(K.kpi-S.kpi)} (el ${pct(1-S.kpi/K.kpi)} de la meta), su reel alcanzó ${nf.format(K.alcance-S.alcance)} cuentas. Sin él, la campaña queda en ${pct(S.pct)} del KPI: el resultado depende de una sola pieza.`},
-    {v:I.ig_cumplen/I.n_ig_kpi,t:`Solo ${I.ig_cumplen} de ${I.n_ig_kpi} reels contratados llegaron a su meta`,p:`En TikTok cumplieron ${I.tt_cumplen} de ${I.n_tt_kpi} videos y en historias ${I.st_cumplen} de ${I.n_st_kpi}. Las metas de alcance de los reels son las que más se quedan cortas; vale la pena revisarlas con el histórico de cada creador antes de la próxima campaña.`},
+    {v:I.macro_reach_share,t:`del alcance contratado vino del reel de ${esc(I.macro_nombre)}`,p:`Con un KPI de ${nf.format(K.kpi-S.kpi)} (el ${pct(1-S.kpi/K.kpi)} de la meta), su reel alcanzó ${nf.format(K.alcance-S.alcance)} cuentas. Sin él, la campaña queda en ${pct(S.pct)} del KPI: ${S.pct>=1?'la meta se cumple igual, pero con poco margen.':'por debajo de la meta, así que el resultado depende de una sola pieza.'}`},
+    (()=>{const F=FMT(),w=F[F.length-1],o=F.slice(0,-1);return {v:w.r,t:`de ${w.l} ${w.c} llegaron a su meta (${w.a} de ${w.b})`,p:`${(s=>s[0].toUpperCase()+s.slice(1))(lista(o.map(f=>`en ${f.l} cumplieron ${f.a} de ${f.b}`)))}. Las metas de ${w.l} son las que más se quedan cortas; vale la pena revisarlas con el histórico de cada creador antes de la próxima campaña.`};})(),
     CV?{v:CV.tono.negativo/CV.marca_n,t:`de los comentarios sobre el producto lo critican`,p:`El público pregunta por la salud del aceite de canola y no entiende qué es el esparcible (${nf.format(CV.duda_esparcible)} preguntas). Los creadores respondieron ${nf.format(CV.respondidas)} de ${nf.format(CV.preguntas)} preguntas del público: la marca puede apoyarlos con respuestas claras sobre el producto.`}:null
   ].filter(Boolean);
   return header()+
   sh('La campaña en cifras','Cuánto alcance logró cada contrato, qué tanto se vio el contenido y cómo reaccionó el público. Debajo de cada cifra, lo que significa.')+
   `<section class="kpis" aria-label="Resumen de la campaña">${
-    kpiI('Cumplimiento del KPI',pct0(K.pct),`Alcance verificado ÷ KPI de ${K.piezas} piezas contratadas`,'goal',`Sin ${esc(I.macro_nombre)}, <b>${pct(S.pct)}</b>: una sola pieza explica el sobrecumplimiento.`,1)+
+    kpiI('Cumplimiento del KPI',pct0(K.pct),`Alcance verificado ÷ KPI de ${K.piezas} piezas contratadas`,'goal',`Sin ${esc(I.macro_nombre)}, <b>${pct(S.pct)}</b>${S.pct>=1?': la meta se cumple también sin su reel.':': una sola pieza explica el sobrecumplimiento.'}`,1)+
     kpiI('Alcance verificado',short(K.alcance),`Piezas contratadas; KPI ${short(K.kpi)}`,'users',`Más <b>${short(K.bonificado_alcance)}</b> de ${K.bonificado_piezas} piezas bonificadas, que no tienen KPI.`)+
     kpiI('Visualizaciones',short(T.views_all),'Instagram, TikTok, Facebook e historias','eye',`El <b>${pct0(I.top_share_views)}</b> de lo que se vio en reels y videos vino de un solo reel de ${esc(I.top_creador)}.`)+
     kpiI('Interacciones',nf.format(T.inter),'Me gusta, comentarios, compartidos y guardados','heart',`<b>${pct0(I.saves_share)}</b> fueron guardados: la gente se lleva la receta.`)+
@@ -207,17 +208,17 @@ function vResumen(){
   ${sh('Cumplimiento por creador','Alcance verificado de las piezas contratadas frente al KPI de cada creador. La línea marca el 100 %.')}
   <div class="duo">
     <section class="card"><div class="card-h"><div><h2>Alcance frente al KPI</h2><p>Ordenados por cumplimiento. La barra llega hasta el 200 %.</p></div></div>${D.creadores.filter(c=>c.kpi).map(meterRow).join('')}
-      ${insight(`Cumplen ${I.creadores_cumplen.length} de ${I.n_creadores_kpi} creadores`,`${lista(I.creadores_cumplen.map(esc))}.${I.casi.length?` ${lista(I.casi.map(c=>esc(c.nombre)))} quedó en ${lista(I.casi.map(c=>pct0(c.pct)))}.`:''} De los ${I.n_micro} microcreadores, cumplieron ${I.micro_cumplen}.`)}</section>
+      ${insight(`Cumplen ${I.creadores_cumplen.length} de ${I.n_creadores_kpi} creadores`,`${lista(I.creadores_cumplen.map(esc))}.${I.casi.length?` ${lista(I.casi.map(c=>esc(c.nombre)))} quedó en ${lista(I.casi.map(c=>pct0(c.pct)))}.`:''} De los ${I.n_micro} microinfluenciadores, con una meta de ${nf.format((D.creadores.find(c=>c.tipo==='Micro')||{}).kpi||0)} cada uno, cumplieron ${I.micro_cumplen}.`)}</section>
     <section class="card"><div class="card-h"><div><h2>Lo verificado y lo proyectado</h2><p>Cumplimiento de la campaña</p></div></div>
       <div class="big2"><div class="hi"><span class="v num">${pct0(K.pct)}</span><span>con todos los creadores (${nf.format(K.cumplen)} de ${K.piezas} piezas cumplen)</span></div><div><span class="v num">${pct(S.pct)}</span><span>sin ${esc(I.macro_nombre)} (${nf.format(S.cumplen)} de ${S.piezas} piezas cumplen)</span></div></div>
       <div class="est"><b class="tag">Estimación, no verificada</b><span class="v num">${pct0(K.pct_proyectado)} · ${pct0(S.pct_proyectado)} sin ${esc(I.macro_nombre)}</span><span>Cumplimiento con el alcance proyectado del informe de la campaña, que suma un 7 % a reels y videos (${nf.format(K.proyectado)} de alcance). No es una cifra medida.</span></div>
       <div class="fmt share">${[['Reels de Instagram',I.ig_cumplen,I.n_ig_kpi],['Videos de TikTok',I.tt_cumplen,I.n_tt_kpi],['Historias',I.st_cumplen,I.n_st_kpi]].map(([l,a,b])=>`<div class="srow"><div class="t"><b>${l}</b><span class="num">${a} de ${b} cumplen</span></div><div class="sbar" style="background:var(--pista)"><div style="width:${a/b*100}%;background:#000"></div></div></div>`).join('')}</div>
-      ${insight('','Los videos de TikTok fueron el formato más confiable para llegar a la meta; los reels, el menos.')}</section>
+      ${(()=>{const F=FMT(),b=F[0],w=F[F.length-1];return insight('',`${b.L} fueron el formato con mejor cumplimiento (${b.a} de ${b.b}); ${w.l}, el que menos (${w.a} de ${w.b}).`);})()}</section>
   </div>
   ${sh('Las publicaciones','Las que más se vieron y qué aportó cada red.')}
   <div class="duo">
     <section class="card"><div class="card-h"><div><h2>Las ${top.length} publicaciones más vistas</h2><p>Visualizaciones; a la derecha, la tasa de interacción. Todas en las pestañas de cada red.</p></div>${legend(['ig','tt','fb'])}</div>${piecesChart(top,true)}
-      ${insight('',`${esc(I.top_piece)}, de ${esc(I.top_creador)}, sumó ${nf.format(I.top_views)} visualizaciones. La mejor tasa fue la de ${esc(I.er_top.t)} de ${esc(I.er_top.creador)} (${pct(I.er_top.er)}), un microcreador.`)}</section>
+      ${insight('',`${esc(I.top_piece)}, de ${esc(I.top_creador)}, sumó ${nf.format(I.top_views)} visualizaciones. La mejor tasa fue la de ${esc(I.er_top.t)} de ${esc(I.er_top.creador)} (${pct(I.er_top.er)})${(D.creadores.find(c=>c.nombre===I.er_top.creador)||{}).tipo==='Micro'?', un microinfluenciador':''}.`)}</section>
     <section class="card"><div class="card-h"><div><h2>Resultados por red</h2><p>Participación de cada red en el total</p></div></div>
       <div class="share">${legend(['ig','tt','fb','hist'])}${shareRow('Visualizaciones',{ig:T.views_ig,tt:T.views_tt,fb:T.views_fb,hist:T.views_st})}${shareRow('Alcance',{ig:N.ig.r,tt:N.tt.r,hist:D.storiesTotal.viewers})}${shareRow('Interacciones',{ig:N.ig.i,tt:N.tt.i})}</div>
       ${insight('Instagram cargó la campaña',`${N.ig.n} reels frente a ${N.tt.n} videos de TikTok. TikTok aportó el ${pct0(I.tt_reach_share)} del alcance de reels y videos, con una tasa de ${pct(N.tt.er)} frente a ${pct(N.ig.er)} en Instagram. Facebook solo suma las reproducciones de los reels publicados también allí (${pct(I.fb_share_meta)} de lo visto en Meta).`)}</section>
@@ -253,7 +254,7 @@ function vCreadores(){
   <section class="card"><div class="card-h"><div><h2>Resumen por creador</h2><p>Visualizaciones de reels, videos, Facebook e historias. Tasa de interacción de reels y videos. Resaltados, los que cumplieron.</p></div></div>
     <div class="tbl"><table><thead><tr><th>Creador</th><th class="l">Tipo</th><th>Reels</th><th>TikTok</th><th>Historias</th><th>KPI</th><th>Alcance verificado</th><th>Cumplimiento</th><th>Bonificado</th><th>Visualizaciones</th><th>Interacciones</th><th>Tasa</th></tr></thead><tbody>${rows}</tbody>
     <tfoot><tr><td>Total</td><td></td><td class="num">${N.ig.n}</td><td class="num">${N.tt.n}</td><td class="num">${D.stories.length}</td><td class="num">${nf.format(K.kpi)}</td><td class="num">${nf.format(K.alcance)}</td><td class="num">${pct0(K.pct)}</td><td class="num">${nf.format(K.bonificado_alcance)}</td><td class="num">${nf.format(T.views_all)}</td><td class="num">${nf.format(T.inter)}</td><td class="num">${pct(T.er)}</td></tr></tfoot></table></div>
-    ${insight('',`${esc(mejorEr.nombre)} tuvo la mejor tasa de interacción (${pct(mejorEr.er)})${mejorEr.tipo==='Micro'?', siendo microcreador':''}.${bono?` ${esc(bono.nombre)} logró más alcance con sus piezas bonificadas (${nf.format(bono.bonificado)}) que con las contratadas (${nf.format(bono.alcance)}).`:''}`)}</section>
+    ${insight('',`${esc(mejorEr.nombre)} tuvo la mejor tasa de interacción (${pct(mejorEr.er)})${mejorEr.tipo==='Micro'?', siendo microinfluenciador':''}.${bono?` ${esc(bono.nombre)} logró más alcance con sus piezas bonificadas (${nf.format(bono.bonificado)}) que con las contratadas (${nf.format(bono.alcance)}).`:''}`)}</section>
   ${footer()}`;
 }
 
@@ -307,7 +308,7 @@ function vTiktok(){
     kpiI('Alcance',short(n.r),'Espectadores, sumado por video','users',`El <b>${pct0(I.tt_reach_share)}</b> del alcance de reels y videos.`)+
     kpiI('Interacciones',nf.format(n.i),'Me gusta, comentarios, compartidos y guardados','heart',`<b>${pct0(n.s/n.i)}</b> fueron guardados.`)+
     kpiI('Tasa de interacción',pct(n.er),'Interacciones ÷ alcance','rate',`<b>${dec(Math.abs(n.er-N.ig.er)*100)} puntos ${n.er<N.ig.er?'menos':'más'}</b> que Instagram (${pct(N.ig.er)}).`)+
-    kpiI('Cumplimiento',`${I.tt_cumplen} de ${I.n_tt_kpi}`,'Videos contratados que llegaron al KPI','goal',`El formato con <b>mejor cumplimiento</b> de la campaña.`)}</section>
+    kpiI('Cumplimiento',`${I.tt_cumplen} de ${I.n_tt_kpi}`,'Videos contratados que llegaron al KPI','goal',FMT()[0].l==='videos de TikTok'?`El formato con <b>mejor cumplimiento</b> de la campaña.`:`Frente a ${FMT()[0].a} de ${FMT()[0].b} en ${FMT()[0].l}.`)}</section>
   ${sh('Video por video','Cuánto se vio cada video y cómo reaccionó el público.')}
   <div class="duo">
     <section class="card"><div class="card-h"><div><h2>Visualizaciones por video</h2><p>A la derecha, la tasa de interacción de cada video.</p></div></div>${piecesChart(P,false)}

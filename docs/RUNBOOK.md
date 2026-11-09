@@ -54,7 +54,8 @@ Cada pieza de contenido fijo se publica el mismo día en **Instagram** (reel), *
 
 Reglas:
 
-- **Las cifras públicas mandan.** Si una métrica existe en las dos fuentes, el reporte usa la pública (es exacta; el Excel copia valores abreviados como 156 K).
+- **El Excel es la fuente única y continua del dato** (decisión de Kevin, 9 de noviembre de 2026). Lo que se ve en línea se escribe *dentro* del Excel con `python -m scripts.actualizar_excel <id> "<ruta del Excel>"` y luego se importa; lo que no es público (alcance, impresiones, guardados, audiencia, historias) se usa tal como viene. El reporte lee solo `metricas.yaml`. El script guarda un respaldo en `insumos/datos/respaldo/`, deja el valor anterior de cada celda en un comentario, llena «Fuente» y la columna «Fecha corte cifras públicas» y, en campañas de un creador, escribe la hoja **«Facebook reels»** (visualizaciones, reacciones, comentarios, compartidos, enlace y precisión).
+- **La cifra pública reemplaza a la del Excel** cuando existen las dos (es exacta; el Excel copia valores abreviados como 156 K).
 - **Ojo con la publicación cruzada.** En Instagram Insights, «Visualizaciones» suma Instagram + Facebook. Por eso las visualizaciones de Instagram se toman de la cifra pública **solo de Instagram** (`ig_play_count`) y las de Facebook (`fb_play_count`) van en su propia red. Con esto la validación del 6 de noviembre de 2026 encontró que el 38 % de lo que el Excel atribuía a Instagram era de Facebook (`docs/VALIDACION_2026-11-06.md`).
 - **Facebook no publica alcance ni guardados.** Su tasa es interacciones ÷ visualizaciones y no entra en la tasa de la campaña, que se calcula con Instagram y TikTok. Sus reacciones desde 10 mil vienen abreviadas (se marcan con ≈).
 
@@ -64,14 +65,19 @@ Reglas:
 - **TikTok** (sin sesión): la página de cada video trae `__UNIVERSAL_DATA_FOR_REHYDRATION__` → `itemStruct.statsV2` (`playCount`, `diggCount`, `commentCount`, `shareCount`, `collectCount`). Los enlaces `vt.tiktok.com` redirigen al video.
 - **Facebook** (sesión iniciada en Chrome): en `facebook.com/<página>/reels/` se ubican los reels por fecha y por las visualizaciones que da `fb_play_count`. En `facebook.com/reel/<id>`, los botones traen el dato en su `aria-label`: «Me gusta, N reacciones», «Comentario, N comentarios», «Compartir, N veces compartido».
 
-Las cifras se escriben en `publicas.yaml` con la fecha de captura.
+Las cifras se escriben en `publicas.yaml` con la fecha de captura y de ahí pasan al Excel (`scripts/actualizar_excel.py`).
+
+### Cambios de KPI
+
+Un cambio de meta (por ejemplo, el KPI de los microinfluenciadores de Canola, que pasó de 9.000 a 3.000 el 9 de noviembre de 2026 por instrucción de CreatorsWay) también se hace **en el Excel**, hoja «Cumplimiento KPI»: detalle por pieza, resumen por talento y total contratado, con su cumplimiento y estado recalculados y el valor anterior en un comentario. Luego se reimporta y se actualizan las cifras esperadas en `tests/`.
 
 ## A. Actualizar las cifras de una campaña existente
 
 1. Capturar las cifras públicas de las 3 redes y actualizar `publicas.yaml` (sección «Fuentes de datos»). Guardar el Excel nuevo en la carpeta de insumos del creador.
-2. Importar (en **PowerShell**, porque la ruta tiene tildes):
+2. Escribir las cifras públicas en el Excel e importar (en **PowerShell**, porque la ruta tiene tildes):
    ```powershell
    cd C:\Users\kevin\Documents\GitHub\creatorsway-reportes
+   python -m scripts.actualizar_excel klarens-2026 "<ruta completa del Excel>"
    python scripts/importar_excel.py klarens-2026 "<ruta completa del Excel>"
    ```
 3. Correr las pruebas:
