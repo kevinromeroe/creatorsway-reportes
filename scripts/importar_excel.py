@@ -36,13 +36,14 @@ def norm(s: object) -> str:
 IG = {"id": "id contenido", "fecha": "fecha publicacion", "nombre": "nombre / descripcion", "url": "enlace", "views": "visualizaciones",
       "reach": "alcance / espectadores", "likes": "me gusta", "comments": "comentarios", "reposts": "reposts",
       "shares": "compartidos", "saves": "guardados", "watch_s": "tiempo promedio reproduccion (s)",
-      "new_followers": "nuevos seguidores", "collab": "colaboracion", "precision": "precision"}
+      "new_followers": "nuevos seguidores", "collab": "colaboracion", "precision": "precision",
+      "fb_views": "publicacion cruzada facebook", "corte": "fecha corte cifras publicas", "fuente_dato": "fuente"}
 TT = {"id": "id contenido", "fecha": "fecha publicacion", "hora": "hora", "nombre": "nombre / descripcion", "url": "enlace", "dur_s": "duracion (s)",
       "views": "visualizaciones", "reach": "alcance / total espectadores", "likes": "me gusta",
       "comments": "comentarios", "shares": "compartidos", "saves": "guardados",
       "new_viewers": "espectadores nuevos %", "returning_viewers": "espectadores recurrentes %",
       "non_followers": "no seguidores %", "followers": "seguidores %", "men": "hombres %", "women": "mujeres %",
-      "precision": "precision"}
+      "precision": "precision", "corte": "fecha corte cifras publicas", "fuente_dato": "fuente"}
 # Hoja opcional de cumplimiento de KPI (tabla «Detalle normalizado»)
 KPI = {"fecha": "fecha publicacion", "creador": "creador", "plataforma": "plataforma", "formato": "formato",
        "tipo": "tipo de accion", "alcance": "alcance verificado", "proyeccion": "proyeccion",

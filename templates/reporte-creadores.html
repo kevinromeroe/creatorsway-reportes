@@ -133,7 +133,7 @@ const LEGAL=`<div class="legal">
   <p><strong>© ${new Date().getFullYear()} Datalítica Colombia S.A.S.</strong> · NIT 901.957.313-6 · Todos los derechos reservados. Reporte confidencial preparado para CreatorsWay y ${esc(D.marca.nombre)}; su reproducción o distribución sin autorización está prohibida (Ley 23 de 1982).</p>
   <nav aria-label="Información legal"><a href="../legal/terminos.html">Términos y condiciones de uso</a><a href="../legal/datos-personales.html">Política de tratamiento de datos personales</a><a href="../legal/datos-personales.html#aviso">Aviso de privacidad</a><a href="../legal/datos-personales.html#cookies">Cookies</a><a href="mailto:comercial@datalitica.com.co">comercial@datalitica.com.co</a></nav>
 </div>`;
-const footer=()=>`<footer class="foot"><div class="foot-top"><span>Fuente: cifras públicas de Instagram y TikTok leídas por Datalítica el ${fechaLarga(D.publicasCapturado)}; alcance, guardados de Instagram, historias y KPI del informe de la campaña; comentarios públicos de las publicaciones.</span><img src="../assets/logo-creatorsway-negro.png" alt="CreatorsWay"></div>${LEGAL}</footer>`;
+const footer=()=>`<footer class="foot"><div class="foot-top"><span>Fuente: informe de la campaña, con visualizaciones, me gusta, comentarios y compartidos actualizados a las cifras públicas de Instagram y TikTok al ${fechaLarga(D.publicasCapturado)}; alcance, guardados de Instagram, historias y KPI tal como vienen en el informe; comentarios públicos de las publicaciones.</span><img src="../assets/logo-creatorsway-negro.png" alt="CreatorsWay"></div>${LEGAL}</footer>`;
 const MESES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
 function fechaLarga(iso){if(!iso)return '';const [y,m,d]=iso.split('-').map(Number);return `${d} de ${MESES[m-1]} de ${y}`;}
 
@@ -300,7 +300,6 @@ function vInstagram(){
 function vTiktok(){
   const P=D.pieces.filter(p=>p.red==='tt').sort((a,b)=>b.v-a.v),n=N.tt;
   const det=P.map(p=>`<tr><td><strong>${esc(p.t)}</strong><span class="hand">${esc(C[p.creador].nombre)} · ${p.f}</span></td><td class="num">${p.dur_s} s</td><td class="num">${nf.format(p.v)}</td><td class="num">${nf.format(p.r)}</td><td class="num">${nf.format(p.likes)}</td><td class="num">${nf.format(p.comments)}</td><td class="num">${nf.format(p.shares)}</td><td class="num">${nf.format(p.s)}</td><td class="num">${pct(p.er)}</td><td class="l">${okPill(p.kpi)}</td></tr>`).join('');
-  const ana=P.find(p=>p.creador==='chef-ana-galvis');
   return header()+tabhead('tt',`${n.n} videos`)+
   sh('TikTok en cifras','Resultados de los videos. Debajo de cada cifra, lo que significa.')+
   `<section class="kpis">${
@@ -313,9 +312,10 @@ function vTiktok(){
   <div class="duo">
     <section class="card"><div class="card-h"><div><h2>Visualizaciones por video</h2><p>A la derecha, la tasa de interacción de cada video.</p></div></div>${piecesChart(P,false)}
       ${insight('',`Tres de los cinco videos son réplicas de reels de Instagram. El de Matilda muffins, bonificado, tuvo la tasa más alta (${pct(P.find(p=>p.t.startsWith('Matilda')).er)}).`)}</section>
-    <section class="card"><div class="card-h"><div><h2>Cifras públicas y cifras del informe</h2><p>Visualizaciones de cada video según el informe de la campaña y según TikTok el ${fechaLarga(D.publicasCapturado)}</p></div></div>
-      <div class="facts">${P.map(p=>`<div><span>${esc(C[p.creador].nombre)} · ${esc(p.t)}</span><b class="num">${nf.format(p.excel_views)} → ${nf.format(p.v)}</b></div>`).join('')}</div>
-      ${insight('','El informe tiene '+nf.format(ana.excel_views)+' visualizaciones en el video de '+esc(C[ana.creador].nombre)+', pero TikTok muestra '+nf.format(ana.v)+': las visualizaciones no bajan, así que la cifra del informe tiene un error. El reporte usa siempre la cifra pública; el alcance sigue siendo el del informe.')}</section>
+    <section class="card"><div class="card-h"><div><h2>Alcance frente al KPI</h2><p>Alcance de cada video contratado frente a su meta. La línea marca el 100 %.</p></div></div>
+      ${P.map(p=>{const k=p.kpi;if(!k||k.kpi==null)return `<div class="kpirow"><div class="who"><img src="../${esc(C[p.creador].avatar)}" alt=""><div><strong>${esc(p.t)}</strong><span>${esc(C[p.creador].nombre)} · bonificado, sin KPI</span></div></div><div class="mw meter-l num"><span>${nf.format(p.r)} de alcance</span></div><div class="pct"><span class="pill bono">Bonificado</span></div></div>`;
+        const w=Math.min(k.pct,2)/2*100;return `<div class="kpirow"><div class="who"><img src="../${esc(C[p.creador].avatar)}" alt=""><div><strong>${esc(p.t)}</strong><span>${esc(C[p.creador].nombre)}</span></div></div><div class="mw"><div class="meter"><div class="fill${k.cumple?' ok':''}" style="width:${w}%"></div><span class="goal" style="left:50%"></span></div><div class="meter-l num"><span>${nf.format(k.alcance)} de alcance</span><span>KPI ${nf.format(k.kpi)}</span></div></div><div class="pct"><span class="v num">${pct0(k.pct)}</span>${okPill(k)}</div></div>`;}).join('')}
+      ${(()=>{const Q=P.filter(p=>p.kpi&&p.kpi.kpi).sort((a,b)=>b.kpi.pct-a.kpi.pct),hi=Q[0],lo=Q[Q.length-1];return insight('',`${esc(hi.t)} de ${esc(C[hi.creador].nombre)} llegó al ${pct0(hi.kpi.pct)} de su meta. ${lo.kpi.cumple?'':`El único que no cumplió fue ${esc(lo.t)} de ${esc(C[lo.creador].nombre)} (${pct0(lo.kpi.pct)}).`}`);})()}</section>
   </div>
   ${convRed('tt')}
   <section class="card"><div class="card-h"><div><h2>Detalle por video</h2><p>Ordenados por visualizaciones.</p></div></div>

@@ -3,12 +3,12 @@
 Igual que en pipeline/metrics.py, todas las cifras salen de aquí y la plantilla
 (templates/reporte-creadores.html) solo las formatea.
 
-Fuentes:
-  publicas.yaml  visualizaciones, me gusta, comentarios y compartidos (y guardados de TikTok), leídos por
-                 Datalítica en cada plataforma. Instagram sin Facebook; las reproducciones en Facebook de
-                 la publicación cruzada se suman aparte (fb_views).
-  metricas.yaml  Excel: alcance, guardados y reposts de Instagram, historias y la hoja "Cumplimiento KPI".
-  campana.yaml   creadores y qué publicación corresponde a cada fila del Excel.
+Fuente única: el Excel de la campaña (metricas.yaml), para darle continuidad al dato.
+  - Lo que se ve en línea (visualizaciones solo de Instagram, reproducciones en Facebook de la publicación
+    cruzada, me gusta, comentarios, compartidos; guardados y duración en TikTok) se actualiza dentro del
+    Excel con scripts/actualizar_excel.py a partir de la captura de publicas.yaml.
+  - Lo que no es público (alcance, guardados y reposts de Instagram, historias, KPI) viene del Excel tal cual.
+  campana.yaml dice qué publicación corresponde a cada fila del Excel.
 
 Definiciones:
   interacciones (reel/video) = me gusta + comentarios + compartidos + guardados (+ reposts en Instagram)
@@ -72,26 +72,28 @@ def build_data(client: dict, camp: dict, met: dict, conv: dict | None = None, pu
     pieces = []
     for p in camp["piezas"]:
         cr, red, m = creadores[p["creador"]], p["red"], excel[p["excel"]]
-        pb = pub.get("instagram" if red == "ig" else "tiktok", {}).get(str(p["codigo"]))
-        if pb is None:
-            raise ValueError(f"Sin cifras públicas para {p['codigo']}")
-        likes, comments, shares = pb["likes"], pb["comments"], pb["shares"]
-        saves = pb["saves"] if red == "tt" else _n(m.get("saves"))
+        # Todas las cifras salen del Excel (ya actualizado con las públicas: scripts/actualizar_excel.py).
+        # publicas.yaml solo aporta datos de referencia: cuenta de TikTok y duración del reel.
+        pb = pub.get("instagram" if red == "ig" else "tiktok", {}).get(str(p["codigo"]), {})
+        if m.get("views") is None:
+            raise ValueError(f"{p['excel']} no tiene visualizaciones en el Excel")
+        likes, comments, shares = _n(m.get("likes")), _n(m.get("comments")), _n(m.get("shares"))
+        saves = _n(m.get("saves"))
         reposts = _n(m.get("reposts")) if red == "ig" else 0
         inter = likes + comments + shares + saves + reposts
         reach = m["reach"]
         er = inter / reach
-        url = m["url"] if red == "ig" else f"https://www.tiktok.com/@{pb['cuenta']}/video/{p['codigo']}"
+        url = m["url"] if red == "ig" or not pb else f"https://www.tiktok.com/@{pb['cuenta']}/video/{p['codigo']}"
         k = kpi_out(kpi_de(cr, PLAT[red], (lambda f: f == "Reel") if red == "ig" else (lambda f: "TikTok" in f),
                            str(m["fecha"])))
         pieces.append({
             "id": str(p["codigo"]), "creador": cr["id"], "red": red, "t": p["titulo"],
-            "fecha": str(pb["fecha"]), "f": fecha_corta(pb["fecha"]), "nota_fecha": p.get("nota_fecha"),
+            "fecha": str(m["fecha"]), "f": fecha_corta(m["fecha"]),
             "url": url, "img": f"assets/{camp['id']}/reel-{p['codigo']}.jpg" if red == "ig" else None,
-            "collab": p.get("collab", True), "dur_s": pb.get("dur_s"),
-            "v": pb["views"], "fbv": _n(pb.get("fb_views")), "r": reach, "likes": likes, "comments": comments,
+            "collab": p.get("collab", True), "dur_s": m.get("dur_s") or pb.get("dur_s"),
+            "v": m["views"], "fbv": _n(m.get("fb_views")), "r": reach, "likes": likes, "comments": comments,
             "shares": shares + reposts, "s": saves, "i": inter, "er": er, "lvl": _lvl(er, tasa),
-            "excel_views": m.get("views"), "kpi": k,
+            "corte": m.get("corte"), "kpi": k,
         })
     pieces.sort(key=lambda x: x["fecha"])
 
@@ -221,7 +223,7 @@ def build_data(client: dict, camp: dict, met: dict, conv: dict | None = None, pu
     data = {
         "id": camp["id"], "tipo": "creadores", "marca": camp["marca"], "periodo": camp["periodo"]["texto"],
         "periodo_largo": _periodo(camp["periodo"]["desde"], camp["periodo"]["hasta"]),
-        "publicasCapturado": str(pub.get("capturado") or ""),
+        "publicasCapturado": str(next((p["corte"] for p in pieces if p.get("corte")), "") or pub.get("capturado") or ""),
         "tabs": ["resumen", "creadores", "instagram", "tiktok"],
         "creadores": crs, "pieces": pieces, "stories": stories, "nets": nets, "storiesTotal": st,
         "totals": totals, "kpi": kpi, "insights": ins, "conv": _conv(conv, pieces, creadores),
