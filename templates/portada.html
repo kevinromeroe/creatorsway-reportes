@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Reportes de campaña · CreatorsWay</title>
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+/*__CSS__*/
+/* Portada: una tarjeta por campaña, con el mismo sistema visual de los reportes. */
+.camps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.camp{display:grid;gap:20px;align-content:start;text-decoration:none;color:inherit;transition:box-shadow .15s}
+.camp:hover{box-shadow:0 0 0 2px #000,var(--sombra)}
+.camp:focus-visible{outline:2px solid #000;outline-offset:3px}
+.camp-h{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+.camp-h .jft{background:var(--amarillo);padding:0 .14em;border-radius:6px}
+.camp-h img.logo{height:1.5em;width:auto}
+.camp-h img.logo.wide{height:.95em}
+.camp-h .avs{display:inline-flex}
+.camp-h .avs img{width:1.6em;height:1.6em;border-radius:50%;object-fit:cover;box-shadow:0 0 0 3px #fff;margin-left:-.4em}
+.camp-h .avs img:first-child{margin-left:0}
+.camp p{font-size:15px;max-width:60ch}
+.camp-n{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.camp-n div{background:var(--fondo);border-radius:14px;padding:12px 14px;display:grid;gap:2px}
+.camp-n div:first-child{background:var(--amarillo)}
+.camp-n b{font-size:24px;font-weight:800;letter-spacing:-.02em}
+.camp-n span{font-size:13px}
+.camp-f{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px}
+.camp-f .go{font-weight:700;border-bottom:2px solid #000}
+@media (max-width:900px){.camps{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:520px){.camp-n{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in"><img class="cw" src="assets/logo-creatorsway-blanco.png" alt="CreatorsWay"></div></header>
+<main class="page"><div class="wrap">
+  <div class="title"><h1>Reportes de campaña</h1></div>
+  <div class="sec-t"><p>Resultados de cada campaña de los creadores de CreatorsWay con sus marcas. Elige una para ver el reporte completo y descargarlo en PDF.</p></div>
+  <section class="camps" id="camps"></section>
+  <footer class="foot"><div class="foot-top"><span>Reportes preparados por Datalítica para CreatorsWay.</span><img src="assets/logo-creatorsway-negro.png" alt="CreatorsWay"></div>
+    <div class="legal"><p><strong>© <span id="y"></span> Datalítica Colombia S.A.S.</strong> · NIT 901.957.313-6 · Todos los derechos reservados. Reportes confidenciales; su reproducción o distribución sin autorización está prohibida (Ley 23 de 1982).</p>
+    <nav aria-label="Información legal"><a href="legal/terminos.html">Términos y condiciones de uso</a><a href="legal/datos-personales.html">Política de tratamiento de datos personales</a><a href="legal/datos-personales.html#aviso">Aviso de privacidad</a><a href="legal/datos-personales.html#cookies">Cookies</a><a href="mailto:comercial@datalitica.com.co">comercial@datalitica.com.co</a></nav></div></footer>
+</div></main>
+<script>
+const D=/*__DATA__*/null;
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const short=v=>v>=1e6?(v/1e6).toLocaleString('es-CO',{minimumFractionDigits:2,maximumFractionDigits:2})+' M':v>=1e4?Math.round(v/1e3).toLocaleString('es-CO')+' K':new Intl.NumberFormat('es-CO').format(Math.round(v));
+const pct=(v,d=0)=>(v*100).toLocaleString('es-CO',{minimumFractionDigits:d,maximumFractionDigits:d})+' %';
+document.getElementById('y').textContent=new Date().getFullYear();
+document.getElementById('camps').innerHTML=D.campanas.map(c=>`<a class="card camp" href="${esc(c.id)}/">
+  <div class="camp-h"><span class="avs">${c.avatares.map(a=>`<img src="${esc(a)}" alt="">`).join('')}</span><span class="jft">${esc(c.quien)}</span><span>×</span><img class="logo${c.logo_ancho?' wide':''}" src="${esc(c.logo)}" alt="${esc(c.marca)}"></div>
+  <p>${esc(c.resumen)}</p>
+  <div class="camp-n">${c.cifras.map(([v,k])=>`<div><b>${esc(v)}</b><span>${esc(k)}</span></div>`).join('')}</div>
+  <div class="camp-f"><span>${esc(c.periodo)}</span><span class="go">Ver reporte</span></div></a>`).join('');
+</script>
+</body>
+</html>

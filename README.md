@@ -1,9 +1,16 @@
 # Reportes de contenido · CreatorsWay
 
 Reporte web de las campañas de los creadores de **CreatorsWay** con sus marcas, con un PDF descargable por pestaña.
-Hecho por Datalítica. Primera campaña: **Juan Food Time × KLAREN'S** (julio a octubre de 2026).
+Hecho por Datalítica. Campañas:
+
+- **Juan Food Time × KLAREN'S** (julio a octubre de 2026): un creador, `/klarens-2026/`.
+- **14 creadores × Canola Life** (marzo a agosto de 2026): campaña con varios creadores y KPI de alcance por contrato, `/canola-2026/`.
+
+La raíz `/` es la portada: una tarjeta por campaña ([`templates/portada.html`](templates/portada.html)).
 
 ## Qué muestra
+
+### Campaña de un creador ([`templates/reporte.html`](templates/reporte.html))
 
 | Pestaña | Contenido |
 |---|---|
@@ -12,7 +19,15 @@ Hecho por Datalítica. Primera campaña: **Juan Food Time × KLAREN'S** (julio a
 | **TikTok** | Cifras de los videos, visualizaciones y tasa por video, audiencia (no seguidores, mujeres y hombres), conversación y detalle por video |
 | **Facebook** | Los mismos reels publicados en la página del creador: visualizaciones, reacciones, comentarios, compartidos, reparto frente a Instagram, conversación y detalle por reel |
 
-La raíz `/` muestra la campaña de `portada` (config/cliente.yaml); cada campaña también vive en su carpeta (`/klarens-2026/`).
+### Campaña con varios creadores ([`templates/reporte-creadores.html`](templates/reporte-creadores.html), `tipo: creadores` en `campana.yaml`)
+
+| Pestaña | Contenido |
+|---|---|
+| **Resumen** | Cumplimiento del KPI (con y sin el creador macro, y la proyección del informe aparte, marcada como estimación), alcance frente al KPI por creador, cumplimiento por formato, publicaciones más vistas, resultados por red, conversación, hallazgos y detalle del KPI por pieza |
+| **Creadores** | Una tarjeta por creador (cumplimiento, visualizaciones, tasa, piezas y comentarios sobre el producto) y tabla resumen |
+| **Instagram** | Cifras de los reels (con las reproducciones en Facebook de la publicación cruzada), visualizaciones por reel, colaboración con la marca, detalle, conversación e historias |
+| **TikTok** | Cifras de los videos, visualizaciones por video, cifras públicas frente a las del informe, conversación y detalle |
+
 Cada pestaña tiene su PDF en `/<campaña>/pdf/<pestaña>.pdf`, que baja el botón **Descargar PDF**.
 
 ## Fuentes
@@ -23,12 +38,13 @@ Cada pestaña tiene su PDF en `/<campaña>/pdf/<pestaña>.pdf`, que baja el bot�
 
 ## Fórmulas
 
-Todas se calculan una sola vez en [`pipeline/metrics.py`](pipeline/metrics.py); la plantilla solo las formatea.
+Todas se calculan una sola vez en [`pipeline/metrics.py`](pipeline/metrics.py) (un creador) o [`pipeline/metrics_creadores.py`](pipeline/metrics_creadores.py) (varios creadores); la plantilla solo las formatea.
 
 - **Interacciones** de un reel o video = me gusta + comentarios + compartidos + guardados (+ reposts en Instagram).
 - **Tasa de interacción** = interacciones ÷ alcance, en Instagram y TikTok. Facebook no publica alcance: su indicador es interacciones ÷ visualizaciones. Alta desde 10 %, baja por debajo de 6 % ([`config/cliente.yaml`](config/cliente.yaml)).
 - **Alcance de la campaña** = suma del alcance de cada pieza (una misma cuenta puede contarse en varias piezas).
 - **Visualizaciones totales** = reels + videos + historias.
+- **Cumplimiento del KPI** (varios creadores) = alcance verificado ÷ KPI, solo piezas contratadas; las bonificadas no tienen KPI. El alcance proyectado del informe (+7 %) es una estimación y se muestra aparte.
 - **EMV y ROI**: apagados hasta tener el benchmark de la marca y el pago (`emv` en `cliente.yaml`, `pago_cop` en la campaña).
 
 ## Flujo

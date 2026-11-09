@@ -1,12 +1,10 @@
 # Cliente de Datalítica: CreatorsWay (agencia de talentos).
-# Cada campaña es la relación de un creador de CreatorsWay con una marca.
+# Cada campaña es la relación de uno o varios creadores de CreatorsWay con una marca.
+# La raíz del dominio es la portada con todas las campañas (templates/portada.html).
 agencia:
   nombre: CreatorsWay
   logo_claro: assets/logo-creatorsway-blanco.png   # sobre la barra negra
   logo_oscuro: assets/logo-creatorsway-negro.png   # sobre fondo claro
-
-# Campaña que se muestra en la raíz del dominio (https://creatorsway.datalitica.com.co/).
-portada: klarens-2026
 
 # Etiqueta de la tasa de interacción (interacciones ÷ alcance) de cada pieza.
 tasa:

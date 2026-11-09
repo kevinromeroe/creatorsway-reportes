@@ -11,14 +11,16 @@ Sitio: **https://creatorsway.datalitica.com.co** · Repo público `kevinromeroe/
 ## Cómo está organizado
 
 ```
-config/cliente.yaml                     agencia, umbrales de la tasa y `portada` (campaña que se ve en la raíz)
+config/cliente.yaml                     agencia y umbrales de la tasa
 config/campanas/<id>/campana.yaml       marca, creador, piezas, nombres de historias y textos curados
 config/campanas/<id>/metricas.yaml      cifras privadas importadas del Excel (no se edita a mano)
 config/campanas/<id>/publicas.yaml      cifras públicas de Instagram, TikTok y Facebook (las captura Datalítica)
-config/campanas/<id>/conversacion.yaml  resumen de comentarios (scripts/analizar_comentarios.py)
+config/campanas/<id>/conversacion.yaml  resumen de comentarios (scripts/analizar_comentarios*.py)
 assets/                                 logos (sin fondo)
-templates/reporte.html                  diseño aprobado: Resumen, Instagram, TikTok y Facebook
-index.html                              la raíz muestra la campaña de `portada`
+templates/reporte.html                  diseño aprobado, campaña de un creador: Resumen, Instagram, TikTok y Facebook
+templates/reporte-creadores.html        campaña con varios creadores (toma los estilos de reporte.html)
+templates/portada.html                  raíz del sitio: una tarjeta por campaña
+index.html                              la portada (la genera scripts/build_reporte.py)
 <id>/index.html y <id>/pdf/             reporte y PDF de cada campaña
 legal/                                  términos de uso y política de datos (Ley 1581 de 2012)
 ```
@@ -110,7 +112,7 @@ Los textos curados (hallazgos, notas por pieza, texto de redes e historias) sí 
    python scripts/build_reporte.py <marca>-<año>
    ```
 4. **Pruebas:** agregar en `tests/test_metrics.py` una clase de cuadre para la campaña nueva, copiando la de KLAREN'S con las cifras del Excel nuevo. Correr `python -m unittest discover tests`.
-5. **Qué se ve en la raíz:** si la campaña nueva debe ser la que se abre en `https://creatorsway.datalitica.com.co/`, cambiar `portada` en `config/cliente.yaml`. Las demás quedan en `https://creatorsway.datalitica.com.co/<marca>-<año>/`.
+5. **Portada:** la raíz `https://creatorsway.datalitica.com.co/` lista todas las campañas (la más reciente primero, por `periodo.hasta`); cada una vive en `https://creatorsway.datalitica.com.co/<marca>-<año>/`.
 6. **Revisar en local y subir** (pasos 4 y 5 de la sección A).
 
 ## D. Comentarios de las publicaciones (conversación)
@@ -133,6 +135,19 @@ Las secciones "Lo que dice la gente" (Resumen) y "Conversación en Instagram/Tik
 
 Las plataformas no exponen todos los comentarios (borrados, filtrados u ocultos): el reporte dice cuántos se leyeron frente al total que reporta cada plataforma.
 
+## E. Campaña con varios creadores y KPI de alcance (ej. Canola Life 2026)
+
+Cuando una marca contrata a varios creadores con una meta de alcance por pieza, se usa `tipo: creadores` en `campana.yaml`.
+
+1. **Excel de la campaña** (lo entrega la agencia): hojas *Instagram reels*, *TikTok videos* e *Instagram stories* (mismo formato de arriba, con la columna «Nombre / descripción») y **Cumplimiento KPI** (Fecha publicación, Creador, Plataforma, Formato, Tipo de acción, Alcance verificado, Proyección, Alcance proyectado, KPI alcance, Estado KPI verificado). Se guarda en `Dashboard Comapan/CreatorsWay-<marca>/insumos/datos/`.
+2. **Importar** (PowerShell): `python scripts/importar_excel.py canola-2026 "<ruta del Excel>"`.
+3. **`campana.yaml`** (a mano): `tipo: creadores`, `marca` (con `handle` de la cuenta coautora), `creadores` (id, nombre visible, `excel` = nombre en la hoja de KPI, cuentas de Instagram y TikTok, tipo de acción), `piezas` (fila del Excel → código del reel o id del video, creador, título; `collab: false` si el reel no está marcado como colaboración) e `historias`. El build se detiene si una fila de KPI queda sin publicación o si el alcance por pieza no cuadra con la hoja de KPI.
+4. **Cifras públicas** (Claude en Chrome) en `publicas.yaml`, con la clave de cada publicación: Instagram por código del reel (`views` = solo Instagram, `fb_views` = reproducciones en Facebook de la publicación cruzada, `coautor`), TikTok por id del video. Las reacciones y comentarios de Facebook de la publicación cruzada quedan en la página de cada creador y no se suman.
+5. **Fotos y portadas:** `assets/<id>/avatar-<cuenta de Instagram>.jpg` y `assets/<id>/reel-<código>.jpg` (los enlaces de imagen vienen en la misma respuesta de la API de Instagram; se bajan con Python y se reducen a 360 px).
+6. **Comentarios:** captura en `datos/capturas/<id>/ig-comentarios.txt` y `tt-comentarios.txt` (formato en `scripts/analizar_comentarios_creadores.py`; sin nombres de usuario, marcando con `C` las respuestas del creador) y luego `python scripts/analizar_comentarios_creadores.py <id> --muestra`. Si Chrome bloquea la descarga, se vuelca el texto en la página y se lee con `get_page_text`.
+7. **Pruebas:** `tests/test_canola.py` cuadra el KPI con el Excel y las cifras públicas con la captura. Se copia para una campaña nueva.
+8. Build, revisión en local, PDF y subida como en la sección A.
+
 ## EMV y ROI
 
 Están apagados (`emv: null` en `cliente.yaml`, `pago_cop: null` en la campaña). Se activan cuando se tenga el pago de la marca y el benchmark de EMV acordado para ella.
@@ -142,7 +157,7 @@ Están apagados (`emv: null` en `cliente.yaml`, `pago_cop: null` en la campaña)
 Con el servidor local en el puerto 8812:
 
 ```bash
-PYTHONIOENCODING=utf-8 PDF_BASE_URL=http://localhost:8812 python scripts/render_pdf.py klarens-2026
+PYTHONIOENCODING=utf-8 PDF_BASE_URL=http://localhost:8812 python scripts/render_pdf.py klarens-2026 canola-2026
 ```
 
 ## Publicación (hecha el 6 de noviembre de 2026)

@@ -1,0 +1,544 @@
+# Generado por scripts/analizar_comentarios_creadores.py — no editar a mano.
+temas:
+  antojo: Antojo y elogio
+  receta: Preguntas y ajustes de la receta
+  producto: Dudas sobre el producto
+  critica: Críticas y debate sobre el aceite
+  pedido: Piden otra receta
+  preparo: Ya la prepararon
+  humor: Humor y comunidad
+  etiqueta: Etiquetan a otra persona
+  otros: Otros
+total:
+  publico: 546
+  total_plataforma: 761
+  respuestas_creadores: 186
+  preguntas: 88
+  preguntas_respondidas: 26
+  temas:
+    antojo: 288
+    producto: 40
+    receta: 62
+    otros: 28
+    pedido: 39
+    preparo: 8
+    critica: 49
+    humor: 29
+    etiqueta: 3
+  tono:
+    duda: 31
+    neutro: 14
+    positivo: 4
+    negativo: 42
+  duda_esparcible: 15
+  duda_fuera: 3
+  neg_publicidad: 6
+redes:
+  ig:
+    capturados: 476
+    total_plataforma: 669
+    temas:
+      antojo: 258
+      producto: 40
+      receta: 55
+      otros: 21
+      pedido: 38
+      preparo: 7
+      critica: 38
+      humor: 16
+      etiqueta: 3
+    tono:
+      duda: 31
+      neutro: 13
+      positivo: 4
+      negativo: 32
+  tt:
+    capturados: 70
+    total_plataforma: 92
+    temas:
+      critica: 11
+      humor: 13
+      antojo: 30
+      otros: 7
+      receta: 7
+      preparo: 1
+      pedido: 1
+    tono:
+      negativo: 10
+      neutro: 1
+piezas:
+  DWeVfAqBprj:
+    red: ig
+    creador: naty-farah
+    capturados: 75
+    total_plataforma: 105
+    temas:
+      antojo: 33
+      producto: 25
+      receta: 10
+      otros: 3
+      pedido: 1
+      preparo: 1
+      critica: 1
+      humor: 1
+    tono:
+      duda: 17
+      neutro: 10
+      positivo: 1
+      negativo: 1
+  DXnPHF_DThk:
+    red: ig
+    creador: camila-arias
+    capturados: 9
+    total_plataforma: 9
+    temas:
+      otros: 1
+      antojo: 7
+      critica: 1
+    tono:
+      negativo: 1
+  DXxf56SjMvL:
+    red: ig
+    creador: b-eats
+    capturados: 56
+    total_plataforma: 68
+    temas:
+      antojo: 17
+      pedido: 32
+      otros: 3
+      receta: 1
+      critica: 3
+    tono:
+      negativo: 3
+  DYFd4oKhkUo:
+    red: ig
+    creador: naty-farah
+    capturados: 33
+    total_plataforma: 39
+    temas:
+      antojo: 12
+      receta: 7
+      preparo: 4
+      producto: 6
+      critica: 3
+      humor: 1
+    tono:
+      duda: 5
+      neutro: 1
+      negativo: 3
+  DYVcbwGhlck:
+    red: ig
+    creador: juliana-cocina
+    capturados: 40
+    total_plataforma: 51
+    temas:
+      antojo: 29
+      humor: 6
+      receta: 4
+      otros: 1
+    tono: {}
+  DZYYddVv72H:
+    red: ig
+    creador: chef-ana-galvis
+    capturados: 22
+    total_plataforma: 42
+    temas:
+      antojo: 17
+      receta: 2
+      producto: 1
+      critica: 1
+      etiqueta: 1
+    tono:
+      duda: 1
+      negativo: 1
+  DZvnF2wO_jj:
+    red: ig
+    creador: sebastian-coy
+    capturados: 39
+    total_plataforma: 59
+    temas:
+      antojo: 27
+      receta: 5
+      humor: 1
+      otros: 2
+      producto: 3
+      critica: 1
+    tono:
+      duda: 3
+      negativo: 1
+  DZ6Rfb4xI1Z:
+    red: ig
+    creador: julia-conscientemente
+    capturados: 13
+    total_plataforma: 24
+    temas:
+      critica: 7
+      humor: 1
+      antojo: 5
+    tono:
+      negativo: 4
+      neutro: 1
+  DaBX90cPPrO:
+    red: ig
+    creador: tatiana-held
+    capturados: 3
+    total_plataforma: 6
+    temas:
+      antojo: 3
+    tono: {}
+  DaVm-WiRaWY:
+    red: ig
+    creador: marcela-ocampo
+    capturados: 5
+    total_plataforma: 5
+    temas:
+      antojo: 3
+      humor: 1
+      otros: 1
+    tono: {}
+  DaayGBuPL3M:
+    red: ig
+    creador: jenn-yummy
+    capturados: 73
+    total_plataforma: 113
+    temas:
+      critica: 19
+      producto: 1
+      antojo: 34
+      preparo: 1
+      receta: 12
+      otros: 3
+      etiqueta: 2
+      humor: 1
+    tono:
+      negativo: 16
+      duda: 1
+      positivo: 2
+  DalwK8AoJHN:
+    red: ig
+    creador: xime-gonzalez
+    capturados: 6
+    total_plataforma: 6
+    temas:
+      antojo: 5
+      otros: 1
+    tono: {}
+  Da0LXtuBqEI:
+    red: ig
+    creador: patricia-martinez
+    capturados: 3
+    total_plataforma: 4
+    temas:
+      otros: 1
+      antojo: 2
+    tono: {}
+  Da3Ca-wBut-:
+    red: ig
+    creador: juliana-cocina
+    capturados: 25
+    total_plataforma: 34
+    temas:
+      producto: 3
+      antojo: 12
+      otros: 3
+      pedido: 5
+      critica: 2
+    tono:
+      duda: 3
+      negativo: 2
+  DbJqzxRPpuz:
+    red: ig
+    creador: julia-conscientemente
+    capturados: 35
+    total_plataforma: 55
+    temas:
+      humor: 4
+      antojo: 31
+    tono: {}
+  DbWBOu2Rec2:
+    red: ig
+    creador: susana-gomez
+    capturados: 6
+    total_plataforma: 6
+    temas:
+      antojo: 4
+      preparo: 1
+      receta: 1
+    tono:
+      positivo: 1
+      neutro: 1
+  Dbd4NI5RG71:
+    red: ig
+    creador: cocina-anto
+    capturados: 6
+    total_plataforma: 9
+    temas:
+      antojo: 4
+      receta: 1
+      otros: 1
+    tono: {}
+  Dcrp0CuAaxJ:
+    red: ig
+    creador: camila-arias
+    capturados: 27
+    total_plataforma: 34
+    temas:
+      receta: 12
+      antojo: 13
+      producto: 1
+      otros: 1
+    tono:
+      duda: 1
+  '7629112348766194951':
+    red: tt
+    creador: chef-ana-galvis
+    capturados: 39
+    total_plataforma: 59
+    temas:
+      critica: 7
+      humor: 3
+      antojo: 21
+      otros: 3
+      receta: 5
+    tono:
+      negativo: 6
+  '7640869859097873685':
+    red: tt
+    creador: naty-farah
+    capturados: 12
+    total_plataforma: 12
+    temas:
+      humor: 6
+      critica: 2
+      antojo: 2
+      preparo: 1
+      otros: 1
+    tono:
+      negativo: 2
+  '7651381201760029972':
+    red: tt
+    creador: camila-arias
+    capturados: 2
+    total_plataforma: 2
+    temas:
+      receta: 1
+      antojo: 1
+    tono: {}
+  '7652731242810608914':
+    red: tt
+    creador: juliana-cocina
+    capturados: 14
+    total_plataforma: 16
+    temas:
+      humor: 3
+      antojo: 6
+      critica: 2
+      otros: 3
+    tono:
+      negativo: 2
+      neutro: 1
+  '7679981421196250375':
+    red: tt
+    creador: camila-arias
+    capturados: 3
+    total_plataforma: 3
+    temas:
+      receta: 1
+      pedido: 1
+      humor: 1
+    tono: {}
+destacados:
+  antojo:
+  - texto: ese apanado y esa miel 😮‍💨😮‍💨😮‍💨
+    me_gusta: 158
+    red: ig
+    pieza: Camarones crujientes con miel picante
+    creador: jenn-yummy
+  - texto: Lo haré pero con pechuga de pollo😍
+    me_gusta: 9
+    red: ig
+    pieza: Camarones crujientes con miel picante
+    creador: jenn-yummy
+  - texto: Yo hago la cobertura solo con queso crema Philadelphia y azúcar glass bates
+      y queda perfecto y más rico.
+    me_gusta: 6
+    red: ig
+    pieza: El mejor carrot cake
+    creador: naty-farah
+  producto:
+  - texto: Excelente... Me puede explicar donde dice 220 grs canola life y 110 grs
+      canola life supongo q se refiere a aceite y mantequilla pero q cantidad corresponde
+      a cada uno por favor
+    me_gusta: 17
+    red: ig
+    pieza: El mejor carrot cake
+    creador: naty-farah
+  - texto: margarina para ser exactos , no mantequilla, la mantequilla no es esparcible.
+    me_gusta: 9
+    red: ig
+    pieza: Pancakes esponjosos
+    creador: naty-farah
+  - texto: Que será esparcible, como nata o crema de leche? 🙏🏼
+    me_gusta: 6
+    red: ig
+    pieza: Pancakes esponjosos
+    creador: naty-farah
+  receta:
+  - texto: Otro tip que los deja todavía más esponjositos ciernan la harina con un
+      colador y me dirán.
+    me_gusta: 4
+    red: ig
+    pieza: Pancakes esponjosos
+    creador: naty-farah
+  - texto: La misma receta sirve para hornear?
+    me_gusta: 4
+    red: ig
+    pieza: Pizza montanara frita
+    creador: chef-ana-galvis
+  - texto: Tinto te referis al vino ..gracias
+    me_gusta: 4
+    red: ig
+    pieza: Matilda muffins
+    creador: camila-arias
+  pedido:
+  - texto: Por favor la receta de las cebollas encurtidas
+    me_gusta: 9
+    red: ig
+    pieza: Coca gomela de pincho y mazorca
+    creador: b-eats
+  - texto: Cebollas encurtidas y Pepinillos Encurtidos 🤭😋🙏
+    me_gusta: 6
+    red: ig
+    pieza: Coca gomela de pincho y mazorca
+    creador: b-eats
+  - texto: Yo ya no llevo la cuenta de los días, pero sí sigo esperando el día del
+      plato de Colombia 🫣
+    me_gusta: 4
+    red: ig
+    pieza: Postre de fin de semana
+    creador: juliana-cocina
+  preparo:
+  - texto: Natalia, pero pense que los pancakes eran “Pan” shaped, estos parecen mas
+      tipo ponques, los voy a intentar hacer igual, tus brownies los hice y quedaron
+      brutales
+    me_gusta: 3
+    red: tt
+    pieza: Pancakes esponjosos (réplica)
+    creador: naty-farah
+  - texto: Acabo de hacer estos pancakes y han sido los más deliciosos que he probado
+      en toda mi vida🤩, y eso que me equivoqué y en vez de bicarbonato usé polvo de
+      hornear, quedaron muy esponjosos, suaves y el s
+    me_gusta: 2
+    red: ig
+    pieza: Pancakes esponjosos
+    creador: naty-farah
+  - texto: Los he hecho y quedan perfectos. Yo no le añadí vinagre y dividí la mezcla.
+      Me han salido 7 en una sartén muy pequeña de 15cm de diámetro aprox.
+    me_gusta: 2
+    red: ig
+    pieza: Pancakes esponjosos
+    creador: naty-farah
+  critica:
+  - texto: El aceite de canola es lo peor para la salud 👀
+    me_gusta: 70
+    red: ig
+    pieza: Camarones crujientes con miel picante
+    creador: jenn-yummy
+  - texto: el "esparcible" es puro aceite ultraprocesado ...no saludable
+    me_gusta: 38
+    red: tt
+    pieza: Tostadas francesas estilo Hong Kong
+    creador: chef-ana-galvis
+  - texto: todo iba bien, hasta que hablaste de canola, yo lo haría con mantequilla
+      que es la verdadera esencia de las tostadas francesas.
+    me_gusta: 24
+    red: tt
+    pieza: Tostadas francesas estilo Hong Kong
+    creador: chef-ana-galvis
+  humor:
+  - texto: Parecen fresas dentro de un tomate 🍅, de lo perfectas que se ven 😂
+    me_gusta: 70
+    red: ig
+    pieza: Morango do amor
+    creador: julia-conscientemente
+  - texto: Si no veo tu usuario, habría jurado que era la voz de Silvy Araújo 😅😅
+    me_gusta: 54
+    red: tt
+    pieza: Pancakes esponjosos (réplica)
+    creador: naty-farah
+  - texto: 'Ay y yo sigo en la etapa: si invito gente, pido domicilio jajajaja'
+    me_gusta: 47
+    red: tt
+    pieza: Receta para ver el partido
+    creador: juliana-cocina
+destacados_tono:
+  duda:
+  - texto: Excelente... Me puede explicar donde dice 220 grs canola life y 110 grs
+      canola life supongo q se refiere a aceite y mantequilla pero q cantidad corresponde
+      a cada uno por favor
+    me_gusta: 17
+    red: ig
+    pieza: El mejor carrot cake
+    creador: naty-farah
+  - texto: Que será esparcible, como nata o crema de leche? 🙏🏼
+    me_gusta: 6
+    red: ig
+    pieza: Pancakes esponjosos
+    creador: naty-farah
+  - texto: Hola se refiere a la mantequilla😊
+    me_gusta: 5
+    red: ig
+    pieza: Pancakes esponjosos
+    creador: naty-farah
+  neutro:
+  - texto: margarina para ser exactos , no mantequilla, la mantequilla no es esparcible.
+    me_gusta: 9
+    red: ig
+    pieza: Pancakes esponjosos
+    creador: naty-farah
+  - texto: se puede por mantequilla
+    me_gusta: 2
+    red: ig
+    pieza: El mejor carrot cake
+    creador: naty-farah
+  - texto: el esparcible es la margarina Ilsa,se trabaja con aceite y margarina
+    me_gusta: 1
+    red: ig
+    pieza: El mejor carrot cake
+    creador: naty-farah
+  positivo:
+  - texto: mi nutricionista me recomendó usar aceite de canola ya que no tiene grasas
+      saturadas como la manteca de cerdo, mantequilla, o el coco, pero que si puedo
+      evitar las frituras mejor
+    me_gusta: 3
+    red: ig
+    pieza: Camarones crujientes con miel picante
+    creador: jenn-yummy
+  - texto: 110 gr es de mantequilla , uso la misma marca del aceite
+    me_gusta: 2
+    red: ig
+    pieza: El mejor carrot cake
+    creador: naty-farah
+  - texto: Me encanta 😍 no sabía que ese aceite se hacía ese tipo de repostería que
+      delicia.
+    me_gusta: 1
+    red: ig
+    pieza: Postre fácil de manzana
+    creador: susana-gomez
+  negativo:
+  - texto: El aceite de canola es lo peor para la salud 👀
+    me_gusta: 70
+    red: ig
+    pieza: Camarones crujientes con miel picante
+    creador: jenn-yummy
+  - texto: el "esparcible" es puro aceite ultraprocesado ...no saludable
+    me_gusta: 38
+    red: tt
+    pieza: Tostadas francesas estilo Hong Kong
+    creador: chef-ana-galvis
+  - texto: todo iba bien, hasta que hablaste de canola, yo lo haría con mantequilla
+      que es la verdadera esencia de las tostadas francesas.
+    me_gusta: 24
+    red: tt
+    pieza: Tostadas francesas estilo Hong Kong
+    creador: chef-ana-galvis

@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Reporte de campaña</title>
+<link rel="icon" href="../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+
+/* Diseño aprobado (2026-11-05): barra superior negra con el menú del reporte; fondo gris cálido con tarjetas
+   blancas muy redondeadas; amarillo CreatorsWay para lo activo y la cifra principal; negro y amarillo para las redes. */
+:root{
+  --fondo:#F2F2EF; --tarjeta:#FFFFFF; --negro:#000000; --barra:#0A0A0A;
+  --amarillo:#E3E935; --amarillo-suave:#F4F7B8; --pista:#ECECE8; --linea:#ECECE8; --gris-tabla:#D9D9D9;
+  --klarens:#0B1F8F; --ig:#0A0A0A; --tt:#E3E935; --fb:#1877F2;
+  --sube:#2F7A3B; --sube-bg:#E5F1E6; --baja:#C2410C; --baja-bg:#FBE9DF; --media-bg:#F0F0EC;
+  --sombra:0 1px 2px rgba(0,0,0,.04),0 6px 20px rgba(0,0,0,.04);
+  --r:22px; --f:"Plus Jakarta Sans",system-ui,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--fondo);color:var(--negro);font:400 15px/1.5 var(--f)}
+h1,h2,h3,p{margin:0}
+a{color:inherit}
+.num{font-variant-numeric:tabular-nums}
+
+/* barra superior */
+.top{position:sticky;top:0;z-index:9;background:var(--barra);color:#fff;padding-top:env(safe-area-inset-top,0px);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.top-in{max-width:1240px;margin:0 auto;display:flex;align-items:center;gap:28px;padding-block:14px}
+.top .cw{height:34px;width:auto;flex:0 0 auto}
+.nav{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;flex:1 1 auto;min-width:0}
+.nav button{flex:0 0 auto;background:transparent;border:0;color:#E8E8E8;font:500 14px var(--f);padding:10px 16px;border-radius:12px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.nav button:hover{background:#1C1C1C;color:#fff}
+.nav button.on{background:var(--amarillo);color:#000;font-weight:700}
+.nav button:focus-visible{outline:2px solid var(--amarillo);outline-offset:2px}
+.nav svg{width:16px;height:16px}
+.top-r{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.period{border:1px solid #333;border-radius:12px;padding:9px 14px;font-size:14px;white-space:nowrap}
+.btn.yel{background:#000;color:#fff;border:1px solid #3A3A3A;padding:10px 16px;font-size:14px}
+.btn.yel:hover{background:#1C1C1C}
+.title h1{display:flex;align-items:center;flex-wrap:wrap;gap:.12em .3em}
+.title h1 .tlogo{height:2.4em;width:auto}
+.title h1 .x{line-height:1}
+.tabhead{display:flex;align-items:center;gap:12px}
+.tabhead h2{font-size:24px;font-weight:800;letter-spacing:-.02em}
+.tabhead span.s{font-size:15px}
+.pbadge{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:#fff;flex:0 0 auto}
+.pbadge svg{width:22px;height:22px}
+.pbadge.ig{background:radial-gradient(circle at 30% 107%,#FDF497 0%,#FD5949 45%,#D6249F 60%,#285AEB 90%)}
+.pbadge.tt{background:#000}
+.pbadge.fb{background:var(--fb)}
+.fill.fb{background:var(--fb)}
+.sbar .fb{background:var(--fb)}
+.aprox{font-size:12px;font-weight:600;margin-left:4px}
+.pbadge.tt svg{filter:drop-shadow(-1px -1px 0 #25F4EE) drop-shadow(1px 1px 0 #FE2C55)}
+.sec-t{display:grid;gap:4px;margin-top:12px}
+.sec-t h2{font-size:22px;font-weight:800;letter-spacing:-.02em}
+.sec-t p{font-size:15px;max-width:72ch}
+.kpi .ins{font-size:13px;line-height:1.45;border-top:1px solid var(--linea);padding-top:10px;margin-top:2px}
+.kpi.hi .ins{border-top-color:rgba(0,0,0,.18)}
+.kpi .ins b{font-weight:800}
+.callout{display:block;font-size:14px;line-height:1.55}
+.callout b{font-weight:800}
+.foot{display:grid;gap:14px}
+.foot-top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.legal{border-top:1px solid #D6D6D2;padding-top:14px;display:grid;gap:8px;font-size:12.5px;line-height:1.5}
+.legal nav{display:flex;flex-wrap:wrap;gap:6px 18px}
+.legal a{color:#000;text-decoration:underline;text-underline-offset:2px}
+
+/* página */
+.page{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 56px}
+.wrap{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
+.wrap > *{min-width:0}
+.title{display:flex;justify-content:space-between;align-items:flex-end;gap:16px 24px;flex-wrap:wrap;margin-bottom:8px}
+.title h1{font-size:clamp(30px,4vw,44px);line-height:1.1;font-weight:800;letter-spacing:-.02em;text-wrap:balance}
+.title h1 .jft{background:var(--amarillo);padding:0 .14em;border-radius:6px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.title h1 .kl{color:var(--klarens)}
+.title .sub{font-size:16px;margin-top:8px;max-width:70ch}
+.title-r{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.title-r img{height:52px;width:auto}
+.btn{background:#000;color:#fff;border:0;border-radius:12px;padding:13px 20px;font:700 15px var(--f);cursor:pointer;display:inline-flex;gap:8px;align-items:center;text-decoration:none}
+.btn.ghost{background:#fff;color:#000;box-shadow:var(--sombra)}
+.btn:focus-visible{outline:2px solid #000;outline-offset:2px}
+
+.card{background:var(--tarjeta);border-radius:var(--r);box-shadow:var(--sombra);padding:26px}
+.card-h{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.card-h h2{font-size:19px;font-weight:700;letter-spacing:-.01em}
+.card-h p{font-size:14px;margin-top:4px}
+.legend{display:flex;gap:16px;font-size:13px;flex:0 0 auto}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.legend i.tt,.dot.tt{box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)}
+
+/* cifras */
+.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+.kpi{display:grid;gap:14px;align-content:start}
+.kpi .row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.kpi .k{font-size:15px;font-weight:500}
+.kpi .ic{width:36px;height:36px;border-radius:10px;background:var(--fondo);display:grid;place-items:center;flex:0 0 auto}
+.kpi .ic svg{width:16px;height:16px}
+.kpi .v{font-size:clamp(28px,2.6vw,38px);font-weight:800;line-height:1;letter-spacing:-.02em}
+.kpi .d{font-size:13px}
+.kpi.hi{background:var(--amarillo)}
+.kpi.hi .ic{background:rgba(255,255,255,.55)}
+
+.duo{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:16px;align-items:stretch}
+.chart{position:relative}
+.crow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.7fr) 96px;gap:20px;align-items:center;padding:14px 0;border-top:1px solid var(--linea)}
+.cname{display:flex;gap:12px;align-items:center;min-width:0}
+.cname > div{min-width:0}
+.thumb{flex:0 0 auto;display:block;width:46px;height:82px;border-radius:10px;overflow:hidden;background:var(--pista)}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb:focus-visible{outline:2px solid #000;outline-offset:2px}
+.title h1 .tavatar{width:2.2em;height:2.2em;border-radius:50%;object-fit:cover;box-shadow:0 0 0 3px #fff,0 0 0 4px var(--linea)}
+.cname strong{display:block;font-weight:700;font-size:15px;line-height:1.3}
+.cname span{font-size:13px}
+.bars{display:grid;gap:5px}
+.b{display:grid;grid-template-columns:minmax(0,1fr) 60px;gap:10px;align-items:center;font-size:13px;font-weight:600}
+.b .track{height:10px;border-radius:99px;background:var(--pista)}
+.b .fill{height:100%;border-radius:99px}
+.fill.ig{background:var(--ig)} .fill.tt{background:var(--tt)}
+.b:focus-visible{outline:2px solid #000;outline-offset:3px;border-radius:6px}
+.er{justify-self:end;display:grid;justify-items:end;gap:5px}
+.er .v{font-size:22px;font-weight:800;letter-spacing:-.02em}
+.pill{font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--media-bg);white-space:nowrap}
+.pill.alta{background:var(--sube-bg);color:var(--sube)}
+.pill.baja{background:var(--baja-bg);color:var(--baja)}
+.tip{position:absolute;pointer-events:none;background:#000;color:#fff;font-size:13px;line-height:1.45;padding:8px 12px;border-radius:10px;white-space:nowrap;z-index:2}
+
+.share{display:grid;gap:18px}
+.srow{display:grid;gap:8px}
+.srow .t{display:flex;justify-content:space-between;gap:8px;font-size:14px}
+.srow .t b{font-weight:700}
+.sbar{display:flex;height:10px;border-radius:99px;overflow:hidden;gap:2px;background:#fff}
+.sbar .ig{background:var(--ig)} .sbar .tt{background:var(--tt)}
+.callout{background:var(--fondo);border-radius:16px;padding:16px 18px;margin:20px 0 0;display:block}
+.callout b{font-weight:700}
+.callout span{font-size:14px}
+
+.finds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.find{display:grid;gap:10px;align-content:start}
+.find .v{font-size:42px;font-weight:800;line-height:1;letter-spacing:-.03em}
+.find h3{font-size:17px;font-weight:700;line-height:1.3}
+.find p{font-size:14px}
+.find.hi{background:#000;color:#fff}
+.find.hi .v{color:var(--amarillo)}
+
+.quotes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.quote{margin:0;display:grid;gap:10px;align-content:start}
+.quote .qt{font-size:12px;font-weight:700;background:var(--fondo);border-radius:999px;padding:3px 10px;justify-self:start}
+.quote blockquote{margin:0;font-size:17px;font-weight:600;line-height:1.4}
+.quote figcaption{font-size:13px}
+.duo.inner{gap:32px}
+.nets{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.net-h{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.badge{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font:800 13px var(--f);flex:0 0 auto}
+.badge.ig{background:var(--ig);color:#fff} .badge.tt{background:var(--tt);color:#000}
+.net-h strong{font-size:17px;display:block}
+.net-h span{font-size:13px}
+.net-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 12px}
+.net-g div{display:grid;gap:2px}
+.net-g .v{font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.net-g .k{font-size:13px}
+
+/* comparación de una pieza */
+.vs{display:grid;gap:16px}
+.vsr{display:grid;gap:8px}
+.vsr .t{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:8px;font-size:14px;align-items:baseline}
+.vsr .t .a{font-weight:800;font-size:17px}
+.vsr .t .m{font-weight:600;text-align:center}
+.vsr .t .z{font-weight:800;font-size:17px;text-align:right}
+.note{font-size:15px;line-height:1.6}
+.facts{display:grid;gap:10px;margin-top:18px}
+.facts div{display:flex;justify-content:space-between;gap:12px;background:var(--fondo);border-radius:12px;padding:10px 14px;font-size:14px}
+.facts b{font-weight:800;white-space:nowrap}
+.links{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+
+.tbl{overflow-x:auto;border-radius:14px;border:1px solid var(--linea)}
+table{border-collapse:collapse;width:100%;min-width:660px;font-size:14px}
+th,td{padding:12px 14px;text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal}
+th.l,td.l{text-align:left}
+thead th{background:var(--gris-tabla);font-weight:700;font-size:13px}
+tbody td{border-top:1px solid var(--linea)}
+tbody tr.hl td{background:var(--amarillo-suave)}
+tfoot td{font-weight:800;border-top:2px solid #000}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px}
+.mini{display:inline-block;height:6px;border-radius:99px;background:#000;vertical-align:middle;margin-left:8px}
+.hand{display:block;font-size:11.5px}
+
+.stories{display:grid;grid-template-columns:240px minmax(0,1fr);gap:24px;align-items:start}
+.sfigs{display:grid;gap:12px}
+.sfigs div{background:var(--fondo);border-radius:16px;padding:14px 16px;display:grid;gap:2px}
+.sfigs div:first-child{background:var(--amarillo)}
+.sfigs .v{font-size:28px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.sfigs span{font-size:13px}
+
+.foot{font-size:13px;padding-top:8px}
+.foot img{height:16px;width:auto}
+
+@media (max-width:1000px){
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kpi.hi{grid-column:1 / -1}
+  .duo,.nets,.finds,.quotes{grid-template-columns:minmax(0,1fr)}
+    .period{display:none}
+  .btn.yel{padding:9px 12px}
+}
+@media (max-width:640px){
+  .crow{grid-template-columns:minmax(0,1fr) auto;gap:10px 14px}
+  .crow .bars{grid-column:1 / -1;grid-row:2}
+  .stories{grid-template-columns:minmax(0,1fr)}
+  .card{padding:20px}
+  .net-g{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .top-in{gap:16px}
+    .top .cw{height:26px}
+}
+@media print{
+  @page{size:A4 landscape;margin:8mm}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .top{position:static}
+  .btn,.tip{display:none!important}
+  .card,.kpi,.find{break-inside:avoid}
+  .page{padding-block:16px 0}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+/* Campaña con varios creadores: mismo sistema visual que el reporte de un creador (templates/reporte.html). */
+:root{--hist:#9A9A95;--canola:#064691}
+.title h1 .tlogo.wide{height:1.05em}
+.avs{display:inline-flex;align-items:center}
+.avs img{width:1.25em;height:1.25em;border-radius:50%;object-fit:cover;box-shadow:0 0 0 3px #fff;margin-left:-.32em}
+.avs img:first-child{margin-left:0}
+.fill.hist,.sbar .hist{background:var(--hist)}
+.legend i.hist{background:var(--hist)}
+.thumb.av{width:46px;height:46px;border-radius:50%}
+/* cumplimiento por creador */
+.kpirow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr) 92px;gap:18px;align-items:center;padding:12px 0;border-top:1px solid var(--linea)}
+.who{display:flex;gap:12px;align-items:center;min-width:0}
+.who img{width:40px;height:40px;border-radius:50%;object-fit:cover;flex:0 0 auto}
+.who strong{display:block;font-size:15px;line-height:1.3}
+.who span{font-size:13px}
+.meter{position:relative;height:12px;border-radius:99px;background:var(--pista)}
+.meter .fill{position:absolute;inset:0 auto 0 0;border-radius:99px;background:#000}
+.meter .fill.ok{background:var(--amarillo);box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
+.meter .goal{position:absolute;top:-5px;bottom:-5px;width:2px;background:#000}
+.meter .over{position:absolute;right:-2px;top:50%;transform:translateY(-50%);font-size:11px;font-weight:800}
+.meter-l{display:flex;justify-content:space-between;font-size:12.5px;margin-top:6px}
+.pct{justify-self:end;display:grid;justify-items:end;gap:4px}
+.pct .v{font-size:20px;font-weight:800;letter-spacing:-.02em}
+.pill.ok{background:var(--sube-bg);color:var(--sube)}
+.pill.no{background:var(--baja-bg);color:var(--baja)}
+.pill.bono{background:var(--media-bg)}
+.big2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.big2 div{background:var(--fondo);border-radius:16px;padding:14px 16px;display:grid;gap:2px}
+.big2 div.hi{background:var(--amarillo)}
+.big2 .v{font-size:30px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.big2 span{font-size:13px}
+.est{border:1.5px dashed #B5B5B0;border-radius:16px;padding:14px 16px;margin-top:12px;display:grid;gap:4px}
+.est .v{font-size:22px;font-weight:800}
+.est span{font-size:13px}
+.est b.tag{font-size:11.5px;font-weight:800;background:var(--fondo);border-radius:999px;padding:2px 9px;justify-self:start}
+.fmt{display:grid;gap:12px;margin-top:16px}
+/* tarjetas de creador */
+.cgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.cc{display:grid;gap:14px;align-content:start}
+.cc-h{display:flex;gap:12px;align-items:center}
+.cc-h img{width:52px;height:52px;border-radius:50%;object-fit:cover;flex:0 0 auto}
+.cc-h strong{display:block;font-size:16px;line-height:1.25}
+.cc-h a{font-size:13px;text-decoration:none}
+.cc-h a:hover{text-decoration:underline}
+.cc .row{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.cc .row .v{font-size:30px;font-weight:800;letter-spacing:-.02em;line-height:1}
+.cc .mini-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.cc .mini-g div{background:var(--fondo);border-radius:12px;padding:8px 10px;display:grid}
+.cc .mini-g b{font-size:16px;font-weight:800}
+.cc .mini-g span{font-size:12px}
+.cc .pz{font-size:13px;line-height:1.5;border-top:1px solid var(--linea);padding-top:10px}
+.cc.hi{box-shadow:inset 0 0 0 2px var(--amarillo),var(--sombra)}
+.tag-red{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700}
+.tag-red svg{width:12px;height:12px}
+td .tag-red{font-weight:600}
+@media (max-width:1000px){.cgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){
+  .cgrid,.big2{grid-template-columns:minmax(0,1fr)}
+  .kpirow{grid-template-columns:minmax(0,1fr) auto;gap:10px 14px}
+  .kpirow .mw{grid-column:1 / -1;grid-row:2}
+}
+@media print{.cc{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <img class="cw" src="../assets/logo-creatorsway-blanco.png" alt="CreatorsWay">
+    <nav class="nav" id="nav" aria-label="Secciones del reporte"></nav>
+    <div class="top-r"><span class="period" id="period"></span><a class="btn yel" id="pdf" href="pdf/resumen.pdf" download>↓ Descargar PDF</a></div>
+  </div>
+</header>
+<main class="page"><div class="wrap" id="view"></div></main>
+
+<script>
+const D={"id":"canola-2026","tipo":"creadores","marca":{"nombre":"Canola Life","handle":"canola.life","logo":"assets/logo-canola-life.png","web":"https://canolalife.com"},"periodo":"Mar a ago 2026","periodo_largo":"20 de marzo al 30 de agosto de 2026","publicasCapturado":"2026-11-09","tabs":["resumen","creadores","instagram","tiktok"],"creadores":[{"id":"jenn-yummy","nombre":"Jenn Yummy","ig":"yummy__journey","tt":null,"tipo":"Macro reemplazo","avatar":"assets/canola-2026/avatar-yummy__journey.jpg","piezas":["DaayGBuPL3M"],"n_reels":1,"n_tt":0,"n_hist":0,"kpi":12000,"alcance":372108,"pct":31.009,"cumple":true,"piezas_kpi":1,"piezas_cumplen":1,"bonificado":0,"v":501985,"reach":372108,"i":60535,"er":0.1626812645791007,"comments":113,"tono":{"negativo":16,"duda":1,"positivo":2}},{"id":"cocina-anto","nombre":"Cocina Anto","ig":"cocinantop_","tt":null,"tipo":"Micro","avatar":"assets/canola-2026/avatar-cocinantop_.jpg","piezas":["Dbd4NI5RG71"],"n_reels":1,"n_tt":0,"n_hist":0,"kpi":9000,"alcance":28888,"pct":3.2097777777777776,"cumple":true,"piezas_kpi":1,"piezas_cumplen":1,"bonificado":0,"v":88496,"reach":28888,"i":8719,"er":0.3018208252561617,"comments":9,"tono":{}},{"id":"susana-gomez","nombre":"Susana Gómez","ig":"susisouffle","tt":null,"tipo":"Micro","avatar":"assets/canola-2026/avatar-susisouffle.jpg","piezas":["DbWBOu2Rec2"],"n_reels":1,"n_tt":0,"n_hist":0,"kpi":9000,"alcance":14041,"pct":1.560111111111111,"cumple":true,"piezas_kpi":1,"piezas_cumplen":1,"bonificado":0,"v":22456,"reach":14041,"i":1446,"er":0.10298411794031764,"comments":7,"tono":{"positivo":1,"neutro":1}},{"id":"naty-farah","nombre":"Naty Farah","ig":"natyfarah","tt":"natifarah","tipo":"Contratado","avatar":"assets/canola-2026/avatar-natyfarah.jpg","piezas":["DWeVfAqBprj","DYFd4oKhkUo","7640869859097873685"],"n_reels":2,"n_tt":1,"n_hist":2,"kpi":121000,"alcance":176229,"pct":1.4564380165289257,"cumple":true,"piezas_kpi":5,"piezas_cumplen":3,"bonificado":0,"v":298708,"reach":147161,"i":23811,"er":0.16180237970657987,"comments":157,"tono":{"duda":22,"neutro":11,"positivo":1,"negativo":6}},{"id":"juliana-cocina","nombre":"Juliana Cocina","ig":"juliana.cocina","tt":"juliana.cocina","tipo":"Contratado","avatar":"assets/canola-2026/avatar-juliana.cocina.jpg","piezas":["DYVcbwGhlck","7652731242810608914","Da3Ca-wBut-"],"n_reels":2,"n_tt":1,"n_hist":1,"kpi":125000,"alcance":134606,"pct":1.076848,"cumple":true,"piezas_kpi":4,"piezas_cumplen":1,"bonificado":0,"v":221183,"reach":125493,"i":15651,"er":0.12471611962420215,"comments":102,"tono":{"negativo":4,"neutro":1,"duda":3}},{"id":"b-eats","nombre":"B-Eats","ig":"b.eats___","tt":null,"tipo":"Contratado","avatar":"assets/canola-2026/avatar-b.eats___.jpg","piezas":["DXxf56SjMvL"],"n_reels":1,"n_tt":0,"n_hist":2,"kpi":140000,"alcance":139064,"pct":0.9933142857142857,"cumple":false,"piezas_kpi":2,"piezas_cumplen":1,"bonificado":92206,"v":313638,"reach":52967,"i":7241,"er":0.13670776143636604,"comments":68,"tono":{"negativo":3}},{"id":"julia-conscientemente","nombre":"Julia Conscientemente","ig":"juliaconsciente_mente","tt":null,"tipo":"Contratado","avatar":"assets/canola-2026/avatar-juliaconsciente_mente.jpg","piezas":["DZ6Rfb4xI1Z","DbJqzxRPpuz"],"n_reels":2,"n_tt":0,"n_hist":0,"kpi":120000,"alcance":98147,"pct":0.8178916666666667,"cumple":false,"piezas_kpi":2,"piezas_cumplen":1,"bonificado":0,"v":157352,"reach":98147,"i":5954,"er":0.060664105881993335,"comments":79,"tono":{"negativo":4,"neutro":1}},{"id":"chef-ana-galvis","nombre":"Chef Ana Galvis","ig":"chefanagalvis","tt":"chefanagalvis","tipo":"Contratado","avatar":"assets/canola-2026/avatar-chefanagalvis.jpg","piezas":["7629112348766194951","DZYYddVv72H"],"n_reels":1,"n_tt":1,"n_hist":0,"kpi":120000,"alcance":94773,"pct":0.789775,"cumple":false,"piezas_kpi":2,"piezas_cumplen":1,"bonificado":0,"v":119540,"reach":94773,"i":8882,"er":0.09371867515009549,"comments":103,"tono":{"negativo":7,"duda":1}},{"id":"tatiana-held","nombre":"Tatiana Held","ig":"cocinadecasa_tatianaheld","tt":null,"tipo":"Micro","avatar":"assets/canola-2026/avatar-cocinadecasa_tatianaheld.jpg","piezas":["DaBX90cPPrO"],"n_reels":1,"n_tt":0,"n_hist":0,"kpi":9000,"alcance":6381,"pct":0.709,"cumple":false,"piezas_kpi":1,"piezas_cumplen":0,"bonificado":0,"v":9331,"reach":6381,"i":456,"er":0.07146215326751293,"comments":6,"tono":{}},{"id":"camila-arias","nombre":"Camila Arias Marthe","ig":"camilaariasmarthe","tt":"camiariasmarthe","tipo":"Contratado","avatar":"assets/canola-2026/avatar-camilaariasmarthe.jpg","piezas":["DXnPHF_DThk","7651381201760029972","Dcrp0CuAaxJ","7679981421196250375"],"n_reels":2,"n_tt":2,"n_hist":1,"kpi":29000,"alcance":20348,"pct":0.701655172413793,"cumple":false,"piezas_kpi":3,"piezas_cumplen":1,"bonificado":64772,"v":130267,"reach":72826,"i":13073,"er":0.17951006508664488,"comments":48,"tono":{"negativo":1,"duda":1}},{"id":"xime-gonzalez","nombre":"Xime González","ig":"ximepastelera","tt":null,"tipo":"Micro","avatar":"assets/canola-2026/avatar-ximepastelera.jpg","piezas":["DalwK8AoJHN"],"n_reels":1,"n_tt":0,"n_hist":0,"kpi":9000,"alcance":4291,"pct":0.4767777777777778,"cumple":false,"piezas_kpi":1,"piezas_cumplen":0,"bonificado":0,"v":8743,"reach":4291,"i":340,"er":0.07923560941505477,"comments":6,"tono":{}},{"id":"marcela-ocampo","nombre":"Marcela Ocampo","ig":"marce_cocina_","tt":null,"tipo":"Micro","avatar":"assets/canola-2026/avatar-marce_cocina_.jpg","piezas":["DaVm-WiRaWY"],"n_reels":1,"n_tt":0,"n_hist":0,"kpi":9000,"alcance":4034,"pct":0.44822222222222224,"cumple":false,"piezas_kpi":1,"piezas_cumplen":0,"bonificado":0,"v":6599,"reach":4034,"i":338,"er":0.08378780366881507,"comments":5,"tono":{}},{"id":"sebastian-coy","nombre":"Sebastián Coy","ig":"sebastian_coy","tt":null,"tipo":"Contratado","avatar":"assets/canola-2026/avatar-sebastian_coy.jpg","piezas":["DZvnF2wO_jj"],"n_reels":1,"n_tt":0,"n_hist":1,"kpi":39500,"alcance":15050,"pct":0.3810126582278481,"cumple":false,"piezas_kpi":2,"piezas_cumplen":0,"bonificado":0,"v":29640,"reach":13803,"i":2041,"er":0.1478664058537999,"comments":59,"tono":{"duda":3,"negativo":1}},{"id":"patricia-martinez","nombre":"Patricia Martínez","ig":"patsmartinezl","tt":null,"tipo":"Micro","avatar":"assets/canola-2026/avatar-patsmartinezl.jpg","piezas":["Da0LXtuBqEI"],"n_reels":1,"n_tt":0,"n_hist":0,"kpi":9000,"alcance":3000,"pct":0.3333333333333333,"cumple":false,"piezas_kpi":1,"piezas_cumplen":0,"bonificado":0,"v":5386,"reach":3000,"i":200,"er":0.06666666666666667,"comments":4,"tono":{}}],"pieces":[{"id":"DWeVfAqBprj","creador":"naty-farah","red":"ig","t":"El mejor carrot cake","fecha":"2026-03-29","f":"29 mar","nota_fecha":null,"url":"https://www.instagram.com/reel/DWeVfAqBprj/","img":"assets/canola-2026/reel-DWeVfAqBprj.jpg","collab":true,"dur_s":130,"v":143368,"fbv":0,"r":85609,"likes":6755,"comments":105,"shares":2231,"s":5156,"i":14247,"er":0.16641941851908093,"lvl":"alta","excel_views":113594,"kpi":{"tipo":"Contratado","kpi":40000,"alcance":85609,"proyectado":91602,"cumple":true,"pct":2.140225,"estado_excel":"Cumplió"}},{"id":"7629112348766194951","creador":"chef-ana-galvis","red":"tt","t":"Tostadas francesas estilo Hong Kong","fecha":"2026-04-15","f":"15 abr","nota_fecha":null,"url":"https://www.tiktok.com/@chefanagalvis/video/7629112348766194951","img":null,"collab":true,"dur_s":83,"v":77000,"fbv":0,"r":73104,"likes":3955,"comments":61,"shares":876,"s":2433,"i":7325,"er":0.10019971547384549,"lvl":"alta","excel_views":108029,"kpi":{"tipo":"Contratado","kpi":50000,"alcance":73104,"proyectado":78221,"cumple":true,"pct":1.46208,"estado_excel":"Cumplió"}},{"id":"DXnPHF_DThk","creador":"camila-arias","red":"ig","t":"Wrap de falafel al estilo griego","fecha":"2026-04-26","f":"26 abr","nota_fecha":null,"url":"https://www.instagram.com/reel/DXnPHF_DThk/","img":"assets/canola-2026/reel-DXnPHF_DThk.jpg","collab":false,"dur_s":55,"v":9620,"fbv":2765,"r":6254,"likes":366,"comments":9,"shares":115,"s":253,"i":743,"er":0.11880396546210426,"lvl":"alta","excel_views":10923,"kpi":{"tipo":"Contratado","kpi":22000,"alcance":6254,"proyectado":6692,"cumple":false,"pct":0.2842727272727273,"estado_excel":"No cumplió"}},{"id":"DXxf56SjMvL","creador":"b-eats","red":"ig","t":"Coca gomela de pincho y mazorca","fecha":"2026-04-30","f":"30 abr","nota_fecha":null,"url":"https://www.instagram.com/reel/DXxf56SjMvL/","img":"assets/canola-2026/reel-DXxf56SjMvL.jpg","collab":true,"dur_s":80,"v":92095,"fbv":16548,"r":52967,"likes":4876,"comments":68,"shares":627,"s":1670,"i":7241,"er":0.13670776143636604,"lvl":"alta","excel_views":93950,"kpi":{"tipo":"Contratado","kpi":100000,"alcance":52967,"proyectado":56675,"cumple":false,"pct":0.52967,"estado_excel":"No cumplió"}},{"id":"DYFd4oKhkUo","creador":"naty-farah","red":"ig","t":"Pancakes esponjosos","fecha":"2026-05-08","f":"8 may","nota_fecha":null,"url":"https://www.instagram.com/reel/DYFd4oKhkUo/","img":"assets/canola-2026/reel-DYFd4oKhkUo.jpg","collab":true,"dur_s":39,"v":80833,"fbv":0,"r":34990,"likes":3182,"comments":39,"shares":1067,"s":1421,"i":5709,"er":0.16316090311517575,"lvl":"alta","excel_views":60604,"kpi":{"tipo":"Contratado","kpi":40000,"alcance":34990,"proyectado":37439,"cumple":false,"pct":0.87475,"estado_excel":"No cumplió"}},{"id":"DYVcbwGhlck","creador":"juliana-cocina","red":"ig","t":"Donas para el día de la madre","fecha":"2026-05-14","f":"14 may","nota_fecha":null,"url":"https://www.instagram.com/reel/DYVcbwGhlck/","img":"assets/canola-2026/reel-DYVcbwGhlck.jpg","collab":true,"dur_s":40,"v":74086,"fbv":0,"r":37298,"likes":3050,"comments":51,"shares":296,"s":953,"i":4350,"er":0.11662823743900477,"lvl":"alta","excel_views":66609,"kpi":{"tipo":"Contratado","kpi":50000,"alcance":37298,"proyectado":39909,"cumple":false,"pct":0.74596,"estado_excel":"No cumplió"}},{"id":"7640869859097873685","creador":"naty-farah","red":"tt","t":"Pancakes esponjosos (réplica)","fecha":"2026-05-17","f":"17 may","nota_fecha":null,"url":"https://www.tiktok.com/@natifarah/video/7640869859097873685","img":null,"collab":true,"dur_s":38,"v":39300,"fbv":0,"r":26562,"likes":2519,"comments":13,"shares":346,"s":977,"i":3855,"er":0.14513214366388072,"lvl":"alta","excel_views":26562,"kpi":{"tipo":"Contratado","kpi":17000,"alcance":26562,"proyectado":28421,"cumple":true,"pct":1.562470588235294,"estado_excel":"Cumplió"}},{"id":"DZYYddVv72H","creador":"chef-ana-galvis","red":"ig","t":"Pizza montanara frita","fecha":"2026-06-09","f":"9 jun","nota_fecha":"El Excel la fecha el 7 de junio; se publicó el 9","url":"https://www.instagram.com/reel/DZYYddVv72H/","img":"assets/canola-2026/reel-DZYYddVv72H.jpg","collab":true,"dur_s":83,"v":35476,"fbv":7064,"r":21669,"likes":1054,"comments":42,"shares":136,"s":325,"i":1557,"er":0.07185380035996124,"lvl":"media","excel_views":35493,"kpi":{"tipo":"Contratado","kpi":70000,"alcance":21669,"proyectado":23186,"cumple":false,"pct":0.30955714285714286,"estado_excel":"No cumplió"}},{"id":"7651381201760029972","creador":"camila-arias","red":"tt","t":"Wrap de falafel (réplica)","fecha":"2026-06-14","f":"14 jun","nota_fecha":null,"url":"https://www.tiktok.com/@camiariasmarthe/video/7651381201760029972","img":null,"collab":true,"dur_s":55,"v":4895,"fbv":0,"r":1800,"likes":165,"comments":2,"shares":26,"s":110,"i":303,"er":0.16833333333333333,"lvl":"alta","excel_views":1900,"kpi":{"tipo":"Contratado","kpi":4000,"alcance":1800,"proyectado":1926,"cumple":false,"pct":0.45,"estado_excel":"No cumplió"}},{"id":"DZvnF2wO_jj","creador":"sebastian-coy","red":"ig","t":"Snack dulce para el fútbol","fecha":"2026-06-18","f":"18 jun","nota_fecha":null,"url":"https://www.instagram.com/reel/DZvnF2wO_jj/","img":"assets/canola-2026/reel-DZvnF2wO_jj.jpg","collab":true,"dur_s":86,"v":28073,"fbv":0,"r":13803,"likes":1062,"comments":59,"shares":174,"s":746,"i":2041,"er":0.1478664058537999,"lvl":"alta","excel_views":23002,"kpi":{"tipo":"Contratado","kpi":35000,"alcance":13803,"proyectado":14769,"cumple":false,"pct":0.3943714285714286,"estado_excel":"No cumplió"}},{"id":"7652731242810608914","creador":"juliana-cocina","red":"tt","t":"Receta para ver el partido","fecha":"2026-06-18","f":"18 jun","nota_fecha":null,"url":"https://www.tiktok.com/@juliana.cocina/video/7652731242810608914","img":null,"collab":true,"dur_s":61,"v":58600,"fbv":0,"r":45100,"likes":4767,"comments":17,"shares":420,"s":1594,"i":6798,"er":0.15073170731707317,"lvl":"alta","excel_views":52900,"kpi":{"tipo":"Contratado","kpi":15000,"alcance":45100,"proyectado":48257,"cumple":true,"pct":3.006666666666667,"estado_excel":"Cumplió"}},{"id":"DZ6Rfb4xI1Z","creador":"julia-conscientemente","red":"ig","t":"Milanesas napolitanas","fecha":"2026-06-22","f":"22 jun","nota_fecha":null,"url":"https://www.instagram.com/reel/DZ6Rfb4xI1Z/","img":"assets/canola-2026/reel-DZ6Rfb4xI1Z.jpg","collab":true,"dur_s":59,"v":38788,"fbv":11004,"r":25582,"likes":819,"comments":24,"shares":211,"s":504,"i":1558,"er":0.06090219685716519,"lvl":"media","excel_views":42404,"kpi":{"tipo":"Contratado","kpi":60000,"alcance":25582,"proyectado":27373,"cumple":false,"pct":0.42636666666666667,"estado_excel":"No cumplió"}},{"id":"DaBX90cPPrO","creador":"tatiana-held","red":"ig","t":"Papitas criollas crocantes con champiñones","fecha":"2026-06-25","f":"25 jun","nota_fecha":null,"url":"https://www.instagram.com/reel/DaBX90cPPrO/","img":"assets/canola-2026/reel-DaBX90cPPrO.jpg","collab":true,"dur_s":44,"v":8909,"fbv":422,"r":6381,"likes":313,"comments":6,"shares":15,"s":122,"i":456,"er":0.07146215326751293,"lvl":"media","excel_views":8128,"kpi":{"tipo":"Micro","kpi":9000,"alcance":6381,"proyectado":6828,"cumple":false,"pct":0.709,"estado_excel":"No cumplió"}},{"id":"DaVm-WiRaWY","creador":"marcela-ocampo","red":"ig","t":"Choripán","fecha":"2026-07-03","f":"3 jul","nota_fecha":null,"url":"https://www.instagram.com/reel/DaVm-WiRaWY/","img":"assets/canola-2026/reel-DaVm-WiRaWY.jpg","collab":false,"dur_s":62,"v":6015,"fbv":584,"r":4034,"likes":196,"comments":5,"shares":35,"s":102,"i":338,"er":0.08378780366881507,"lvl":"media","excel_views":6278,"kpi":{"tipo":"Micro","kpi":9000,"alcance":4034,"proyectado":4316,"cumple":false,"pct":0.44822222222222224,"estado_excel":"No cumplió"}},{"id":"DaayGBuPL3M","creador":"jenn-yummy","red":"ig","t":"Camarones crujientes con miel picante","fecha":"2026-07-05","f":"5 jul","nota_fecha":null,"url":"https://www.instagram.com/reel/DaayGBuPL3M/","img":"assets/canola-2026/reel-DaayGBuPL3M.jpg","collab":true,"dur_s":82,"v":491504,"fbv":10481,"r":372108,"likes":24252,"comments":113,"shares":13370,"s":22800,"i":60535,"er":0.1626812645791007,"lvl":"alta","excel_views":457467,"kpi":{"tipo":"Macro reemplazo","kpi":12000,"alcance":372108,"proyectado":398156,"cumple":true,"pct":31.009,"estado_excel":"Cumplió"}},{"id":"DalwK8AoJHN","creador":"xime-gonzalez","red":"ig","t":"Snack para el Mundial","fecha":"2026-07-09","f":"9 jul","nota_fecha":null,"url":"https://www.instagram.com/reel/DalwK8AoJHN/","img":"assets/canola-2026/reel-DalwK8AoJHN.jpg","collab":true,"dur_s":60,"v":8743,"fbv":0,"r":4291,"likes":241,"comments":6,"shares":24,"s":69,"i":340,"er":0.07923560941505477,"lvl":"media","excel_views":6216,"kpi":{"tipo":"Micro","kpi":9000,"alcance":4291,"proyectado":4591,"cumple":false,"pct":0.4767777777777778,"estado_excel":"No cumplió"}},{"id":"Da0LXtuBqEI","creador":"patricia-martinez","red":"ig","t":"Nachos de arepa","fecha":"2026-07-15","f":"15 jul","nota_fecha":null,"url":"https://www.instagram.com/reel/Da0LXtuBqEI/","img":"assets/canola-2026/reel-Da0LXtuBqEI.jpg","collab":true,"dur_s":27,"v":5386,"fbv":0,"r":3000,"likes":125,"comments":4,"shares":28,"s":43,"i":200,"er":0.06666666666666667,"lvl":"media","excel_views":4500,"kpi":{"tipo":"Micro","kpi":9000,"alcance":3000,"proyectado":3210,"cumple":false,"pct":0.3333333333333333,"estado_excel":"No cumplió"}},{"id":"Da3Ca-wBut-","creador":"juliana-cocina","red":"ig","t":"Postre de fin de semana","fecha":"2026-07-16","f":"16 jul","nota_fecha":null,"url":"https://www.instagram.com/reel/Da3Ca-wBut-/","img":"assets/canola-2026/reel-Da3Ca-wBut-.jpg","collab":false,"dur_s":33,"v":76864,"fbv":0,"r":43095,"likes":2793,"comments":34,"shares":376,"s":1300,"i":4503,"er":0.10449008005569091,"lvl":"alta","excel_views":74605,"kpi":{"tipo":"Contratado","kpi":50000,"alcance":43095,"proyectado":46112,"cumple":false,"pct":0.8619,"estado_excel":"No cumplió"}},{"id":"DbJqzxRPpuz","creador":"julia-conscientemente","red":"ig","t":"Morango do amor","fecha":"2026-07-23","f":"23 jul","nota_fecha":null,"url":"https://www.instagram.com/reel/DbJqzxRPpuz/","img":"assets/canola-2026/reel-DbJqzxRPpuz.jpg","collab":true,"dur_s":52,"v":100891,"fbv":6669,"r":72565,"likes":2610,"comments":55,"shares":631,"s":1100,"i":4396,"er":0.06058016950320402,"lvl":"media","excel_views":null,"kpi":{"tipo":"Contratado","kpi":60000,"alcance":72565,"proyectado":77645,"cumple":true,"pct":1.2094166666666666,"estado_excel":"Cumplió"}},{"id":"DbWBOu2Rec2","creador":"susana-gomez","red":"ig","t":"Postre fácil de manzana","fecha":"2026-07-28","f":"28 jul","nota_fecha":null,"url":"https://www.instagram.com/reel/DbWBOu2Rec2/","img":"assets/canola-2026/reel-DbWBOu2Rec2.jpg","collab":true,"dur_s":90,"v":22456,"fbv":0,"r":14041,"likes":730,"comments":7,"shares":139,"s":570,"i":1446,"er":0.10298411794031764,"lvl":"alta","excel_views":20619,"kpi":{"tipo":"Micro","kpi":9000,"alcance":14041,"proyectado":15024,"cumple":true,"pct":1.560111111111111,"estado_excel":"Cumplió"}},{"id":"Dbd4NI5RG71","creador":"cocina-anto","red":"ig","t":"Mozzarella sticks","fecha":"2026-07-31","f":"31 jul","nota_fecha":null,"url":"https://www.instagram.com/reel/Dbd4NI5RG71/","img":"assets/canola-2026/reel-Dbd4NI5RG71.jpg","collab":true,"dur_s":61,"v":88496,"fbv":0,"r":28888,"likes":6536,"comments":9,"shares":1414,"s":760,"i":8719,"er":0.3018208252561617,"lvl":"alta","excel_views":34729,"kpi":{"tipo":"Micro","kpi":9000,"alcance":28888,"proyectado":30910,"cumple":true,"pct":3.2097777777777776,"estado_excel":"Cumplió"}},{"id":"Dcrp0CuAaxJ","creador":"camila-arias","red":"ig","t":"Matilda muffins","fecha":"2026-08-30","f":"30 ago","nota_fecha":null,"url":"https://www.instagram.com/reel/Dcrp0CuAaxJ/","img":"assets/canola-2026/reel-Dcrp0CuAaxJ.jpg","collab":true,"dur_s":54,"v":83351,"fbv":0,"r":58472,"likes":3998,"comments":34,"shares":1483,"s":4700,"i":10215,"er":0.1746990012313586,"lvl":"alta","excel_views":73902,"kpi":{"tipo":"Bonificado","kpi":null,"alcance":58472,"proyectado":62565,"cumple":null,"pct":null,"estado_excel":"Bonificado"}},{"id":"7679981421196250375","creador":"camila-arias","red":"tt","t":"Matilda muffins (réplica)","fecha":"2026-08-30","f":"30 ago","nota_fecha":null,"url":"https://www.tiktok.com/@camiariasmarthe/video/7679981421196250375","img":null,"collab":true,"dur_s":54,"v":15400,"fbv":0,"r":6300,"likes":989,"comments":3,"shares":126,"s":694,"i":1812,"er":0.2876190476190476,"lvl":"alta","excel_views":7000,"kpi":{"tipo":"Bonificado","kpi":null,"alcance":6300,"proyectado":6741,"cumple":null,"pct":null,"estado_excel":"Bonificado"}}],"stories":[{"creador":"naty-farah","fecha":"2026-03-20","f":"20 mar","viewers":11726,"views":15021,"inter":198,"sticker":11,"link":0,"visits":55,"kpi":{"tipo":"Contratado","kpi":12000,"alcance":11726,"proyectado":11726,"cumple":false,"pct":0.9771666666666666,"estado_excel":"No cumplió"}},{"creador":"camila-arias","fecha":"2026-04-09","f":"9 abr","viewers":12294,"views":14236,"inter":616,"sticker":15,"link":0,"visits":196,"kpi":{"tipo":"Contratado","kpi":3000,"alcance":12294,"proyectado":12294,"cumple":true,"pct":4.098,"estado_excel":"Cumplió"}},{"creador":"b-eats","fecha":"2026-04-21","f":"21 abr","viewers":92206,"views":103581,"inter":326,"sticker":109,"link":2,"visits":123,"kpi":{"tipo":"Bonificado","kpi":null,"alcance":92206,"proyectado":92206,"cumple":null,"pct":null,"estado_excel":"Bonificado"}},{"creador":"b-eats","fecha":"2026-04-21","f":"21 abr","viewers":86097,"views":101414,"inter":1262,"sticker":36,"link":7,"visits":562,"kpi":{"tipo":"Contratado","kpi":40000,"alcance":86097,"proyectado":86097,"cumple":true,"pct":2.152425,"estado_excel":"Cumplió"}},{"creador":"sebastian-coy","fecha":"2026-05-18","f":"18 may","viewers":1247,"views":1567,"inter":84,"sticker":8,"link":null,"visits":14,"kpi":{"tipo":"Contratado","kpi":4500,"alcance":1247,"proyectado":1247,"cumple":false,"pct":0.2771111111111111,"estado_excel":"No cumplió"}},{"creador":"naty-farah","fecha":"2026-05-22","f":"22 may","viewers":17342,"views":20186,"inter":514,"sticker":39,"link":1,"visits":164,"kpi":{"tipo":"Contratado","kpi":12000,"alcance":17342,"proyectado":17342,"cumple":true,"pct":1.4451666666666667,"estado_excel":"Cumplió"}},{"creador":"juliana-cocina","fecha":"2026-06-18","f":"18 jun","viewers":9113,"views":11633,"inter":159,"sticker":5,"link":null,"visits":35,"kpi":{"tipo":"Contratado","kpi":10000,"alcance":9113,"proyectado":9113,"cumple":false,"pct":0.9113,"estado_excel":"No cumplió"}}],"nets":{"ig":{"n":18,"v":1394954,"r":885047,"i":128594,"er":0.14529623850484777,"likes":62958,"comments":670,"shares":22372,"s":42594,"fbv":55537},"tt":{"n":5,"v":195195,"r":152866,"i":20093,"er":0.13144191644970105,"likes":12395,"comments":96,"shares":1794,"s":5808,"fbv":0}},"storiesTotal":{"n":7,"viewers":230025,"views":267638,"inter":3159,"sticker":223,"link":10,"visits":1149},"totals":{"views_ig":1394954,"views_tt":195195,"views_fb":55537,"views_st":267638,"views_all":1913324,"reach":1037913,"reach_all":1267938,"inter":148687,"er":0.14325574494201346,"saves":48402,"shares":24166,"comments":766},"kpi":{"kpi":760500,"alcance":1110960,"pct":1.4608284023668638,"proyectado":1179081,"pct_proyectado":1.5504023668639053,"piezas":27,"cumplen":11,"sin_macro":{"kpi":748500,"alcance":738852,"pct":0.9871102204408818,"proyectado":780925,"pct_proyectado":1.043319973279893,"piezas":26,"cumplen":10},"macro":["Jenn Yummy"],"bonificado_alcance":156978,"bonificado_piezas":3,"alcance_verificado":1267938},"insights":{"top_piece":"Camarones crujientes con miel picante","top_creador":"Jenn Yummy","top_share_views":0.3050308503566294,"top_views":501985,"macro_nombre":"Jenn Yummy","macro_pct":31.009,"macro_reach_share":0.33494275221430114,"creadores_cumplen":["Jenn Yummy","Cocina Anto","Susana Gómez","Naty Farah","Juliana Cocina"],"n_creadores_kpi":14,"casi":[{"nombre":"B-Eats","pct":0.9933142857142857}],"micro_cumplen":2,"n_micro":6,"tt_cumplen":3,"n_tt_kpi":4,"ig_cumplen":5,"n_ig_kpi":17,"st_cumplen":3,"n_st_kpi":6,"fb_share_meta":0.03828841406116963,"tt_reach_share":0.14728209397126735,"saves_share":0.3255294679427253,"inter_per_100":14.325574494201346,"nocollab":[{"t":"Wrap de falafel al estilo griego","creador":"Camila Arias Marthe","f":"26 abr"},{"t":"Choripán","creador":"Marcela Ocampo","f":"3 jul"},{"t":"Postre de fin de semana","creador":"Juliana Cocina","f":"16 jul"}],"er_top":{"t":"Mozzarella sticks","er":0.3018208252561617,"creador":"Cocina Anto"},"n_alta":16,"n_pieces":23,"st_top":{"creador":"b-eats","fecha":"2026-04-21","f":"21 abr","viewers":92206,"views":103581,"inter":326,"sticker":109,"link":2,"visits":123,"kpi":{"tipo":"Bonificado","kpi":null,"alcance":92206,"proyectado":92206,"cumple":null,"pct":null,"estado_excel":"Bonificado"},"nombre":"B-Eats"}},"conv":{"n":546,"total":761,"creadores_resp":186,"coverage":0.961892247043364,"preguntas":88,"respondidas":26,"temas":[{"k":"antojo","label":"Antojo y elogio","n":288,"share":0.5274725274725275},{"k":"receta","label":"Preguntas y ajustes de la receta","n":62,"share":0.11355311355311355},{"k":"critica","label":"Críticas y debate sobre el aceite","n":49,"share":0.08974358974358974},{"k":"producto","label":"Dudas sobre el producto","n":40,"share":0.07326007326007326},{"k":"pedido","label":"Piden otra receta","n":39,"share":0.07142857142857142},{"k":"humor","label":"Humor y comunidad","n":29,"share":0.05311355311355311},{"k":"preparo","label":"Ya la prepararon","n":8,"share":0.014652014652014652}],"tono":{"positivo":4,"negativo":42,"duda":31,"neutro":14},"marca_n":91,"marca_share":0.16666666666666666,"duda_esparcible":15,"duda_fuera":3,"neg_publicidad":6,"crit_top":{"t":"Camarones crujientes con miel picante","creador":"Jenn Yummy","n":16,"share":0.38095238095238093},"duda_top":{"t":"El mejor carrot cake","creador":"Naty Farah","n":17},"pedido_top":{"t":"Coca gomela de pincho y mazorca","creador":"B-Eats","n":32},"top_crit_quote":{"texto":"El aceite de canola es lo peor para la salud 👀","me_gusta":70,"red":"ig","pieza":"Camarones crujientes con miel picante","creador":"jenn-yummy"},"redes":{"ig":{"n":476,"total":669,"temas":[{"k":"antojo","label":"Antojo y elogio","n":258,"share":0.542016806722689},{"k":"receta","label":"Preguntas y ajustes de la receta","n":55,"share":0.11554621848739496},{"k":"producto","label":"Dudas sobre el producto","n":40,"share":0.08403361344537816},{"k":"pedido","label":"Piden otra receta","n":38,"share":0.07983193277310924},{"k":"critica","label":"Críticas y debate sobre el aceite","n":38,"share":0.07983193277310924},{"k":"humor","label":"Humor y comunidad","n":16,"share":0.03361344537815126},{"k":"preparo","label":"Ya la prepararon","n":7,"share":0.014705882352941176}],"tono":{"positivo":4,"negativo":32,"duda":31,"neutro":13}},"tt":{"n":70,"total":92,"temas":[{"k":"antojo","label":"Antojo y elogio","n":30,"share":0.42857142857142855},{"k":"humor","label":"Humor y comunidad","n":13,"share":0.18571428571428572},{"k":"critica","label":"Críticas y debate sobre el aceite","n":11,"share":0.15714285714285714},{"k":"receta","label":"Preguntas y ajustes de la receta","n":7,"share":0.1},{"k":"preparo","label":"Ya la prepararon","n":1,"share":0.014285714285714285},{"k":"pedido","label":"Piden otra receta","n":1,"share":0.014285714285714285}],"tono":{"positivo":0,"negativo":10,"duda":0,"neutro":1}}},"destacados":[{"texto":"ese apanado y esa miel 😮‍💨😮‍💨😮‍💨","me_gusta":158,"red":"ig","pieza":"Camarones crujientes con miel picante","creador":"Jenn Yummy","tema":"Antojo y elogio"},{"texto":"El aceite de canola es lo peor para la salud 👀","me_gusta":70,"red":"ig","pieza":"Camarones crujientes con miel picante","creador":"Jenn Yummy","tema":"Críticas y debate sobre el aceite"},{"texto":"Excelente... Me puede explicar donde dice 220 grs canola life y 110 grs canola life supongo q se refiere a aceite y mantequilla pero q cantidad corresponde a cada uno por favor","me_gusta":17,"red":"ig","pieza":"El mejor carrot cake","creador":"Naty Farah","tema":"Dudas sobre el producto"},{"texto":"Por favor la receta de las cebollas encurtidas","me_gusta":9,"red":"ig","pieza":"Coca gomela de pincho y mazorca","creador":"B-Eats","tema":"Piden otra receta"},{"texto":"Parecen fresas dentro de un tomate 🍅, de lo perfectas que se ven 😂","me_gusta":70,"red":"ig","pieza":"Morango do amor","creador":"Julia Conscientemente","tema":"Humor y comunidad"}]},"pdfBase":"pdf"};
+const nf=new Intl.NumberFormat('es-CO');
+const short=v=>v>=1e6?(v/1e6).toLocaleString('es-CO',{minimumFractionDigits:2,maximumFractionDigits:2})+' M':v>=1e4?Math.round(v/1e3).toLocaleString('es-CO')+' K':nf.format(Math.round(v));
+const pct=(v,d=1)=>(v*100).toLocaleString('es-CO',{minimumFractionDigits:d,maximumFractionDigits:d})+' %';
+const pct0=v=>pct(v,0);
+const dec=(v,d=1)=>v.toLocaleString('es-CO',{minimumFractionDigits:d,maximumFractionDigits:d});
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const LVL={alta:'Alta',media:'Media',baja:'Baja'};
+const NET={ig:'Instagram',tt:'TikTok',fb:'Facebook',hist:'Historias'};
+const IC={
+ eye:'<path d="M1 8s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="2" fill="currentColor"/>',
+ users:'<circle cx="6" cy="5" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M1.5 14c0-2.5 2-4 4.5-4s4.5 1.5 4.5 4M11 3.2a2.4 2.4 0 010 4.6M12.5 10.3c1.3.5 2 1.8 2 3.7" fill="none" stroke="currentColor" stroke-width="1.5"/>',
+ heart:'<path d="M8 14S1.5 10 1.5 5.6A3.3 3.3 0 018 4a3.3 3.3 0 016.5 1.6C14.5 10 8 14 8 14z" fill="none" stroke="currentColor" stroke-width="1.5"/>',
+ rate:'<path d="M2 13L6 8l3 3 5-7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>',
+ goal:'<circle cx="8" cy="8" r="6.3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="1" fill="currentColor"/>',
+ save:'<path d="M4 1.8h8v12.4L8 11l-4 3.2z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>',
+ ig:'<rect x="1.5" y="1.5" width="13" height="13" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="11.9" cy="4.1" r=".9" fill="currentColor"/>',
+ fb:'<path d="M9.2 15V8.6h2.1l.3-2.5H9.2V4.5c0-.7.2-1.2 1.2-1.2h1.3V1.1c-.2 0-1-.1-1.9-.1-1.9 0-3.2 1.2-3.2 3.3v1.8H4.5v2.5h2.1V15z" fill="currentColor"/>',
+ tt:'<path d="M8.6 1.5h2.3c.2 1.4 1.2 2.4 2.6 2.6v2.3c-1 0-1.9-.3-2.6-.8v4.6a3.6 3.6 0 11-3.6-3.6c.2 0 .4 0 .6.1v2.3a1.4 1.4 0 10.7 1.2z" fill="currentColor"/>',
+ grid:'<rect x="1" y="1" width="6" height="6" rx="1" fill="currentColor"/><rect x="9" y="1" width="6" height="6" rx="1" fill="currentColor"/><rect x="1" y="9" width="6" height="6" rx="1" fill="currentColor"/><rect x="9" y="9" width="6" height="6" rx="1" fill="currentColor"/>',
+ people:'<circle cx="5" cy="5" r="2.3" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="11" cy="5" r="2.3" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M1 14c0-2.3 1.8-3.8 4-3.8s4 1.5 4 3.8M7 14c0-2.3 1.8-3.8 4-3.8s4 1.5 4 3.8" fill="none" stroke="currentColor" stroke-width="1.4"/>'
+};
+const svg=k=>`<svg viewBox="0 0 16 16" aria-hidden="true">${IC[k]}</svg>`;
+const pill=l=>`<span class="pill ${l}">${LVL[l]}</span>`;
+const okPill=k=>!k||k.kpi==null?'<span class="pill bono">Bonificado</span>':k.cumple?'<span class="pill ok">Cumplió</span>':'<span class="pill no">No cumplió</span>';
+const C=Object.fromEntries(D.creadores.map(c=>[c.id,c]));
+const I=D.insights,T=D.totals,K=D.kpi,N=D.nets,CV=D.conv;
+const redTag=k=>`<span class="tag-red">${svg(k)}${NET[k]}</span>`;
+const kpiI=(k,v,d,ic,ins,hi)=>`<article class="card kpi${hi?' hi':''}"><div class="row"><span class="k">${k}</span><span class="ic">${svg(ic)}</span></div><span class="v num">${v}</span><span class="d">${d}</span><p class="ins">${ins}</p></article>`;
+const insight=(t,b)=>`<p class="callout">${t?`<b>${t}:</b> `:''}${b}</p>`;
+const sh=(t,p)=>`<div class="sec-t"><h2>${t}</h2>${p?`<p>${p}</p>`:''}</div>`;
+const tabhead=(k,s)=>`<div class="tabhead"><span class="pbadge ${k}">${svg(k)}</span><h2>${NET[k]}</h2><span class="s">${s}</span></div>`;
+const legend=ks=>`<div class="legend">${ks.map(k=>`<span><i class="${k}" style="background:var(--${k})"></i>${NET[k]}</span>`).join('')}</div>`;
+const lista=a=>a.length<2?a.join(''):a.slice(0,-1).join(', ')+' y '+a[a.length-1];
+
+function header(){
+  const avs=D.creadores.slice().sort((a,b)=>b.alcance-a.alcance).slice(0,5).map(c=>`<img src="../${esc(c.avatar)}" alt="">`).join('');
+  return `<div class="title"><h1><span class="avs">${avs}</span><span class="jft">${D.creadores.length} creadores</span><span class="x">×</span><img class="tlogo wide" src="../${esc(D.marca.logo)}" alt="${esc(D.marca.nombre)}"></h1></div>`;
+}
+const LEGAL=`<div class="legal">
+  <p><strong>© ${new Date().getFullYear()} Datalítica Colombia S.A.S.</strong> · NIT 901.957.313-6 · Todos los derechos reservados. Reporte confidencial preparado para CreatorsWay y ${esc(D.marca.nombre)}; su reproducción o distribución sin autorización está prohibida (Ley 23 de 1982).</p>
+  <nav aria-label="Información legal"><a href="../legal/terminos.html">Términos y condiciones de uso</a><a href="../legal/datos-personales.html">Política de tratamiento de datos personales</a><a href="../legal/datos-personales.html#aviso">Aviso de privacidad</a><a href="../legal/datos-personales.html#cookies">Cookies</a><a href="mailto:comercial@datalitica.com.co">comercial@datalitica.com.co</a></nav>
+</div>`;
+const footer=()=>`<footer class="foot"><div class="foot-top"><span>Fuente: cifras públicas de Instagram y TikTok leídas por Datalítica el ${fechaLarga(D.publicasCapturado)}; alcance, guardados de Instagram, historias y KPI del informe de la campaña; comentarios públicos de las publicaciones.</span><img src="../assets/logo-creatorsway-negro.png" alt="CreatorsWay"></div>${LEGAL}</footer>`;
+const MESES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+function fechaLarga(iso){if(!iso)return '';const [y,m,d]=iso.split('-').map(Number);return `${d} de ${MESES[m-1]} de ${y}`;}
+
+/* ---------- piezas ---------- */
+const thumb=p=>{const c=C[p.creador];const img=p.img?`<img src="../${esc(p.img)}" alt="" loading="eager">`:`<img src="../${esc(c.avatar)}" alt="">`;
+  return `<a class="thumb${p.img?'':' av'}" href="${esc(p.url)}" target="_blank" rel="noopener" aria-label="Ver ${esc(p.t)}">${img}</a>`;};
+function piecesChart(P,showFb){
+  const max=Math.max(...P.map(p=>p.v+(showFb?p.fbv:0)));
+  const bar=(k,v,p)=>`<div class="b" tabindex="0" data-tip="${NET[k]}: ${nf.format(v)} visualizaciones${k==='fb'?'':`, ${nf.format(p.i)} interacciones, ${nf.format(p.s)} guardados`}"><div class="track"><div class="fill ${k}" style="width:${(v/max*100).toFixed(1)}%"></div></div><span class="num">${short(v)}</span></div>`;
+  return `<div class="chart" id="chart">${P.map(p=>`<div class="crow"><div class="cname">${thumb(p)}<div><strong>${esc(p.t)}</strong><span>${esc(C[p.creador].nombre)} · ${p.f}</span></div></div><div class="bars">${bar(p.red,p.v,p)}${showFb&&p.fbv?bar('fb',p.fbv,p):''}</div><div class="er"><span class="v num">${pct(p.er)}</span>${pill(p.lvl)}</div></div>`).join('')}<div class="tip" id="tip" hidden></div></div>`;
+}
+
+/* ---------- cumplimiento ---------- */
+function meterRow(c){
+  const cap=2,w=Math.min(c.pct,cap)/cap*100,goal=1/cap*100;
+  return `<div class="kpirow"><div class="who"><img src="../${esc(c.avatar)}" alt=""><div><strong>${esc(c.nombre)}</strong><span>${esc(c.tipo)} · ${c.piezas_cumplen} de ${c.piezas_kpi} piezas</span></div></div>
+    <div class="mw"><div class="meter" role="img" aria-label="${esc(c.nombre)}: ${nf.format(c.alcance)} de alcance frente a un KPI de ${nf.format(c.kpi)}"><div class="fill${c.cumple?' ok':''}" style="width:${w}%"></div><span class="goal" style="left:${goal}%"></span>${c.pct>cap?'<span class="over">›</span>':''}</div>
+    <div class="meter-l num"><span>${nf.format(c.alcance)} de alcance</span><span>KPI ${nf.format(c.kpi)}</span></div></div>
+    <div class="pct"><span class="v num">${pct0(c.pct)}</span>${c.cumple?'<span class="pill ok">Cumple</span>':'<span class="pill no">No cumple</span>'}</div></div>`;
+}
+
+/* ---------- conversación ---------- */
+const temaBars=(temas,color)=>{const mx=Math.max(...temas.map(t=>t.share));
+  return `<div class="share">${temas.map(t=>`<div class="srow"><div class="t"><b>${esc(t.label)}</b><span class="num">${nf.format(t.n)} · ${pct0(t.share)}</span></div><div class="sbar" style="background:var(--pista)"><div style="width:${t.share/mx*100}%;background:${color}"></div></div></div>`).join('')}</div>`;};
+const tonoBars=t=>{const rows=[['Críticas: salud del aceite o del esparcible',t.negativo,'var(--baja)'],['Dudas: qué es, con qué reemplazarlo, dónde se consigue',t.duda,'#9A9A95'],['Sin opinión: mencionan o explican el producto',t.neutro,'#D0D0CB'],['A favor del aceite',t.positivo,'var(--sube)']];const mx=Math.max(...rows.map(r=>r[1]),1);
+  return `<div class="share">${rows.map(r=>`<div class="srow"><div class="t"><b>${r[0]}</b><span class="num">${nf.format(r[1])}</span></div><div class="sbar" style="background:var(--pista)"><div style="width:${r[1]/mx*100}%;background:${r[2]}"></div></div></div>`).join('')}</div>`;};
+function convResumen(){
+  if(!CV)return '';const t=CV.tono,th=Object.fromEntries(CV.temas.map(x=>[x.k,x]));
+  const quotes=CV.destacados.slice(0,3).map(q=>`<figure class="card quote"><span class="qt">${esc(q.tema)}</span><blockquote>“${esc(q.texto)}”</blockquote><figcaption class="num">${nf.format(q.me_gusta)} me gusta · ${NET[q.red]} · ${esc(q.creador)}, ${esc(q.pieza)}</figcaption></figure>`).join('');
+  const opin=t.negativo+t.positivo;
+  return sh('Lo que dice la gente',`Leímos ${nf.format(CV.n)} comentarios del público y ${nf.format(CV.creadores_resp)} respuestas de los creadores en las ${D.pieces.length} publicaciones (el ${pct0(CV.coverage)} de los que reportan las plataformas).`)+
+  `<div class="duo">
+    <section class="card"><div class="card-h"><div><h2>Temas de la conversación</h2><p>Comentarios y respuestas del público, por tema principal</p></div></div>${temaBars(CV.temas,'#000')}
+      ${insight('',`${pct0(th.antojo.share)} es antojo y elogio a la receta. Le siguen las preguntas sobre la preparación (${pct0(th.receta.share)}) y las críticas al aceite (${pct0(th.critica.share)}). ${esc(CV.pedido_top.creador)} recibió ${nf.format(CV.pedido_top.n)} pedidos de otra receta en un solo reel: el público quería las cebollas encurtidas.`)}</section>
+    <section class="card"><div class="card-h"><div><h2>${esc(D.marca.nombre)} en los comentarios</h2><p>${nf.format(CV.marca_n)} comentarios del público hablan del aceite, del esparcible o de la marca (${pct0(CV.marca_share)})</p></div></div>${tonoBars(t)}
+      ${insight(`${nf.format(t.negativo)} críticas frente a ${nf.format(t.positivo)} defensas`,`la mayoría cuestiona si el aceite de canola es saludable. ${esc(CV.crit_top.creador)} concentró ${nf.format(CV.crit_top.n)} (${pct0(CV.crit_top.share)}), con el comentario más votado de la conversación de marca.`)}
+      <p class="callout"><b>${nf.format(t.duda)} dudas sobre el producto:</b> ${nf.format(CV.duda_esparcible)} preguntan qué es el esparcible o si es margarina o mantequilla, la mayoría en el reel de ${esc(CV.duda_top.creador)}. La marca tiene una tarea de explicar su producto.</p></section>
+  </div>
+  <section class="quotes" aria-label="Comentarios destacados">${quotes}</section>`;
+}
+function convRed(k){
+  if(!CV||!CV.redes[k])return '';const R=CV.redes[k],t=R.tono;
+  return sh(`Conversación en ${NET[k]}`,`${nf.format(R.n)} comentarios del público, de ${nf.format(R.total)} que reporta la plataforma (incluye respuestas de los creadores).`)+
+  `<section class="card"><div class="duo inner">
+    <div><div class="card-h"><div><h2>Temas</h2></div></div>${temaBars(R.temas,k==='tt'?'#000':'#000')}</div>
+    <div><div class="card-h"><div><h2>${esc(D.marca.nombre)} en los comentarios</h2></div></div>${tonoBars(t)}</div>
+  </div>${insight('',`${nf.format(t.negativo)} críticas al aceite, ${nf.format(t.duda)} dudas sobre el producto y ${nf.format(t.positivo)} comentarios a favor.${k==='tt'?' En TikTok no hubo dudas sobre el producto: la conversación de marca fue solo crítica.':''}`)}</section>`;
+}
+
+/* ---------- resumen ---------- */
+function vResumen(){
+  const S=K.sin_macro;
+  const top=D.pieces.slice().sort((a,b)=>(b.v+b.fbv)-(a.v+a.fbv)).slice(0,8);
+  const shareRow=(k,vals)=>{const ks=Object.keys(vals),tot=ks.reduce((a,x)=>a+vals[x],0);
+    return `<div class="srow"><div class="t"><b>${k}</b><span class="num">${ks.map(x=>Math.round(vals[x]/tot*100)+' %').join(' · ')}</span></div><div class="sbar">${ks.map(x=>`<div class="${x}" style="width:${vals[x]/tot*100}%"></div>`).join('')}</div></div>`;};
+  const rows=[...D.pieces.map(p=>({...p,tipoF:p.red==='ig'?'Reel':'Video'})),...D.stories.map(s=>({...s,red:'hist',tipoF:'Historia',t:'Historia',r:s.viewers}))].filter(x=>x.kpi).sort((a,b)=>C[a.creador].nombre.localeCompare(C[b.creador].nombre,'es')||a.fecha.localeCompare(b.fecha));
+  const det=rows.map(x=>{const k=x.kpi;return `<tr class="${k.cumple?'hl':''}"><td><strong>${esc(C[x.creador].nombre)}</strong><span class="hand">${esc(x.t)}</span></td><td class="l">${x.red==='hist'?'Historia de Instagram':redTag(x.red)}</td><td class="l">${x.f}</td><td class="l">${esc(k.tipo)}</td><td class="num">${k.kpi==null?'—':nf.format(k.kpi)}</td><td class="num">${nf.format(k.alcance)}</td><td class="num">${k.pct==null?'—':pct0(k.pct)}</td><td class="l">${okPill(k)}</td><td class="num">${nf.format(k.proyectado)}</td></tr>`;}).join('');
+  const H=[
+    {v:I.macro_reach_share,t:`${esc(I.macro_nombre)} aportó un tercio del alcance contratado`,p:`Con un KPI de ${nf.format(K.kpi-S.kpi)} (el ${pct(1-S.kpi/K.kpi)} de la meta), su reel alcanzó ${nf.format(K.alcance-S.alcance)} cuentas. Sin él, la campaña queda en ${pct(S.pct)} del KPI: el resultado depende de una sola pieza.`},
+    {v:I.ig_cumplen/I.n_ig_kpi,t:`Solo ${I.ig_cumplen} de ${I.n_ig_kpi} reels contratados llegaron a su meta`,p:`En TikTok cumplieron ${I.tt_cumplen} de ${I.n_tt_kpi} videos y en historias ${I.st_cumplen} de ${I.n_st_kpi}. Las metas de alcance de los reels son las que más se quedan cortas; vale la pena revisarlas con el histórico de cada creador antes de la próxima campaña.`},
+    CV?{v:CV.tono.negativo/CV.marca_n,t:`de los comentarios sobre el producto lo critican`,p:`El público pregunta por la salud del aceite de canola y no entiende qué es el esparcible (${nf.format(CV.duda_esparcible)} preguntas). Los creadores respondieron ${nf.format(CV.respondidas)} de ${nf.format(CV.preguntas)} preguntas del público: la marca puede apoyarlos con respuestas claras sobre el producto.`}:null
+  ].filter(Boolean);
+  return header()+
+  sh('La campaña en cifras','Cuánto alcance logró cada contrato, qué tanto se vio el contenido y cómo reaccionó el público. Debajo de cada cifra, lo que significa.')+
+  `<section class="kpis" aria-label="Resumen de la campaña">${
+    kpiI('Cumplimiento del KPI',pct0(K.pct),`Alcance verificado ÷ KPI de ${K.piezas} piezas contratadas`,'goal',`Sin ${esc(I.macro_nombre)}, <b>${pct(S.pct)}</b>: una sola pieza explica el sobrecumplimiento.`,1)+
+    kpiI('Alcance verificado',short(K.alcance),`Piezas contratadas; KPI ${short(K.kpi)}`,'users',`Más <b>${short(K.bonificado_alcance)}</b> de ${K.bonificado_piezas} piezas bonificadas, que no tienen KPI.`)+
+    kpiI('Visualizaciones',short(T.views_all),'Instagram, TikTok, Facebook e historias','eye',`El <b>${pct0(I.top_share_views)}</b> de lo que se vio en reels y videos vino de un solo reel de ${esc(I.top_creador)}.`)+
+    kpiI('Interacciones',nf.format(T.inter),'Me gusta, comentarios, compartidos y guardados','heart',`<b>${pct0(I.saves_share)}</b> fueron guardados: la gente se lleva la receta.`)+
+    kpiI('Tasa de interacción',pct(T.er),'Interacciones ÷ alcance, reels y videos','rate',`<b>${I.n_alta} de ${I.n_pieces}</b> publicaciones tuvieron una tasa alta (10 % o más).`)}</section>
+  ${sh('Cumplimiento por creador','Alcance verificado de las piezas contratadas frente al KPI de cada creador. La línea marca el 100 %.')}
+  <div class="duo">
+    <section class="card"><div class="card-h"><div><h2>Alcance frente al KPI</h2><p>Ordenados por cumplimiento. La barra llega hasta el 200 %.</p></div></div>${D.creadores.filter(c=>c.kpi).map(meterRow).join('')}
+      ${insight(`Cumplen ${I.creadores_cumplen.length} de ${I.n_creadores_kpi} creadores`,`${lista(I.creadores_cumplen.map(esc))}.${I.casi.length?` ${lista(I.casi.map(c=>esc(c.nombre)))} quedó en ${lista(I.casi.map(c=>pct0(c.pct)))}.`:''} De los ${I.n_micro} microcreadores, cumplieron ${I.micro_cumplen}.`)}</section>
+    <section class="card"><div class="card-h"><div><h2>Lo verificado y lo proyectado</h2><p>Cumplimiento de la campaña</p></div></div>
+      <div class="big2"><div class="hi"><span class="v num">${pct0(K.pct)}</span><span>con todos los creadores (${nf.format(K.cumplen)} de ${K.piezas} piezas cumplen)</span></div><div><span class="v num">${pct(S.pct)}</span><span>sin ${esc(I.macro_nombre)} (${nf.format(S.cumplen)} de ${S.piezas} piezas cumplen)</span></div></div>
+      <div class="est"><b class="tag">Estimación, no verificada</b><span class="v num">${pct0(K.pct_proyectado)} · ${pct0(S.pct_proyectado)} sin ${esc(I.macro_nombre)}</span><span>Cumplimiento con el alcance proyectado del informe de la campaña, que suma un 7 % a reels y videos (${nf.format(K.proyectado)} de alcance). No es una cifra medida.</span></div>
+      <div class="fmt share">${[['Reels de Instagram',I.ig_cumplen,I.n_ig_kpi],['Videos de TikTok',I.tt_cumplen,I.n_tt_kpi],['Historias',I.st_cumplen,I.n_st_kpi]].map(([l,a,b])=>`<div class="srow"><div class="t"><b>${l}</b><span class="num">${a} de ${b} cumplen</span></div><div class="sbar" style="background:var(--pista)"><div style="width:${a/b*100}%;background:#000"></div></div></div>`).join('')}</div>
+      ${insight('','Los videos de TikTok fueron el formato más confiable para llegar a la meta; los reels, el menos.')}</section>
+  </div>
+  ${sh('Las publicaciones','Las que más se vieron y qué aportó cada red.')}
+  <div class="duo">
+    <section class="card"><div class="card-h"><div><h2>Las ${top.length} publicaciones más vistas</h2><p>Visualizaciones; a la derecha, la tasa de interacción. Todas en las pestañas de cada red.</p></div>${legend(['ig','tt','fb'])}</div>${piecesChart(top,true)}
+      ${insight('',`${esc(I.top_piece)}, de ${esc(I.top_creador)}, sumó ${nf.format(I.top_views)} visualizaciones. La mejor tasa fue la de ${esc(I.er_top.t)} de ${esc(I.er_top.creador)} (${pct(I.er_top.er)}), un microcreador.`)}</section>
+    <section class="card"><div class="card-h"><div><h2>Resultados por red</h2><p>Participación de cada red en el total</p></div></div>
+      <div class="share">${legend(['ig','tt','fb','hist'])}${shareRow('Visualizaciones',{ig:T.views_ig,tt:T.views_tt,fb:T.views_fb,hist:T.views_st})}${shareRow('Alcance',{ig:N.ig.r,tt:N.tt.r,hist:D.storiesTotal.viewers})}${shareRow('Interacciones',{ig:N.ig.i,tt:N.tt.i})}</div>
+      ${insight('Instagram cargó la campaña',`${N.ig.n} reels frente a ${N.tt.n} videos de TikTok. TikTok aportó el ${pct0(I.tt_reach_share)} del alcance de reels y videos, con una tasa de ${pct(N.tt.er)} frente a ${pct(N.ig.er)} en Instagram. Facebook solo suma las reproducciones de los reels publicados también allí (${pct(I.fb_share_meta)} de lo visto en Meta).`)}</section>
+  </div>
+  ${convResumen()}
+  ${sh('Hallazgos','Lo que la marca y la agencia deberían llevarse de esta campaña.')}
+  <section class="finds" aria-label="Hallazgos">${H.map((h,i)=>`<article class="card find${i?'':' hi'}"><span class="v num">${pct0(h.v)}</span><h3>${h.t}</h3><p>${h.p}</p></article>`).join('')}</section>
+  ${sh('Detalle del KPI','Cada pieza con su meta, su alcance verificado y el proyectado del informe de la campaña.')}
+  <section class="card"><div class="card-h"><div><h2>Cumplimiento por pieza</h2><p>Resaltadas, las piezas que cumplieron. Las bonificadas no tienen KPI (—). El proyectado es una estimación (+7 % en reels y videos).</p></div></div>
+    <div class="tbl"><table><thead><tr><th>Creador y pieza</th><th class="l">Formato</th><th class="l">Fecha</th><th class="l">Tipo</th><th>KPI</th><th>Alcance verificado</th><th>Cumplimiento</th><th class="l">Estado</th><th>Proyectado</th></tr></thead><tbody>${det}</tbody>
+    <tfoot><tr><td>Total contratado</td><td></td><td></td><td></td><td class="num">${nf.format(K.kpi)}</td><td class="num">${nf.format(K.alcance)}</td><td class="num">${pct0(K.pct)}</td><td class="l">${K.cumplen} de ${K.piezas}</td><td class="num">${nf.format(K.proyectado)}</td></tr></tfoot></table></div>
+    ${insight('',`El alcance de cada pieza viene del informe de la campaña y cuadra con la suma de las publicaciones (${nf.format(K.alcance_verificado)} con las bonificadas).`)}</section>
+  ${footer()}`;
+}
+
+/* ---------- creadores ---------- */
+function vCreadores(){
+  const cards=D.creadores.slice().sort((a,b)=>b.alcance+b.bonificado-(a.alcance+a.bonificado)).map(c=>{
+    const P=D.pieces.filter(p=>p.creador===c.id),S=D.stories.filter(s=>s.creador===c.id);
+    const crit=c.tono.negativo||0,dud=c.tono.duda||0;
+    const pz=[...P.map(p=>`${esc(p.t)} (${NET[p.red]}, ${p.f})`),...S.map(s=>`Historia (${s.f})`)].join(' · ');
+    return `<article class="card cc${c.cumple?' hi':''}"><div class="cc-h"><img src="../${esc(c.avatar)}" alt=""><div><strong>${esc(c.nombre)}</strong><a href="https://www.instagram.com/${esc(c.ig)}/" target="_blank" rel="noopener">@${esc(c.ig)}</a> <span class="pill">${esc(c.tipo)}</span></div></div>
+      <div class="row"><span class="v num">${pct0(c.pct)}</span>${c.cumple?'<span class="pill ok">Cumple el KPI</span>':'<span class="pill no">No cumple el KPI</span>'}</div>
+      <div><div class="meter"><div class="fill${c.cumple?' ok':''}" style="width:${Math.min(c.pct,2)/2*100}%"></div><span class="goal" style="left:50%"></span></div><div class="meter-l num"><span>${nf.format(c.alcance)} de alcance</span><span>KPI ${nf.format(c.kpi)}</span></div></div>
+      <div class="mini-g"><div><b class="num">${short(c.v)}</b><span>visualizaciones</span></div><div><b class="num">${c.er==null?'—':pct(c.er)}</b><span>tasa de interacción</span></div><div><b class="num">${c.piezas_cumplen}/${c.piezas_kpi}</b><span>piezas cumplen</span></div></div>
+      <p class="pz">${pz}${c.bonificado?`<br><b>Bonificado:</b> ${nf.format(c.bonificado)} de alcance adicional, sin KPI.`:''}${crit||dud?`<br><b>Comentarios sobre el producto:</b> ${crit} ${crit===1?'crítica':'críticas'} y ${dud} ${dud===1?'duda':'dudas'}.`:''}</p></article>`;}).join('');
+  const rows=D.creadores.map(c=>`<tr class="${c.cumple?'hl':''}"><td><strong>${esc(c.nombre)}</strong></td><td class="l">${esc(c.tipo)}</td><td class="num">${c.n_reels}</td><td class="num">${c.n_tt}</td><td class="num">${c.n_hist}</td><td class="num">${nf.format(c.kpi)}</td><td class="num">${nf.format(c.alcance)}</td><td class="num">${pct0(c.pct)}</td><td class="num">${c.bonificado?nf.format(c.bonificado):'—'}</td><td class="num">${nf.format(c.v)}</td><td class="num">${nf.format(c.i)}</td><td class="num">${c.er==null?'—':pct(c.er)}</td></tr>`).join('');
+  const mejorEr=D.creadores.filter(c=>c.er!=null).sort((a,b)=>b.er-a.er)[0];
+  const bono=D.creadores.find(c=>c.bonificado>c.alcance);
+  return header()+`<div class="tabhead"><span class="pbadge" style="background:#000">${svg('people')}</span><h2>Creadores</h2><span class="s">${D.creadores.length} creadores, ${D.pieces.length} publicaciones y ${D.stories.length} historias</span></div>`+
+  sh('Creador por creador','Ordenados por alcance total, incluidas las piezas bonificadas. Con borde amarillo, los que cumplieron su KPI.')+
+  `<section class="cgrid">${cards}</section>
+  <section class="card"><div class="card-h"><div><h2>Resumen por creador</h2><p>Visualizaciones de reels, videos, Facebook e historias. Tasa de interacción de reels y videos. Resaltados, los que cumplieron.</p></div></div>
+    <div class="tbl"><table><thead><tr><th>Creador</th><th class="l">Tipo</th><th>Reels</th><th>TikTok</th><th>Historias</th><th>KPI</th><th>Alcance verificado</th><th>Cumplimiento</th><th>Bonificado</th><th>Visualizaciones</th><th>Interacciones</th><th>Tasa</th></tr></thead><tbody>${rows}</tbody>
+    <tfoot><tr><td>Total</td><td></td><td class="num">${N.ig.n}</td><td class="num">${N.tt.n}</td><td class="num">${D.stories.length}</td><td class="num">${nf.format(K.kpi)}</td><td class="num">${nf.format(K.alcance)}</td><td class="num">${pct0(K.pct)}</td><td class="num">${nf.format(K.bonificado_alcance)}</td><td class="num">${nf.format(T.views_all)}</td><td class="num">${nf.format(T.inter)}</td><td class="num">${pct(T.er)}</td></tr></tfoot></table></div>
+    ${insight('',`${esc(mejorEr.nombre)} tuvo la mejor tasa de interacción (${pct(mejorEr.er)})${mejorEr.tipo==='Micro'?', siendo microcreador':''}.${bono?` ${esc(bono.nombre)} logró más alcance con sus piezas bonificadas (${nf.format(bono.bonificado)}) que con las contratadas (${nf.format(bono.alcance)}).`:''}`)}</section>
+  ${footer()}`;
+}
+
+/* ---------- Instagram ---------- */
+function vInstagram(){
+  const P=D.pieces.filter(p=>p.red==='ig').sort((a,b)=>b.v-a.v),n=N.ig,ST=D.storiesTotal;
+  const det=P.map(p=>`<tr><td><strong>${esc(p.t)}</strong><span class="hand">${esc(C[p.creador].nombre)} · ${p.f}${p.collab?'':' · sin colaboración'}</span></td><td class="num">${nf.format(p.v)}</td><td class="num">${p.fbv?nf.format(p.fbv):'—'}</td><td class="num">${nf.format(p.r)}</td><td class="num">${nf.format(p.likes)}</td><td class="num">${nf.format(p.comments)}</td><td class="num">${nf.format(p.shares)}</td><td class="num">${nf.format(p.s)}</td><td class="num">${pct(p.er)}</td><td class="l">${okPill(p.kpi)}</td></tr>`).join('');
+  const sdet=D.stories.map(s=>`<tr class="${s.viewers===I.st_top.viewers&&s.fecha===I.st_top.fecha?'hl':''}"><td><strong>${esc(C[s.creador].nombre)}</strong></td><td class="l">${s.f}</td><td class="num">${nf.format(s.viewers)}</td><td class="num">${nf.format(s.views)}</td><td class="num">${nf.format(s.inter)}</td><td class="num">${s.sticker==null?'—':nf.format(s.sticker)}</td><td class="num">${s.link==null?'—':nf.format(s.link)}</td><td class="num">${nf.format(s.visits)}</td><td class="l">${okPill(s.kpi)}</td></tr>`).join('');
+  const nfb=P.filter(p=>p.fbv).length;
+  return header()+tabhead('ig',`${n.n} reels y ${ST.n} historias`)+
+  sh('Instagram en cifras','Resultados de los reels. Debajo de cada cifra, lo que significa.')+
+  `<section class="kpis">${
+    kpiI('Visualizaciones',short(n.v),`De los ${n.n} reels, solo Instagram`,'eye',`El <b>${pct0(P[0].v/n.v)}</b> vino de ${esc(P[0].t)} de ${esc(C[P[0].creador].nombre)}.`,1)+
+    kpiI('En Facebook',short(n.fbv),`Reproducciones de ${nfb} reels publicados también allí`,'fb',`Apenas el <b>${pct(I.fb_share_meta)}</b> de lo que se vio en Meta.`)+
+    kpiI('Alcance',short(n.r),'Cuentas alcanzadas, sumado por reel','users',`Cada cuenta vio los reels <b>${dec(n.v/n.r)} veces</b> en promedio.`)+
+    kpiI('Interacciones',nf.format(n.i),'Me gusta, comentarios, compartidos y guardados','heart',`<b>${pct0(n.s/n.i)}</b> fueron guardados y solo <b>${pct(n.comments/n.i)}</b> comentarios.`)+
+    kpiI('Tasa de interacción',pct(n.er),'Interacciones ÷ alcance','rate',`<b>${P.filter(p=>p.lvl==='alta').length} de ${n.n}</b> reels con tasa alta.`)}</section>
+  ${sh('Reel por reel','Cuánto se vio cada reel y cómo reaccionó el público.')}
+  <div class="duo">
+    <section class="card"><div class="card-h"><div><h2>Visualizaciones por reel</h2><p>Instagram y, cuando se publicó también allí, Facebook. A la derecha, la tasa de interacción.</p></div>${legend(['ig','fb'])}</div>${piecesChart(P,true)}
+      ${insight('',`El reel de ${esc(C[P[0].creador].nombre)} tuvo ${dec(P[0].v/P[1].v)} veces las visualizaciones del segundo, ${esc(P[1].t)} de ${esc(C[P[1].creador].nombre)}. La mitad de los reels no pasó de ${short(P[Math.floor(P.length/2)].v)} visualizaciones.`)}</section>
+    <section class="card"><div class="card-h"><div><h2>Colaboración con @${esc(D.marca.handle)}</h2><p>Reels marcados como colaboración, que aparecen también en el perfil de la marca</p></div></div>
+      <div class="big2"><div class="hi"><span class="v num">${n.n-I.nocollab.length} de ${n.n}</span><span>reels marcados como colaboración</span></div><div><span class="v num">${I.nocollab.length}</span><span>sin la marca como coautora</span></div></div>
+      <div class="facts">${I.nocollab.map(x=>`<div><span>${esc(x.t)} · ${esc(x.creador)}</span><b>${x.f}</b></div>`).join('')}</div>
+      ${insight('','Sin la colaboración, el reel no aparece en el perfil de la marca. Conviene pedirla siempre en el contrato.')}</section>
+  </div>
+  <section class="card"><div class="card-h"><div><h2>Detalle por reel</h2><p>Compartidos incluye los reposts. Ordenados por visualizaciones.</p></div></div>
+    <div class="tbl"><table><thead><tr><th>Reel</th><th>Visualizaciones</th><th>En Facebook</th><th>Alcance</th><th>Me gusta</th><th>Comentarios</th><th>Compartidos</th><th>Guardados</th><th>Tasa</th><th class="l">KPI</th></tr></thead><tbody>${det}</tbody>
+    <tfoot><tr><td>Total</td><td class="num">${nf.format(n.v)}</td><td class="num">${nf.format(n.fbv)}</td><td class="num">${nf.format(n.r)}</td><td class="num">${nf.format(n.likes)}</td><td class="num">${nf.format(n.comments)}</td><td class="num">${nf.format(n.shares)}</td><td class="num">${nf.format(n.s)}</td><td class="num">${pct(n.er)}</td><td></td></tr></tfoot></table></div></section>
+  ${convRed('ig')}
+  ${sh('Historias',`${ST.n} historias de Instagram, con sus cifras del informe de la campaña.`)}
+  <section class="card">
+    <div class="stories"><div class="sfigs"><div><span class="v num">${short(ST.viewers)}</span><span>espectadores en ${ST.n} historias</span></div>
+      <div><span class="v num">${nf.format(ST.sticker)}</span><span>toques al sticker</span></div>
+      <div><span class="v num">${nf.format(ST.link)}</span><span>toques al enlace</span></div>
+      <div><span class="v num">${nf.format(ST.visits)}</span><span>visitas al perfil</span></div></div>
+      <div class="tbl"><table><thead><tr><th>Creador</th><th class="l">Fecha</th><th>Espectadores</th><th>Visualizaciones</th><th>Interacciones</th><th>Toques al sticker</th><th>Toques al enlace</th><th>Visitas al perfil</th><th class="l">KPI</th></tr></thead><tbody>${sdet}</tbody>
+      <tfoot><tr><td>Total</td><td></td><td class="num">${nf.format(ST.viewers)}</td><td class="num">${nf.format(ST.views)}</td><td class="num">${nf.format(ST.inter)}</td><td class="num">${nf.format(ST.sticker)}</td><td class="num">${nf.format(ST.link)}</td><td class="num">${nf.format(ST.visits)}</td><td></td></tr></tfoot></table></div></div>
+    ${insight(`${nf.format(ST.link)} toques al enlace en ${short(ST.viewers)} espectadores`,`las historias dieron alcance (${esc(I.st_top.nombre)} sumó ${nf.format(I.st_top.viewers)} espectadores en una sola historia, bonificada), pero casi no llevaron tráfico fuera de Instagram.`)}</section>
+  ${footer()}`;
+}
+
+/* ---------- TikTok ---------- */
+function vTiktok(){
+  const P=D.pieces.filter(p=>p.red==='tt').sort((a,b)=>b.v-a.v),n=N.tt;
+  const det=P.map(p=>`<tr><td><strong>${esc(p.t)}</strong><span class="hand">${esc(C[p.creador].nombre)} · ${p.f}</span></td><td class="num">${p.dur_s} s</td><td class="num">${nf.format(p.v)}</td><td class="num">${nf.format(p.r)}</td><td class="num">${nf.format(p.likes)}</td><td class="num">${nf.format(p.comments)}</td><td class="num">${nf.format(p.shares)}</td><td class="num">${nf.format(p.s)}</td><td class="num">${pct(p.er)}</td><td class="l">${okPill(p.kpi)}</td></tr>`).join('');
+  const ana=P.find(p=>p.creador==='chef-ana-galvis');
+  return header()+tabhead('tt',`${n.n} videos`)+
+  sh('TikTok en cifras','Resultados de los videos. Debajo de cada cifra, lo que significa.')+
+  `<section class="kpis">${
+    kpiI('Visualizaciones',short(n.v),`De los ${n.n} videos`,'eye',`El <b>${pct0(P[0].v/n.v)}</b> vino de ${esc(P[0].t)} de ${esc(C[P[0].creador].nombre)}.`,1)+
+    kpiI('Alcance',short(n.r),'Espectadores, sumado por video','users',`El <b>${pct0(I.tt_reach_share)}</b> del alcance de reels y videos.`)+
+    kpiI('Interacciones',nf.format(n.i),'Me gusta, comentarios, compartidos y guardados','heart',`<b>${pct0(n.s/n.i)}</b> fueron guardados.`)+
+    kpiI('Tasa de interacción',pct(n.er),'Interacciones ÷ alcance','rate',`<b>${dec(Math.abs(n.er-N.ig.er)*100)} puntos ${n.er<N.ig.er?'menos':'más'}</b> que Instagram (${pct(N.ig.er)}).`)+
+    kpiI('Cumplimiento',`${I.tt_cumplen} de ${I.n_tt_kpi}`,'Videos contratados que llegaron al KPI','goal',`El formato con <b>mejor cumplimiento</b> de la campaña.`)}</section>
+  ${sh('Video por video','Cuánto se vio cada video y cómo reaccionó el público.')}
+  <div class="duo">
+    <section class="card"><div class="card-h"><div><h2>Visualizaciones por video</h2><p>A la derecha, la tasa de interacción de cada video.</p></div></div>${piecesChart(P,false)}
+      ${insight('',`Tres de los cinco videos son réplicas de reels de Instagram. El de Matilda muffins, bonificado, tuvo la tasa más alta (${pct(P.find(p=>p.t.startsWith('Matilda')).er)}).`)}</section>
+    <section class="card"><div class="card-h"><div><h2>Cifras públicas y cifras del informe</h2><p>Visualizaciones de cada video según el informe de la campaña y según TikTok el ${fechaLarga(D.publicasCapturado)}</p></div></div>
+      <div class="facts">${P.map(p=>`<div><span>${esc(C[p.creador].nombre)} · ${esc(p.t)}</span><b class="num">${nf.format(p.excel_views)} → ${nf.format(p.v)}</b></div>`).join('')}</div>
+      ${insight('','El informe tiene '+nf.format(ana.excel_views)+' visualizaciones en el video de '+esc(C[ana.creador].nombre)+', pero TikTok muestra '+nf.format(ana.v)+': las visualizaciones no bajan, así que la cifra del informe tiene un error. El reporte usa siempre la cifra pública; el alcance sigue siendo el del informe.')}</section>
+  </div>
+  ${convRed('tt')}
+  <section class="card"><div class="card-h"><div><h2>Detalle por video</h2><p>Ordenados por visualizaciones.</p></div></div>
+    <div class="tbl"><table><thead><tr><th>Video</th><th>Duración</th><th>Visualizaciones</th><th>Alcance</th><th>Me gusta</th><th>Comentarios</th><th>Compartidos</th><th>Guardados</th><th>Tasa</th><th class="l">KPI</th></tr></thead><tbody>${det}</tbody>
+    <tfoot><tr><td>Total</td><td></td><td class="num">${nf.format(n.v)}</td><td class="num">${nf.format(n.r)}</td><td class="num">${nf.format(n.likes)}</td><td class="num">${nf.format(n.comments)}</td><td class="num">${nf.format(n.shares)}</td><td class="num">${nf.format(n.s)}</td><td class="num">${pct(n.er)}</td><td></td></tr></tfoot></table></div></section>
+  ${footer()}`;
+}
+
+/* ---------- navegación ---------- */
+const TABS=[{id:'resumen',label:'Resumen',icon:'grid'},{id:'creadores',label:'Creadores',icon:'people'},{id:'instagram',label:'Instagram',icon:'ig'},{id:'tiktok',label:'TikTok',icon:'tt'}].filter(t=>D.tabs.includes(t.id));
+window.REPORT_TABS=TABS.map(t=>t.id);
+document.getElementById('nav').innerHTML=TABS.map(t=>`<button type="button" id="tab-${t.id}" data-tab="${t.id}">${svg(t.icon)}${esc(t.label)}</button>`).join('');
+document.getElementById('period').textContent=D.periodo;
+document.title=`Reporte de campaña · ${D.marca.nombre} con ${D.creadores.length} creadores`;
+function bindTips(){
+  const chart=document.getElementById('chart'),tip=document.getElementById('tip');if(!chart)return;
+  const show=el=>{const r=el.getBoundingClientRect(),pr=chart.getBoundingClientRect();tip.textContent=el.dataset.tip;tip.hidden=false;
+    tip.style.left=Math.max(0,Math.min(r.left-pr.left,pr.width-tip.offsetWidth))+'px';tip.style.top=(r.top-pr.top-tip.offsetHeight-6)+'px';};
+  chart.querySelectorAll('.b').forEach(b=>{b.addEventListener('mouseenter',()=>show(b));b.addEventListener('focus',()=>show(b));b.addEventListener('mouseleave',()=>tip.hidden=true);b.addEventListener('blur',()=>tip.hidden=true);});
+}
+const VIEWS={resumen:vResumen,creadores:vCreadores,instagram:vInstagram,tiktok:vTiktok};
+function go(id){
+  if(!window.REPORT_TABS.includes(id)) id='resumen';
+  document.getElementById('view').innerHTML=VIEWS[id]();
+  document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.tab===id));
+  document.getElementById('pdf').href=`${D.pdfBase||'pdf'}/${id}.pdf`;
+  bindTips();
+}
+document.getElementById('nav').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  if(location.hash!=='#'+b.dataset.tab) history.replaceState(null,'','#'+b.dataset.tab);go(b.dataset.tab);window.scrollTo(0,0);});
+window.addEventListener('hashchange',()=>go(location.hash.slice(1)));
+go(location.hash.slice(1));
+</script>
+</body>
+</html>

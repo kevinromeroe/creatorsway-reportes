@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Reporte de campaña</title>
+<link rel="icon" href="../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+/*__CSS__*/
+/* Campaña con varios creadores: mismo sistema visual que el reporte de un creador (templates/reporte.html). */
+:root{--hist:#9A9A95;--canola:#064691}
+.title h1 .tlogo.wide{height:1.05em}
+.avs{display:inline-flex;align-items:center}
+.avs img{width:1.25em;height:1.25em;border-radius:50%;object-fit:cover;box-shadow:0 0 0 3px #fff;margin-left:-.32em}
+.avs img:first-child{margin-left:0}
+.fill.hist,.sbar .hist{background:var(--hist)}
+.legend i.hist{background:var(--hist)}
+.thumb.av{width:46px;height:46px;border-radius:50%}
+/* cumplimiento por creador */
+.kpirow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr) 92px;gap:18px;align-items:center;padding:12px 0;border-top:1px solid var(--linea)}
+.who{display:flex;gap:12px;align-items:center;min-width:0}
+.who img{width:40px;height:40px;border-radius:50%;object-fit:cover;flex:0 0 auto}
+.who strong{display:block;font-size:15px;line-height:1.3}
+.who span{font-size:13px}
+.meter{position:relative;height:12px;border-radius:99px;background:var(--pista)}
+.meter .fill{position:absolute;inset:0 auto 0 0;border-radius:99px;background:#000}
+.meter .fill.ok{background:var(--amarillo);box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
+.meter .goal{position:absolute;top:-5px;bottom:-5px;width:2px;background:#000}
+.meter .over{position:absolute;right:-2px;top:50%;transform:translateY(-50%);font-size:11px;font-weight:800}
+.meter-l{display:flex;justify-content:space-between;font-size:12.5px;margin-top:6px}
+.pct{justify-self:end;display:grid;justify-items:end;gap:4px}
+.pct .v{font-size:20px;font-weight:800;letter-spacing:-.02em}
+.pill.ok{background:var(--sube-bg);color:var(--sube)}
+.pill.no{background:var(--baja-bg);color:var(--baja)}
+.pill.bono{background:var(--media-bg)}
+.big2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.big2 div{background:var(--fondo);border-radius:16px;padding:14px 16px;display:grid;gap:2px}
+.big2 div.hi{background:var(--amarillo)}
+.big2 .v{font-size:30px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.big2 span{font-size:13px}
+.est{border:1.5px dashed #B5B5B0;border-radius:16px;padding:14px 16px;margin-top:12px;display:grid;gap:4px}
+.est .v{font-size:22px;font-weight:800}
+.est span{font-size:13px}
+.est b.tag{font-size:11.5px;font-weight:800;background:var(--fondo);border-radius:999px;padding:2px 9px;justify-self:start}
+.fmt{display:grid;gap:12px;margin-top:16px}
+/* tarjetas de creador */
+.cgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.cc{display:grid;gap:14px;align-content:start}
+.cc-h{display:flex;gap:12px;align-items:center}
+.cc-h img{width:52px;height:52px;border-radius:50%;object-fit:cover;flex:0 0 auto}
+.cc-h strong{display:block;font-size:16px;line-height:1.25}
+.cc-h a{font-size:13px;text-decoration:none}
+.cc-h a:hover{text-decoration:underline}
+.cc .row{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.cc .row .v{font-size:30px;font-weight:800;letter-spacing:-.02em;line-height:1}
+.cc .mini-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.cc .mini-g div{background:var(--fondo);border-radius:12px;padding:8px 10px;display:grid}
+.cc .mini-g b{font-size:16px;font-weight:800}
+.cc .mini-g span{font-size:12px}
+.cc .pz{font-size:13px;line-height:1.5;border-top:1px solid var(--linea);padding-top:10px}
+.cc.hi{box-shadow:inset 0 0 0 2px var(--amarillo),var(--sombra)}
+.tag-red{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700}
+.tag-red svg{width:12px;height:12px}
+td .tag-red{font-weight:600}
+@media (max-width:1000px){.cgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){
+  .cgrid,.big2{grid-template-columns:minmax(0,1fr)}
+  .kpirow{grid-template-columns:minmax(0,1fr) auto;gap:10px 14px}
+  .kpirow .mw{grid-column:1 / -1;grid-row:2}
+}
+@media print{.cc{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <img class="cw" src="../assets/logo-creatorsway-blanco.png" alt="CreatorsWay">
+    <nav class="nav" id="nav" aria-label="Secciones del reporte"></nav>
+    <div class="top-r"><span class="period" id="period"></span><a class="btn yel" id="pdf" href="pdf/resumen.pdf" download>↓ Descargar PDF</a></div>
+  </div>
+</header>
+<main class="page"><div class="wrap" id="view"></div></main>
+
+<script>
+const D=/*__DATA__*/null;
+const nf=new Intl.NumberFormat('es-CO');
+const short=v=>v>=1e6?(v/1e6).toLocaleString('es-CO',{minimumFractionDigits:2,maximumFractionDigits:2})+' M':v>=1e4?Math.round(v/1e3).toLocaleString('es-CO')+' K':nf.format(Math.round(v));
+const pct=(v,d=1)=>(v*100).toLocaleString('es-CO',{minimumFractionDigits:d,maximumFractionDigits:d})+' %';
+const pct0=v=>pct(v,0);
+const dec=(v,d=1)=>v.toLocaleString('es-CO',{minimumFractionDigits:d,maximumFractionDigits:d});
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const LVL={alta:'Alta',media:'Media',baja:'Baja'};
+const NET={ig:'Instagram',tt:'TikTok',fb:'Facebook',hist:'Historias'};
+const IC={
+ eye:'<path d="M1 8s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="2" fill="currentColor"/>',
+ users:'<circle cx="6" cy="5" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M1.5 14c0-2.5 2-4 4.5-4s4.5 1.5 4.5 4M11 3.2a2.4 2.4 0 010 4.6M12.5 10.3c1.3.5 2 1.8 2 3.7" fill="none" stroke="currentColor" stroke-width="1.5"/>',
+ heart:'<path d="M8 14S1.5 10 1.5 5.6A3.3 3.3 0 018 4a3.3 3.3 0 016.5 1.6C14.5 10 8 14 8 14z" fill="none" stroke="currentColor" stroke-width="1.5"/>',
+ rate:'<path d="M2 13L6 8l3 3 5-7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>',
+ goal:'<circle cx="8" cy="8" r="6.3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="1" fill="currentColor"/>',
+ save:'<path d="M4 1.8h8v12.4L8 11l-4 3.2z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>',
+ ig:'<rect x="1.5" y="1.5" width="13" height="13" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="11.9" cy="4.1" r=".9" fill="currentColor"/>',
+ fb:'<path d="M9.2 15V8.6h2.1l.3-2.5H9.2V4.5c0-.7.2-1.2 1.2-1.2h1.3V1.1c-.2 0-1-.1-1.9-.1-1.9 0-3.2 1.2-3.2 3.3v1.8H4.5v2.5h2.1V15z" fill="currentColor"/>',
+ tt:'<path d="M8.6 1.5h2.3c.2 1.4 1.2 2.4 2.6 2.6v2.3c-1 0-1.9-.3-2.6-.8v4.6a3.6 3.6 0 11-3.6-3.6c.2 0 .4 0 .6.1v2.3a1.4 1.4 0 10.7 1.2z" fill="currentColor"/>',
+ grid:'<rect x="1" y="1" width="6" height="6" rx="1" fill="currentColor"/><rect x="9" y="1" width="6" height="6" rx="1" fill="currentColor"/><rect x="1" y="9" width="6" height="6" rx="1" fill="currentColor"/><rect x="9" y="9" width="6" height="6" rx="1" fill="currentColor"/>',
+ people:'<circle cx="5" cy="5" r="2.3" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="11" cy="5" r="2.3" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M1 14c0-2.3 1.8-3.8 4-3.8s4 1.5 4 3.8M7 14c0-2.3 1.8-3.8 4-3.8s4 1.5 4 3.8" fill="none" stroke="currentColor" stroke-width="1.4"/>'
+};
+const svg=k=>`<svg viewBox="0 0 16 16" aria-hidden="true">${IC[k]}</svg>`;
+const pill=l=>`<span class="pill ${l}">${LVL[l]}</span>`;
+const okPill=k=>!k||k.kpi==null?'<span class="pill bono">Bonificado</span>':k.cumple?'<span class="pill ok">Cumplió</span>':'<span class="pill no">No cumplió</span>';
+const C=Object.fromEntries(D.creadores.map(c=>[c.id,c]));
+const I=D.insights,T=D.totals,K=D.kpi,N=D.nets,CV=D.conv;
+const redTag=k=>`<span class="tag-red">${svg(k)}${NET[k]}</span>`;
+const kpiI=(k,v,d,ic,ins,hi)=>`<article class="card kpi${hi?' hi':''}"><div class="row"><span class="k">${k}</span><span class="ic">${svg(ic)}</span></div><span class="v num">${v}</span><span class="d">${d}</span><p class="ins">${ins}</p></article>`;
+const insight=(t,b)=>`<p class="callout">${t?`<b>${t}:</b> `:''}${b}</p>`;
+const sh=(t,p)=>`<div class="sec-t"><h2>${t}</h2>${p?`<p>${p}</p>`:''}</div>`;
+const tabhead=(k,s)=>`<div class="tabhead"><span class="pbadge ${k}">${svg(k)}</span><h2>${NET[k]}</h2><span class="s">${s}</span></div>`;
+const legend=ks=>`<div class="legend">${ks.map(k=>`<span><i class="${k}" style="background:var(--${k})"></i>${NET[k]}</span>`).join('')}</div>`;
+const lista=a=>a.length<2?a.join(''):a.slice(0,-1).join(', ')+' y '+a[a.length-1];
+
+function header(){
+  const avs=D.creadores.slice().sort((a,b)=>b.alcance-a.alcance).slice(0,5).map(c=>`<img src="../${esc(c.avatar)}" alt="">`).join('');
+  return `<div class="title"><h1><span class="avs">${avs}</span><span class="jft">${D.creadores.length} creadores</span><span class="x">×</span><img class="tlogo wide" src="../${esc(D.marca.logo)}" alt="${esc(D.marca.nombre)}"></h1></div>`;
+}
+const LEGAL=`<div class="legal">
+  <p><strong>© ${new Date().getFullYear()} Datalítica Colombia S.A.S.</strong> · NIT 901.957.313-6 · Todos los derechos reservados. Reporte confidencial preparado para CreatorsWay y ${esc(D.marca.nombre)}; su reproducción o distribución sin autorización está prohibida (Ley 23 de 1982).</p>
+  <nav aria-label="Información legal"><a href="../legal/terminos.html">Términos y condiciones de uso</a><a href="../legal/datos-personales.html">Política de tratamiento de datos personales</a><a href="../legal/datos-personales.html#aviso">Aviso de privacidad</a><a href="../legal/datos-personales.html#cookies">Cookies</a><a href="mailto:comercial@datalitica.com.co">comercial@datalitica.com.co</a></nav>
+</div>`;
+const footer=()=>`<footer class="foot"><div class="foot-top"><span>Fuente: cifras públicas de Instagram y TikTok leídas por Datalítica el ${fechaLarga(D.publicasCapturado)}; alcance, guardados de Instagram, historias y KPI del informe de la campaña; comentarios públicos de las publicaciones.</span><img src="../assets/logo-creatorsway-negro.png" alt="CreatorsWay"></div>${LEGAL}</footer>`;
+const MESES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+function fechaLarga(iso){if(!iso)return '';const [y,m,d]=iso.split('-').map(Number);return `${d} de ${MESES[m-1]} de ${y}`;}
+
+/* ---------- piezas ---------- */
+const thumb=p=>{const c=C[p.creador];const img=p.img?`<img src="../${esc(p.img)}" alt="" loading="eager">`:`<img src="../${esc(c.avatar)}" alt="">`;
+  return `<a class="thumb${p.img?'':' av'}" href="${esc(p.url)}" target="_blank" rel="noopener" aria-label="Ver ${esc(p.t)}">${img}</a>`;};
+function piecesChart(P,showFb){
+  const max=Math.max(...P.map(p=>p.v+(showFb?p.fbv:0)));
+  const bar=(k,v,p)=>`<div class="b" tabindex="0" data-tip="${NET[k]}: ${nf.format(v)} visualizaciones${k==='fb'?'':`, ${nf.format(p.i)} interacciones, ${nf.format(p.s)} guardados`}"><div class="track"><div class="fill ${k}" style="width:${(v/max*100).toFixed(1)}%"></div></div><span class="num">${short(v)}</span></div>`;
+  return `<div class="chart" id="chart">${P.map(p=>`<div class="crow"><div class="cname">${thumb(p)}<div><strong>${esc(p.t)}</strong><span>${esc(C[p.creador].nombre)} · ${p.f}</span></div></div><div class="bars">${bar(p.red,p.v,p)}${showFb&&p.fbv?bar('fb',p.fbv,p):''}</div><div class="er"><span class="v num">${pct(p.er)}</span>${pill(p.lvl)}</div></div>`).join('')}<div class="tip" id="tip" hidden></div></div>`;
+}
+
+/* ---------- cumplimiento ---------- */
+function meterRow(c){
+  const cap=2,w=Math.min(c.pct,cap)/cap*100,goal=1/cap*100;
+  return `<div class="kpirow"><div class="who"><img src="../${esc(c.avatar)}" alt=""><div><strong>${esc(c.nombre)}</strong><span>${esc(c.tipo)} · ${c.piezas_cumplen} de ${c.piezas_kpi} piezas</span></div></div>
+    <div class="mw"><div class="meter" role="img" aria-label="${esc(c.nombre)}: ${nf.format(c.alcance)} de alcance frente a un KPI de ${nf.format(c.kpi)}"><div class="fill${c.cumple?' ok':''}" style="width:${w}%"></div><span class="goal" style="left:${goal}%"></span>${c.pct>cap?'<span class="over">›</span>':''}</div>
+    <div class="meter-l num"><span>${nf.format(c.alcance)} de alcance</span><span>KPI ${nf.format(c.kpi)}</span></div></div>
+    <div class="pct"><span class="v num">${pct0(c.pct)}</span>${c.cumple?'<span class="pill ok">Cumple</span>':'<span class="pill no">No cumple</span>'}</div></div>`;
+}
+
+/* ---------- conversación ---------- */
+const temaBars=(temas,color)=>{const mx=Math.max(...temas.map(t=>t.share));
+  return `<div class="share">${temas.map(t=>`<div class="srow"><div class="t"><b>${esc(t.label)}</b><span class="num">${nf.format(t.n)} · ${pct0(t.share)}</span></div><div class="sbar" style="background:var(--pista)"><div style="width:${t.share/mx*100}%;background:${color}"></div></div></div>`).join('')}</div>`;};
+const tonoBars=t=>{const rows=[['Críticas: salud del aceite o del esparcible',t.negativo,'var(--baja)'],['Dudas: qué es, con qué reemplazarlo, dónde se consigue',t.duda,'#9A9A95'],['Sin opinión: mencionan o explican el producto',t.neutro,'#D0D0CB'],['A favor del aceite',t.positivo,'var(--sube)']];const mx=Math.max(...rows.map(r=>r[1]),1);
+  return `<div class="share">${rows.map(r=>`<div class="srow"><div class="t"><b>${r[0]}</b><span class="num">${nf.format(r[1])}</span></div><div class="sbar" style="background:var(--pista)"><div style="width:${r[1]/mx*100}%;background:${r[2]}"></div></div></div>`).join('')}</div>`;};
+function convResumen(){
+  if(!CV)return '';const t=CV.tono,th=Object.fromEntries(CV.temas.map(x=>[x.k,x]));
+  const quotes=CV.destacados.slice(0,3).map(q=>`<figure class="card quote"><span class="qt">${esc(q.tema)}</span><blockquote>“${esc(q.texto)}”</blockquote><figcaption class="num">${nf.format(q.me_gusta)} me gusta · ${NET[q.red]} · ${esc(q.creador)}, ${esc(q.pieza)}</figcaption></figure>`).join('');
+  const opin=t.negativo+t.positivo;
+  return sh('Lo que dice la gente',`Leímos ${nf.format(CV.n)} comentarios del público y ${nf.format(CV.creadores_resp)} respuestas de los creadores en las ${D.pieces.length} publicaciones (el ${pct0(CV.coverage)} de los que reportan las plataformas).`)+
+  `<div class="duo">
+    <section class="card"><div class="card-h"><div><h2>Temas de la conversación</h2><p>Comentarios y respuestas del público, por tema principal</p></div></div>${temaBars(CV.temas,'#000')}
+      ${insight('',`${pct0(th.antojo.share)} es antojo y elogio a la receta. Le siguen las preguntas sobre la preparación (${pct0(th.receta.share)}) y las críticas al aceite (${pct0(th.critica.share)}). ${esc(CV.pedido_top.creador)} recibió ${nf.format(CV.pedido_top.n)} pedidos de otra receta en un solo reel: el público quería las cebollas encurtidas.`)}</section>
+    <section class="card"><div class="card-h"><div><h2>${esc(D.marca.nombre)} en los comentarios</h2><p>${nf.format(CV.marca_n)} comentarios del público hablan del aceite, del esparcible o de la marca (${pct0(CV.marca_share)})</p></div></div>${tonoBars(t)}
+      ${insight(`${nf.format(t.negativo)} críticas frente a ${nf.format(t.positivo)} defensas`,`la mayoría cuestiona si el aceite de canola es saludable. ${esc(CV.crit_top.creador)} concentró ${nf.format(CV.crit_top.n)} (${pct0(CV.crit_top.share)}), con el comentario más votado de la conversación de marca.`)}
+      <p class="callout"><b>${nf.format(t.duda)} dudas sobre el producto:</b> ${nf.format(CV.duda_esparcible)} preguntan qué es el esparcible o si es margarina o mantequilla, la mayoría en el reel de ${esc(CV.duda_top.creador)}. La marca tiene una tarea de explicar su producto.</p></section>
+  </div>
+  <section class="quotes" aria-label="Comentarios destacados">${quotes}</section>`;
+}
+function convRed(k){
+  if(!CV||!CV.redes[k])return '';const R=CV.redes[k],t=R.tono;
+  return sh(`Conversación en ${NET[k]}`,`${nf.format(R.n)} comentarios del público, de ${nf.format(R.total)} que reporta la plataforma (incluye respuestas de los creadores).`)+
+  `<section class="card"><div class="duo inner">
+    <div><div class="card-h"><div><h2>Temas</h2></div></div>${temaBars(R.temas,k==='tt'?'#000':'#000')}</div>
+    <div><div class="card-h"><div><h2>${esc(D.marca.nombre)} en los comentarios</h2></div></div>${tonoBars(t)}</div>
+  </div>${insight('',`${nf.format(t.negativo)} críticas al aceite, ${nf.format(t.duda)} dudas sobre el producto y ${nf.format(t.positivo)} comentarios a favor.${k==='tt'?' En TikTok no hubo dudas sobre el producto: la conversación de marca fue solo crítica.':''}`)}</section>`;
+}
+
+/* ---------- resumen ---------- */
+function vResumen(){
+  const S=K.sin_macro;
+  const top=D.pieces.slice().sort((a,b)=>(b.v+b.fbv)-(a.v+a.fbv)).slice(0,8);
+  const shareRow=(k,vals)=>{const ks=Object.keys(vals),tot=ks.reduce((a,x)=>a+vals[x],0);
+    return `<div class="srow"><div class="t"><b>${k}</b><span class="num">${ks.map(x=>Math.round(vals[x]/tot*100)+' %').join(' · ')}</span></div><div class="sbar">${ks.map(x=>`<div class="${x}" style="width:${vals[x]/tot*100}%"></div>`).join('')}</div></div>`;};
+  const rows=[...D.pieces.map(p=>({...p,tipoF:p.red==='ig'?'Reel':'Video'})),...D.stories.map(s=>({...s,red:'hist',tipoF:'Historia',t:'Historia',r:s.viewers}))].filter(x=>x.kpi).sort((a,b)=>C[a.creador].nombre.localeCompare(C[b.creador].nombre,'es')||a.fecha.localeCompare(b.fecha));
+  const det=rows.map(x=>{const k=x.kpi;return `<tr class="${k.cumple?'hl':''}"><td><strong>${esc(C[x.creador].nombre)}</strong><span class="hand">${esc(x.t)}</span></td><td class="l">${x.red==='hist'?'Historia de Instagram':redTag(x.red)}</td><td class="l">${x.f}</td><td class="l">${esc(k.tipo)}</td><td class="num">${k.kpi==null?'—':nf.format(k.kpi)}</td><td class="num">${nf.format(k.alcance)}</td><td class="num">${k.pct==null?'—':pct0(k.pct)}</td><td class="l">${okPill(k)}</td><td class="num">${nf.format(k.proyectado)}</td></tr>`;}).join('');
+  const H=[
+    {v:I.macro_reach_share,t:`${esc(I.macro_nombre)} aportó un tercio del alcance contratado`,p:`Con un KPI de ${nf.format(K.kpi-S.kpi)} (el ${pct(1-S.kpi/K.kpi)} de la meta), su reel alcanzó ${nf.format(K.alcance-S.alcance)} cuentas. Sin él, la campaña queda en ${pct(S.pct)} del KPI: el resultado depende de una sola pieza.`},
+    {v:I.ig_cumplen/I.n_ig_kpi,t:`Solo ${I.ig_cumplen} de ${I.n_ig_kpi} reels contratados llegaron a su meta`,p:`En TikTok cumplieron ${I.tt_cumplen} de ${I.n_tt_kpi} videos y en historias ${I.st_cumplen} de ${I.n_st_kpi}. Las metas de alcance de los reels son las que más se quedan cortas; vale la pena revisarlas con el histórico de cada creador antes de la próxima campaña.`},
+    CV?{v:CV.tono.negativo/CV.marca_n,t:`de los comentarios sobre el producto lo critican`,p:`El público pregunta por la salud del aceite de canola y no entiende qué es el esparcible (${nf.format(CV.duda_esparcible)} preguntas). Los creadores respondieron ${nf.format(CV.respondidas)} de ${nf.format(CV.preguntas)} preguntas del público: la marca puede apoyarlos con respuestas claras sobre el producto.`}:null
+  ].filter(Boolean);
+  return header()+
+  sh('La campaña en cifras','Cuánto alcance logró cada contrato, qué tanto se vio el contenido y cómo reaccionó el público. Debajo de cada cifra, lo que significa.')+
+  `<section class="kpis" aria-label="Resumen de la campaña">${
+    kpiI('Cumplimiento del KPI',pct0(K.pct),`Alcance verificado ÷ KPI de ${K.piezas} piezas contratadas`,'goal',`Sin ${esc(I.macro_nombre)}, <b>${pct(S.pct)}</b>: una sola pieza explica el sobrecumplimiento.`,1)+
+    kpiI('Alcance verificado',short(K.alcance),`Piezas contratadas; KPI ${short(K.kpi)}`,'users',`Más <b>${short(K.bonificado_alcance)}</b> de ${K.bonificado_piezas} piezas bonificadas, que no tienen KPI.`)+
+    kpiI('Visualizaciones',short(T.views_all),'Instagram, TikTok, Facebook e historias','eye',`El <b>${pct0(I.top_share_views)}</b> de lo que se vio en reels y videos vino de un solo reel de ${esc(I.top_creador)}.`)+
+    kpiI('Interacciones',nf.format(T.inter),'Me gusta, comentarios, compartidos y guardados','heart',`<b>${pct0(I.saves_share)}</b> fueron guardados: la gente se lleva la receta.`)+
+    kpiI('Tasa de interacción',pct(T.er),'Interacciones ÷ alcance, reels y videos','rate',`<b>${I.n_alta} de ${I.n_pieces}</b> publicaciones tuvieron una tasa alta (10 % o más).`)}</section>
+  ${sh('Cumplimiento por creador','Alcance verificado de las piezas contratadas frente al KPI de cada creador. La línea marca el 100 %.')}
+  <div class="duo">
+    <section class="card"><div class="card-h"><div><h2>Alcance frente al KPI</h2><p>Ordenados por cumplimiento. La barra llega hasta el 200 %.</p></div></div>${D.creadores.filter(c=>c.kpi).map(meterRow).join('')}
+      ${insight(`Cumplen ${I.creadores_cumplen.length} de ${I.n_creadores_kpi} creadores`,`${lista(I.creadores_cumplen.map(esc))}.${I.casi.length?` ${lista(I.casi.map(c=>esc(c.nombre)))} quedó en ${lista(I.casi.map(c=>pct0(c.pct)))}.`:''} De los ${I.n_micro} microcreadores, cumplieron ${I.micro_cumplen}.`)}</section>
+    <section class="card"><div class="card-h"><div><h2>Lo verificado y lo proyectado</h2><p>Cumplimiento de la campaña</p></div></div>
+      <div class="big2"><div class="hi"><span class="v num">${pct0(K.pct)}</span><span>con todos los creadores (${nf.format(K.cumplen)} de ${K.piezas} piezas cumplen)</span></div><div><span class="v num">${pct(S.pct)}</span><span>sin ${esc(I.macro_nombre)} (${nf.format(S.cumplen)} de ${S.piezas} piezas cumplen)</span></div></div>
+      <div class="est"><b class="tag">Estimación, no verificada</b><span class="v num">${pct0(K.pct_proyectado)} · ${pct0(S.pct_proyectado)} sin ${esc(I.macro_nombre)}</span><span>Cumplimiento con el alcance proyectado del informe de la campaña, que suma un 7 % a reels y videos (${nf.format(K.proyectado)} de alcance). No es una cifra medida.</span></div>
+      <div class="fmt share">${[['Reels de Instagram',I.ig_cumplen,I.n_ig_kpi],['Videos de TikTok',I.tt_cumplen,I.n_tt_kpi],['Historias',I.st_cumplen,I.n_st_kpi]].map(([l,a,b])=>`<div class="srow"><div class="t"><b>${l}</b><span class="num">${a} de ${b} cumplen</span></div><div class="sbar" style="background:var(--pista)"><div style="width:${a/b*100}%;background:#000"></div></div></div>`).join('')}</div>
+      ${insight('','Los videos de TikTok fueron el formato más confiable para llegar a la meta; los reels, el menos.')}</section>
+  </div>
+  ${sh('Las publicaciones','Las que más se vieron y qué aportó cada red.')}
+  <div class="duo">
+    <section class="card"><div class="card-h"><div><h2>Las ${top.length} publicaciones más vistas</h2><p>Visualizaciones; a la derecha, la tasa de interacción. Todas en las pestañas de cada red.</p></div>${legend(['ig','tt','fb'])}</div>${piecesChart(top,true)}
+      ${insight('',`${esc(I.top_piece)}, de ${esc(I.top_creador)}, sumó ${nf.format(I.top_views)} visualizaciones. La mejor tasa fue la de ${esc(I.er_top.t)} de ${esc(I.er_top.creador)} (${pct(I.er_top.er)}), un microcreador.`)}</section>
+    <section class="card"><div class="card-h"><div><h2>Resultados por red</h2><p>Participación de cada red en el total</p></div></div>
+      <div class="share">${legend(['ig','tt','fb','hist'])}${shareRow('Visualizaciones',{ig:T.views_ig,tt:T.views_tt,fb:T.views_fb,hist:T.views_st})}${shareRow('Alcance',{ig:N.ig.r,tt:N.tt.r,hist:D.storiesTotal.viewers})}${shareRow('Interacciones',{ig:N.ig.i,tt:N.tt.i})}</div>
+      ${insight('Instagram cargó la campaña',`${N.ig.n} reels frente a ${N.tt.n} videos de TikTok. TikTok aportó el ${pct0(I.tt_reach_share)} del alcance de reels y videos, con una tasa de ${pct(N.tt.er)} frente a ${pct(N.ig.er)} en Instagram. Facebook solo suma las reproducciones de los reels publicados también allí (${pct(I.fb_share_meta)} de lo visto en Meta).`)}</section>
+  </div>
+  ${convResumen()}
+  ${sh('Hallazgos','Lo que la marca y la agencia deberían llevarse de esta campaña.')}
+  <section class="finds" aria-label="Hallazgos">${H.map((h,i)=>`<article class="card find${i?'':' hi'}"><span class="v num">${pct0(h.v)}</span><h3>${h.t}</h3><p>${h.p}</p></article>`).join('')}</section>
+  ${sh('Detalle del KPI','Cada pieza con su meta, su alcance verificado y el proyectado del informe de la campaña.')}
+  <section class="card"><div class="card-h"><div><h2>Cumplimiento por pieza</h2><p>Resaltadas, las piezas que cumplieron. Las bonificadas no tienen KPI (—). El proyectado es una estimación (+7 % en reels y videos).</p></div></div>
+    <div class="tbl"><table><thead><tr><th>Creador y pieza</th><th class="l">Formato</th><th class="l">Fecha</th><th class="l">Tipo</th><th>KPI</th><th>Alcance verificado</th><th>Cumplimiento</th><th class="l">Estado</th><th>Proyectado</th></tr></thead><tbody>${det}</tbody>
+    <tfoot><tr><td>Total contratado</td><td></td><td></td><td></td><td class="num">${nf.format(K.kpi)}</td><td class="num">${nf.format(K.alcance)}</td><td class="num">${pct0(K.pct)}</td><td class="l">${K.cumplen} de ${K.piezas}</td><td class="num">${nf.format(K.proyectado)}</td></tr></tfoot></table></div>
+    ${insight('',`El alcance de cada pieza viene del informe de la campaña y cuadra con la suma de las publicaciones (${nf.format(K.alcance_verificado)} con las bonificadas).`)}</section>
+  ${footer()}`;
+}
+
+/* ---------- creadores ---------- */
+function vCreadores(){
+  const cards=D.creadores.slice().sort((a,b)=>b.alcance+b.bonificado-(a.alcance+a.bonificado)).map(c=>{
+    const P=D.pieces.filter(p=>p.creador===c.id),S=D.stories.filter(s=>s.creador===c.id);
+    const crit=c.tono.negativo||0,dud=c.tono.duda||0;
+    const pz=[...P.map(p=>`${esc(p.t)} (${NET[p.red]}, ${p.f})`),...S.map(s=>`Historia (${s.f})`)].join(' · ');
+    return `<article class="card cc${c.cumple?' hi':''}"><div class="cc-h"><img src="../${esc(c.avatar)}" alt=""><div><strong>${esc(c.nombre)}</strong><a href="https://www.instagram.com/${esc(c.ig)}/" target="_blank" rel="noopener">@${esc(c.ig)}</a> <span class="pill">${esc(c.tipo)}</span></div></div>
+      <div class="row"><span class="v num">${pct0(c.pct)}</span>${c.cumple?'<span class="pill ok">Cumple el KPI</span>':'<span class="pill no">No cumple el KPI</span>'}</div>
+      <div><div class="meter"><div class="fill${c.cumple?' ok':''}" style="width:${Math.min(c.pct,2)/2*100}%"></div><span class="goal" style="left:50%"></span></div><div class="meter-l num"><span>${nf.format(c.alcance)} de alcance</span><span>KPI ${nf.format(c.kpi)}</span></div></div>
+      <div class="mini-g"><div><b class="num">${short(c.v)}</b><span>visualizaciones</span></div><div><b class="num">${c.er==null?'—':pct(c.er)}</b><span>tasa de interacción</span></div><div><b class="num">${c.piezas_cumplen}/${c.piezas_kpi}</b><span>piezas cumplen</span></div></div>
+      <p class="pz">${pz}${c.bonificado?`<br><b>Bonificado:</b> ${nf.format(c.bonificado)} de alcance adicional, sin KPI.`:''}${crit||dud?`<br><b>Comentarios sobre el producto:</b> ${crit} ${crit===1?'crítica':'críticas'} y ${dud} ${dud===1?'duda':'dudas'}.`:''}</p></article>`;}).join('');
+  const rows=D.creadores.map(c=>`<tr class="${c.cumple?'hl':''}"><td><strong>${esc(c.nombre)}</strong></td><td class="l">${esc(c.tipo)}</td><td class="num">${c.n_reels}</td><td class="num">${c.n_tt}</td><td class="num">${c.n_hist}</td><td class="num">${nf.format(c.kpi)}</td><td class="num">${nf.format(c.alcance)}</td><td class="num">${pct0(c.pct)}</td><td class="num">${c.bonificado?nf.format(c.bonificado):'—'}</td><td class="num">${nf.format(c.v)}</td><td class="num">${nf.format(c.i)}</td><td class="num">${c.er==null?'—':pct(c.er)}</td></tr>`).join('');
+  const mejorEr=D.creadores.filter(c=>c.er!=null).sort((a,b)=>b.er-a.er)[0];
+  const bono=D.creadores.find(c=>c.bonificado>c.alcance);
+  return header()+`<div class="tabhead"><span class="pbadge" style="background:#000">${svg('people')}</span><h2>Creadores</h2><span class="s">${D.creadores.length} creadores, ${D.pieces.length} publicaciones y ${D.stories.length} historias</span></div>`+
+  sh('Creador por creador','Ordenados por alcance total, incluidas las piezas bonificadas. Con borde amarillo, los que cumplieron su KPI.')+
+  `<section class="cgrid">${cards}</section>
+  <section class="card"><div class="card-h"><div><h2>Resumen por creador</h2><p>Visualizaciones de reels, videos, Facebook e historias. Tasa de interacción de reels y videos. Resaltados, los que cumplieron.</p></div></div>
+    <div class="tbl"><table><thead><tr><th>Creador</th><th class="l">Tipo</th><th>Reels</th><th>TikTok</th><th>Historias</th><th>KPI</th><th>Alcance verificado</th><th>Cumplimiento</th><th>Bonificado</th><th>Visualizaciones</th><th>Interacciones</th><th>Tasa</th></tr></thead><tbody>${rows}</tbody>
+    <tfoot><tr><td>Total</td><td></td><td class="num">${N.ig.n}</td><td class="num">${N.tt.n}</td><td class="num">${D.stories.length}</td><td class="num">${nf.format(K.kpi)}</td><td class="num">${nf.format(K.alcance)}</td><td class="num">${pct0(K.pct)}</td><td class="num">${nf.format(K.bonificado_alcance)}</td><td class="num">${nf.format(T.views_all)}</td><td class="num">${nf.format(T.inter)}</td><td class="num">${pct(T.er)}</td></tr></tfoot></table></div>
+    ${insight('',`${esc(mejorEr.nombre)} tuvo la mejor tasa de interacción (${pct(mejorEr.er)})${mejorEr.tipo==='Micro'?', siendo microcreador':''}.${bono?` ${esc(bono.nombre)} logró más alcance con sus piezas bonificadas (${nf.format(bono.bonificado)}) que con las contratadas (${nf.format(bono.alcance)}).`:''}`)}</section>
+  ${footer()}`;
+}
+
+/* ---------- Instagram ---------- */
+function vInstagram(){
+  const P=D.pieces.filter(p=>p.red==='ig').sort((a,b)=>b.v-a.v),n=N.ig,ST=D.storiesTotal;
+  const det=P.map(p=>`<tr><td><strong>${esc(p.t)}</strong><span class="hand">${esc(C[p.creador].nombre)} · ${p.f}${p.collab?'':' · sin colaboración'}</span></td><td class="num">${nf.format(p.v)}</td><td class="num">${p.fbv?nf.format(p.fbv):'—'}</td><td class="num">${nf.format(p.r)}</td><td class="num">${nf.format(p.likes)}</td><td class="num">${nf.format(p.comments)}</td><td class="num">${nf.format(p.shares)}</td><td class="num">${nf.format(p.s)}</td><td class="num">${pct(p.er)}</td><td class="l">${okPill(p.kpi)}</td></tr>`).join('');
+  const sdet=D.stories.map(s=>`<tr class="${s.viewers===I.st_top.viewers&&s.fecha===I.st_top.fecha?'hl':''}"><td><strong>${esc(C[s.creador].nombre)}</strong></td><td class="l">${s.f}</td><td class="num">${nf.format(s.viewers)}</td><td class="num">${nf.format(s.views)}</td><td class="num">${nf.format(s.inter)}</td><td class="num">${s.sticker==null?'—':nf.format(s.sticker)}</td><td class="num">${s.link==null?'—':nf.format(s.link)}</td><td class="num">${nf.format(s.visits)}</td><td class="l">${okPill(s.kpi)}</td></tr>`).join('');
+  const nfb=P.filter(p=>p.fbv).length;
+  return header()+tabhead('ig',`${n.n} reels y ${ST.n} historias`)+
+  sh('Instagram en cifras','Resultados de los reels. Debajo de cada cifra, lo que significa.')+
+  `<section class="kpis">${
+    kpiI('Visualizaciones',short(n.v),`De los ${n.n} reels, solo Instagram`,'eye',`El <b>${pct0(P[0].v/n.v)}</b> vino de ${esc(P[0].t)} de ${esc(C[P[0].creador].nombre)}.`,1)+
+    kpiI('En Facebook',short(n.fbv),`Reproducciones de ${nfb} reels publicados también allí`,'fb',`Apenas el <b>${pct(I.fb_share_meta)}</b> de lo que se vio en Meta.`)+
+    kpiI('Alcance',short(n.r),'Cuentas alcanzadas, sumado por reel','users',`Cada cuenta vio los reels <b>${dec(n.v/n.r)} veces</b> en promedio.`)+
+    kpiI('Interacciones',nf.format(n.i),'Me gusta, comentarios, compartidos y guardados','heart',`<b>${pct0(n.s/n.i)}</b> fueron guardados y solo <b>${pct(n.comments/n.i)}</b> comentarios.`)+
+    kpiI('Tasa de interacción',pct(n.er),'Interacciones ÷ alcance','rate',`<b>${P.filter(p=>p.lvl==='alta').length} de ${n.n}</b> reels con tasa alta.`)}</section>
+  ${sh('Reel por reel','Cuánto se vio cada reel y cómo reaccionó el público.')}
+  <div class="duo">
+    <section class="card"><div class="card-h"><div><h2>Visualizaciones por reel</h2><p>Instagram y, cuando se publicó también allí, Facebook. A la derecha, la tasa de interacción.</p></div>${legend(['ig','fb'])}</div>${piecesChart(P,true)}
+      ${insight('',`El reel de ${esc(C[P[0].creador].nombre)} tuvo ${dec(P[0].v/P[1].v)} veces las visualizaciones del segundo, ${esc(P[1].t)} de ${esc(C[P[1].creador].nombre)}. La mitad de los reels no pasó de ${short(P[Math.floor(P.length/2)].v)} visualizaciones.`)}</section>
+    <section class="card"><div class="card-h"><div><h2>Colaboración con @${esc(D.marca.handle)}</h2><p>Reels marcados como colaboración, que aparecen también en el perfil de la marca</p></div></div>
+      <div class="big2"><div class="hi"><span class="v num">${n.n-I.nocollab.length} de ${n.n}</span><span>reels marcados como colaboración</span></div><div><span class="v num">${I.nocollab.length}</span><span>sin la marca como coautora</span></div></div>
+      <div class="facts">${I.nocollab.map(x=>`<div><span>${esc(x.t)} · ${esc(x.creador)}</span><b>${x.f}</b></div>`).join('')}</div>
+      ${insight('','Sin la colaboración, el reel no aparece en el perfil de la marca. Conviene pedirla siempre en el contrato.')}</section>
+  </div>
+  <section class="card"><div class="card-h"><div><h2>Detalle por reel</h2><p>Compartidos incluye los reposts. Ordenados por visualizaciones.</p></div></div>
+    <div class="tbl"><table><thead><tr><th>Reel</th><th>Visualizaciones</th><th>En Facebook</th><th>Alcance</th><th>Me gusta</th><th>Comentarios</th><th>Compartidos</th><th>Guardados</th><th>Tasa</th><th class="l">KPI</th></tr></thead><tbody>${det}</tbody>
+    <tfoot><tr><td>Total</td><td class="num">${nf.format(n.v)}</td><td class="num">${nf.format(n.fbv)}</td><td class="num">${nf.format(n.r)}</td><td class="num">${nf.format(n.likes)}</td><td class="num">${nf.format(n.comments)}</td><td class="num">${nf.format(n.shares)}</td><td class="num">${nf.format(n.s)}</td><td class="num">${pct(n.er)}</td><td></td></tr></tfoot></table></div></section>
+  ${convRed('ig')}
+  ${sh('Historias',`${ST.n} historias de Instagram, con sus cifras del informe de la campaña.`)}
+  <section class="card">
+    <div class="stories"><div class="sfigs"><div><span class="v num">${short(ST.viewers)}</span><span>espectadores en ${ST.n} historias</span></div>
+      <div><span class="v num">${nf.format(ST.sticker)}</span><span>toques al sticker</span></div>
+      <div><span class="v num">${nf.format(ST.link)}</span><span>toques al enlace</span></div>
+      <div><span class="v num">${nf.format(ST.visits)}</span><span>visitas al perfil</span></div></div>
+      <div class="tbl"><table><thead><tr><th>Creador</th><th class="l">Fecha</th><th>Espectadores</th><th>Visualizaciones</th><th>Interacciones</th><th>Toques al sticker</th><th>Toques al enlace</th><th>Visitas al perfil</th><th class="l">KPI</th></tr></thead><tbody>${sdet}</tbody>
+      <tfoot><tr><td>Total</td><td></td><td class="num">${nf.format(ST.viewers)}</td><td class="num">${nf.format(ST.views)}</td><td class="num">${nf.format(ST.inter)}</td><td class="num">${nf.format(ST.sticker)}</td><td class="num">${nf.format(ST.link)}</td><td class="num">${nf.format(ST.visits)}</td><td></td></tr></tfoot></table></div></div>
+    ${insight(`${nf.format(ST.link)} toques al enlace en ${short(ST.viewers)} espectadores`,`las historias dieron alcance (${esc(I.st_top.nombre)} sumó ${nf.format(I.st_top.viewers)} espectadores en una sola historia, bonificada), pero casi no llevaron tráfico fuera de Instagram.`)}</section>
+  ${footer()}`;
+}
+
+/* ---------- TikTok ---------- */
+function vTiktok(){
+  const P=D.pieces.filter(p=>p.red==='tt').sort((a,b)=>b.v-a.v),n=N.tt;
+  const det=P.map(p=>`<tr><td><strong>${esc(p.t)}</strong><span class="hand">${esc(C[p.creador].nombre)} · ${p.f}</span></td><td class="num">${p.dur_s} s</td><td class="num">${nf.format(p.v)}</td><td class="num">${nf.format(p.r)}</td><td class="num">${nf.format(p.likes)}</td><td class="num">${nf.format(p.comments)}</td><td class="num">${nf.format(p.shares)}</td><td class="num">${nf.format(p.s)}</td><td class="num">${pct(p.er)}</td><td class="l">${okPill(p.kpi)}</td></tr>`).join('');
+  const ana=P.find(p=>p.creador==='chef-ana-galvis');
+  return header()+tabhead('tt',`${n.n} videos`)+
+  sh('TikTok en cifras','Resultados de los videos. Debajo de cada cifra, lo que significa.')+
+  `<section class="kpis">${
+    kpiI('Visualizaciones',short(n.v),`De los ${n.n} videos`,'eye',`El <b>${pct0(P[0].v/n.v)}</b> vino de ${esc(P[0].t)} de ${esc(C[P[0].creador].nombre)}.`,1)+
+    kpiI('Alcance',short(n.r),'Espectadores, sumado por video','users',`El <b>${pct0(I.tt_reach_share)}</b> del alcance de reels y videos.`)+
+    kpiI('Interacciones',nf.format(n.i),'Me gusta, comentarios, compartidos y guardados','heart',`<b>${pct0(n.s/n.i)}</b> fueron guardados.`)+
+    kpiI('Tasa de interacción',pct(n.er),'Interacciones ÷ alcance','rate',`<b>${dec(Math.abs(n.er-N.ig.er)*100)} puntos ${n.er<N.ig.er?'menos':'más'}</b> que Instagram (${pct(N.ig.er)}).`)+
+    kpiI('Cumplimiento',`${I.tt_cumplen} de ${I.n_tt_kpi}`,'Videos contratados que llegaron al KPI','goal',`El formato con <b>mejor cumplimiento</b> de la campaña.`)}</section>
+  ${sh('Video por video','Cuánto se vio cada video y cómo reaccionó el público.')}
+  <div class="duo">
+    <section class="card"><div class="card-h"><div><h2>Visualizaciones por video</h2><p>A la derecha, la tasa de interacción de cada video.</p></div></div>${piecesChart(P,false)}
+      ${insight('',`Tres de los cinco videos son réplicas de reels de Instagram. El de Matilda muffins, bonificado, tuvo la tasa más alta (${pct(P.find(p=>p.t.startsWith('Matilda')).er)}).`)}</section>
+    <section class="card"><div class="card-h"><div><h2>Cifras públicas y cifras del informe</h2><p>Visualizaciones de cada video según el informe de la campaña y según TikTok el ${fechaLarga(D.publicasCapturado)}</p></div></div>
+      <div class="facts">${P.map(p=>`<div><span>${esc(C[p.creador].nombre)} · ${esc(p.t)}</span><b class="num">${nf.format(p.excel_views)} → ${nf.format(p.v)}</b></div>`).join('')}</div>
+      ${insight('','El informe tiene '+nf.format(ana.excel_views)+' visualizaciones en el video de '+esc(C[ana.creador].nombre)+', pero TikTok muestra '+nf.format(ana.v)+': las visualizaciones no bajan, así que la cifra del informe tiene un error. El reporte usa siempre la cifra pública; el alcance sigue siendo el del informe.')}</section>
+  </div>
+  ${convRed('tt')}
+  <section class="card"><div class="card-h"><div><h2>Detalle por video</h2><p>Ordenados por visualizaciones.</p></div></div>
+    <div class="tbl"><table><thead><tr><th>Video</th><th>Duración</th><th>Visualizaciones</th><th>Alcance</th><th>Me gusta</th><th>Comentarios</th><th>Compartidos</th><th>Guardados</th><th>Tasa</th><th class="l">KPI</th></tr></thead><tbody>${det}</tbody>
+    <tfoot><tr><td>Total</td><td></td><td class="num">${nf.format(n.v)}</td><td class="num">${nf.format(n.r)}</td><td class="num">${nf.format(n.likes)}</td><td class="num">${nf.format(n.comments)}</td><td class="num">${nf.format(n.shares)}</td><td class="num">${nf.format(n.s)}</td><td class="num">${pct(n.er)}</td><td></td></tr></tfoot></table></div></section>
+  ${footer()}`;
+}
+
+/* ---------- navegación ---------- */
+const TABS=[{id:'resumen',label:'Resumen',icon:'grid'},{id:'creadores',label:'Creadores',icon:'people'},{id:'instagram',label:'Instagram',icon:'ig'},{id:'tiktok',label:'TikTok',icon:'tt'}].filter(t=>D.tabs.includes(t.id));
+window.REPORT_TABS=TABS.map(t=>t.id);
+document.getElementById('nav').innerHTML=TABS.map(t=>`<button type="button" id="tab-${t.id}" data-tab="${t.id}">${svg(t.icon)}${esc(t.label)}</button>`).join('');
+document.getElementById('period').textContent=D.periodo;
+document.title=`Reporte de campaña · ${D.marca.nombre} con ${D.creadores.length} creadores`;
+function bindTips(){
+  const chart=document.getElementById('chart'),tip=document.getElementById('tip');if(!chart)return;
+  const show=el=>{const r=el.getBoundingClientRect(),pr=chart.getBoundingClientRect();tip.textContent=el.dataset.tip;tip.hidden=false;
+    tip.style.left=Math.max(0,Math.min(r.left-pr.left,pr.width-tip.offsetWidth))+'px';tip.style.top=(r.top-pr.top-tip.offsetHeight-6)+'px';};
+  chart.querySelectorAll('.b').forEach(b=>{b.addEventListener('mouseenter',()=>show(b));b.addEventListener('focus',()=>show(b));b.addEventListener('mouseleave',()=>tip.hidden=true);b.addEventListener('blur',()=>tip.hidden=true);});
+}
+const VIEWS={resumen:vResumen,creadores:vCreadores,instagram:vInstagram,tiktok:vTiktok};
+function go(id){
+  if(!window.REPORT_TABS.includes(id)) id='resumen';
+  document.getElementById('view').innerHTML=VIEWS[id]();
+  document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.tab===id));
+  document.getElementById('pdf').href=`${D.pdfBase||'pdf'}/${id}.pdf`;
+  bindTips();
+}
+document.getElementById('nav').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  if(location.hash!=='#'+b.dataset.tab) history.replaceState(null,'','#'+b.dataset.tab);go(b.dataset.tab);window.scrollTo(0,0);});
+window.addEventListener('hashchange',()=>go(location.hash.slice(1)));
+go(location.hash.slice(1));
+</script>
+</body>
+</html>
