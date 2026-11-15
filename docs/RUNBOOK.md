@@ -180,3 +180,15 @@ PYTHONIOENCODING=utf-8 PDF_BASE_URL=http://localhost:8812 python scripts/render_
 2. Repo público `kevinromeroe/creatorsway-reportes`. `robots.txt` y la etiqueta `noindex` bloquean a los buscadores.
 3. *Settings → Pages → Deploy from a branch → main / (root)*. El dominio se toma del archivo `CNAME`.
 4. Cuando GitHub emite el certificado: *Enforce HTTPS*.
+
+## Corrida automática (desde el 14 de noviembre de 2026)
+
+Corre sola en el OptiPlex **lunes y jueves a las 7:00** (`~/ops/influencers/corrida.sh`, junto con LCI y Polar). Decisión de Kevin: **se publica sola si pasa el control automático**; si no, no se publica y avisa en el resumen de WhatsApp.
+
+1. `lista.py creatorsway` toma las publicaciones de cada `publicas.yaml`; cuando la clave es la fecha, el enlace sale del Excel.
+2. **Instagram por Apify** (vistas, me gusta, comentarios). Comparado el 14-nov-2026 con `ig_play_count` en las 18 piezas de Canola: las vistas de Apify son **solo de Instagram**. Apify no da compartidos: se conservan. **TikTok** lo lee Claude en Chrome. **Facebook** no se actualiza en la corrida (se conserva).
+3. `validar_corrida.py` (cobertura ≥ 80 %, saltos > 30 % y > 1.000 no se aplican).
+4. `scripts/actualizar_publicas.py` aplica las reglas (solo suben, nada se borra) a `publicas.yaml`.
+5. Por cada campaña: `actualizar_excel` (con respaldo en `respaldo/`) e `importar_excel` con el Excel de `~/datos/clientes/creatorsway/<id>/` en el OptiPlex. **El Excel nuevo que envíe CreatorsWay se pone en esa carpeta.**
+6. `scripts/ajustar_textos.py`: los porcentajes que citan los textos curados se ponen al día solos (solo el número, la redacción no cambia; decisión de Kevin del 14-nov-2026). Se avisan en WhatsApp.
+7. Pruebas: las de cuadre comparan contra la foto aprobada del 9-nov (`tests/fixtures/aprobado-2026-11-09/`); `TextosKlarensHoy` verifica los textos contra los datos de hoy. Luego build, push (el workflow regenera los PDF) y verificación en línea.
