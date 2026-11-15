@@ -12,13 +12,14 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from pipeline.metrics_creadores import build_data  # noqa: E402
+from tests import foto  # noqa: E402
 from pipeline.util.config import load_campaign, load_client, load_conversation, load_metrics, load_public  # noqa: E402
 
 CID = "canola-2026"
 
 
 def data():
-    return build_data(load_client(), load_campaign(CID), load_metrics(CID), load_conversation(CID), load_public(CID))
+    return build_data(load_client(), load_campaign(CID), foto.metricas(CID), load_conversation(CID), foto.publicas(CID))
 
 
 class TestCanola(unittest.TestCase):

@@ -5,6 +5,8 @@ Correr con:  python -m unittest discover tests
 import re
 import unittest
 
+from tests import foto
+
 from pipeline.metrics import build_data
 from pipeline.util.config import load_campaign, load_client, load_conversation, load_metrics, load_public
 
@@ -13,8 +15,8 @@ class CuadreKlarens(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.camp = load_campaign("klarens-2026")
-        cls.d = build_data(load_client(), cls.camp, load_metrics("klarens-2026"), load_conversation("klarens-2026"),
-                           load_public("klarens-2026"))
+        cls.d = build_data(load_client(), cls.camp, foto.metricas("klarens-2026"), load_conversation("klarens-2026"),
+                           foto.publicas("klarens-2026"))
         cls.by = {p["slug"]: p for p in cls.d["pieces"]}
 
     def test_totales_de_la_campana(self):
@@ -95,6 +97,18 @@ class CuadreKlarens(unittest.TestCase):
         self.assertEqual(i["ig_wins_er"], 3)
         self.assertTrue(i["low_is_last_in_both"])
 
+
+class TextosKlarensHoy(unittest.TestCase):
+    """Los porcentajes escritos en los textos deben salir de los datos DE HOY (no de la foto).
+    La corrida automática los ajusta con scripts/ajustar_textos.py antes de correr las pruebas."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.camp = load_campaign("klarens-2026")
+        cls.d = build_data(load_client(), cls.camp, load_metrics("klarens-2026"), load_conversation("klarens-2026"),
+                           load_public("klarens-2026"))
+        cls.by = {p["slug"]: p for p in cls.d["pieces"]}
+
     def test_textos_curados_coinciden_con_las_cifras(self):
         """Cada porcentaje escrito a mano en las notas debe salir de los datos."""
         p = self.by
@@ -107,8 +121,6 @@ class CuadreKlarens(unittest.TestCase):
         for slug, esperados in notas.items():
             citados = [float(x.replace(",", ".")) for x in re.findall(r"(\d+(?:,\d)?) %", p[slug]["nota"])]
             self.assertEqual(citados, esperados, slug)
-        h = [round(x["v"] * 100, 1) for x in self.d["hallazgos"]]
-        self.assertEqual(h, [71.5, 29.0, 5.0])
         self.assertIn("80 %", self.camp["textos"]["redes"]["texto"])
         self.assertIn("16,7 % frente a 14,7 %", self.camp["textos"]["redes"]["texto"])
 

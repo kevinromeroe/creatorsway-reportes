@@ -1,0 +1,37 @@
+# Cifras públicas de cada publicación, leídas por Datalítica con Claude en Chrome el 9 de noviembre de 2026.
+# Son la fuente de visualizaciones, me gusta, comentarios y compartidos (y guardados de TikTok).
+# Del Excel solo se usa lo que no es público: alcance, guardados y reposts de Instagram, e historias.
+#
+# Instagram: /api/v1/media/<id>/info/ → ig_play_count (solo Instagram), fb_play_count (reproducciones
+#            de la publicación cruzada a Facebook, desde la cuenta del creador), like_count,
+#            comment_count, reshare_count, duración y coautores. La clave es el código del reel.
+#            `coautor: null` = el reel no está marcado como colaboración con @canola.life.
+# TikTok:    datos de la página del video (statsV2). Fecha en hora de Bogotá.
+# Facebook:  solo las reproducciones (fb_views). Las reacciones y comentarios de la publicación cruzada
+#            quedan en la página de Facebook de cada creador y no se suman.
+capturado: 2026-11-09
+instagram:
+  DWeVfAqBprj: {fecha: 2026-03-29, cuenta: natyfarah, coautor: canola.life, views: 143368, fb_views: 0, likes: 6755, comments: 105, shares: 2142, dur_s: 130}
+  DXnPHF_DThk: {fecha: 2026-04-26, cuenta: camilaariasmarthe, coautor: null, views: 9620, fb_views: 2765, likes: 366, comments: 9, shares: 110, dur_s: 55}
+  DXxf56SjMvL: {fecha: 2026-04-30, cuenta: b.eats___, coautor: canola.life, views: 92095, fb_views: 16548, likes: 4876, comments: 68, shares: 602, dur_s: 80}
+  DYFd4oKhkUo: {fecha: 2026-05-08, cuenta: natyfarah, coautor: canola.life, views: 80833, fb_views: 0, likes: 3182, comments: 39, shares: 1050, dur_s: 39}
+  DYVcbwGhlck: {fecha: 2026-05-14, cuenta: juliana.cocina, coautor: canola.life, views: 74086, fb_views: 0, likes: 3050, comments: 51, shares: 274, dur_s: 40}
+  DZYYddVv72H: {fecha: 2026-06-09, cuenta: chefanagalvis, coautor: canola.life, views: 35476, fb_views: 7064, likes: 1054, comments: 42, shares: 128, dur_s: 83}
+  DZvnF2wO_jj: {fecha: 2026-06-18, cuenta: sebastian_coy, coautor: canola.life, views: 28073, fb_views: 0, likes: 1062, comments: 59, shares: 159, dur_s: 86}
+  DZ6Rfb4xI1Z: {fecha: 2026-06-22, cuenta: juliaconsciente_mente, coautor: canola.life, views: 38788, fb_views: 11004, likes: 819, comments: 24, shares: 211, dur_s: 59}
+  DaBX90cPPrO: {fecha: 2026-06-25, cuenta: cocinadecasa_tatianaheld, coautor: canola.life, views: 8909, fb_views: 422, likes: 313, comments: 6, shares: 12, dur_s: 44}
+  DaVm-WiRaWY: {fecha: 2026-07-03, cuenta: marce_cocina_, coautor: null, views: 6015, fb_views: 584, likes: 196, comments: 5, shares: 33, dur_s: 62}
+  DaayGBuPL3M: {fecha: 2026-07-05, cuenta: yummy__journey, coautor: canola.life, views: 491504, fb_views: 10481, likes: 24252, comments: 113, shares: 12997, dur_s: 82}
+  DalwK8AoJHN: {fecha: 2026-07-09, cuenta: ximepastelera, coautor: canola.life, views: 8743, fb_views: 0, likes: 241, comments: 6, shares: 20, dur_s: 60}
+  Da0LXtuBqEI: {fecha: 2026-07-15, cuenta: patsmartinezl, coautor: canola.life, views: 5386, fb_views: 0, likes: 125, comments: 4, shares: 22, dur_s: 27}
+  Da3Ca-wBut-: {fecha: 2026-07-16, cuenta: juliana.cocina, coautor: null, views: 76864, fb_views: 0, likes: 2793, comments: 34, shares: 352, dur_s: 33}
+  DbJqzxRPpuz: {fecha: 2026-07-23, cuenta: juliaconsciente_mente, coautor: canola.life, views: 100891, fb_views: 6669, likes: 2610, comments: 55, shares: 577, dur_s: 52}
+  DbWBOu2Rec2: {fecha: 2026-07-28, cuenta: susisouffle, coautor: canola.life, views: 22456, fb_views: 0, likes: 730, comments: 7, shares: 129, dur_s: 90}
+  Dbd4NI5RG71: {fecha: 2026-07-31, cuenta: cocinantop_, coautor: canola.life, views: 88496, fb_views: 0, likes: 6536, comments: 9, shares: 1394, dur_s: 61}
+  Dcrp0CuAaxJ: {fecha: 2026-08-30, cuenta: camilaariasmarthe, coautor: canola.life, views: 83351, fb_views: 0, likes: 3998, comments: 34, shares: 1408, dur_s: 54}
+tiktok:
+  "7629112348766194951": {fecha: 2026-04-15, cuenta: chefanagalvis, views: 77000, likes: 3955, comments: 61, shares: 876, saves: 2433, dur_s: 83}
+  "7640869859097873685": {fecha: 2026-05-17, cuenta: natifarah, views: 39300, likes: 2519, comments: 13, shares: 346, saves: 977, dur_s: 38}
+  "7651381201760029972": {fecha: 2026-06-14, cuenta: camiariasmarthe, views: 4895, likes: 165, comments: 2, shares: 26, saves: 110, dur_s: 55}
+  "7652731242810608914": {fecha: 2026-06-18, cuenta: juliana.cocina, views: 58600, likes: 4767, comments: 17, shares: 420, saves: 1594, dur_s: 61}
+  "7679981421196250375": {fecha: 2026-08-30, cuenta: camiariasmarthe, views: 15400, likes: 989, comments: 3, shares: 126, saves: 694, dur_s: 54}
