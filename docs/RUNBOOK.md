@@ -162,6 +162,18 @@ Cuando una marca contrata a varios creadores con una meta de alcance por pieza, 
 7. **Pruebas:** `tests/test_canola.py` cuadra el KPI con el Excel y las cifras públicas con la captura. Se copia para una campaña nueva.
 8. Build, revisión en local, PDF y subida como en la sección A.
 
+## F. Campaña organizada por acciones del plan, sin enlaces (ej. Premier 2026)
+
+El Excel trae una fila por acción contratada (también las no ejecutadas) en la hoja «Detalle contenidos», con estado, KPI, alcance, visualizaciones e interacciones, **sin enlaces ni fechas válidas**. Se usa `tipo: creadores` y `modelo: plan` en `campana.yaml` (`pipeline/metrics_plan.py`, misma plantilla que la sección E con un Resumen propio: avance del plan, lo que falta y detalle de las 48 acciones).
+
+1. **Importar:** `python -m scripts.importar_plan premier-2026 "<ruta del Excel>"`. Compara las sumas del detalle con la hoja «Resumen» (KPI, alcance, visualizaciones, interacciones) y avisa si no cuadran.
+2. **Scouting (Claude en Chrome, con sesión de Instagram):** la pestaña de **etiquetadas** de la cuenta de la marca (`instagram.com/<marca>/tagged/`) da las cuentas reales de los creadores; luego se recorre la grilla de reels de cada creador y se consulta cada publicación con `/api/v1/media/<id>/info/`. TikTok se lee desde el perfil del creador (se intercepta `item_list` al hacer scroll). Cada publicación pasa cuatro filtros: cuenta/red/formato, prueba de marca (coautor, etiqueta o mención), visualizaciones públicas ≥ las del Excel y una publicación por fila. El resultado va a `Dashboard Comapan/CreatorsWay-<marca>/VALIDACION_SCOUTING_<fecha>.md` y **Kevin lo aprueba antes de construir**.
+3. **`campana.yaml`:** creadores (`excel` = nombre del talento en el Excel), `piezas` (fila del Excel → `codigo` del reel o id del video; sin `codigo` = no encontrada, se reporta con las cifras del Excel y se marca «sin verificar») e `historias` (filas).
+4. **Regla de cifras («la variable más reciente»):** lo público (visualizaciones de Instagram sin Facebook + Facebook aparte, me gusta, comentarios, compartidos, guardados de TikTok, fecha) reemplaza al Excel en las publicaciones confirmadas. Alcance, interacciones de Instagram (incluyen guardados, que no son públicos; se usa el mayor entre el Excel y lo público) e historias vienen del Excel. El Excel del cliente no se modifica.
+5. **Comentarios:** capturas en `datos/capturas/<id>/{ig,tt}-comentarios.txt` y `analizar_comentarios_creadores.py`. En `campana.yaml → conversacion` se pueden activar `temas_extra` (p. ej. `origen`: debate sobre el origen y la receta tradicional del plato), `marca_termino` (nombrar la marca con un elogio cuenta a favor) y `quitar_duplicados` (la paginación de Instagram a veces repite respuestas).
+6. **Pruebas:** `tests/test_premier.py`. Build, revisión en local, PDF y subida como en la sección A.
+7. **Pendientes:** lo que falta confirmar con la agencia queda en `Dashboard Comapan/CreatorsWay-<marca>/PENDIENTES.md`; al resolverlo se actualizan la tabla de validación, `publicas.yaml`, `campana.yaml` y las pruebas.
+
 ## EMV y ROI
 
 Están apagados (`emv: null` en `cliente.yaml`, `pago_cop: null` en la campaña). Se activan cuando se tenga el pago de la marca y el benchmark de EMV acordado para ella.

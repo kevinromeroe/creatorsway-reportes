@@ -256,8 +256,15 @@ def _conv(conv: dict, pieces: list, creadores: dict) -> dict | None:
                     "temas": [{"k": t, "label": temas[t], "n": v, "share": v / rn} for t, v in
                               sorted(r["temas"].items(), key=lambda kv: -kv[1]) if t not in ("otros", "etiqueta")],
                     "tono": {t: r["tono"].get(t, 0) for t in ("positivo", "negativo", "duda", "neutro")}}
+    temas_top = {}
+    for tm in temas:
+        best = max(pieces, key=lambda p: conv["piezas"].get(p["id"], {}).get("temas", {}).get(tm, 0))
+        n_best = conv["piezas"].get(best["id"], {}).get("temas", {}).get(tm, 0)
+        if n_best:
+            temas_top[tm] = {"t": best["t"], "creador": nombre(best), "n": n_best,
+                             "share": n_best / max(1, T["temas"].get(tm, 0))}
     dest = []
-    for tm in ("antojo", "critica", "producto", "pedido", "humor"):
+    for tm in ("origen", "antojo", "critica", "producto", "pedido", "humor"):
         for q in conv.get("destacados", {}).get(tm, [])[:1]:
             dest.append({**q, "tema": temas[tm], "creador": creadores[q["creador"]]["nombre"]})
     return {
@@ -272,5 +279,5 @@ def _conv(conv: dict, pieces: list, creadores: dict) -> dict | None:
         "duda_top": {"t": dudas[0][0]["t"], "creador": nombre(dudas[0][0]), "n": dudas[0][1]},
         "pedido_top": {"t": pedidos[0][0]["t"], "creador": nombre(pedidos[0][0]), "n": pedidos[0][1]},
         "top_crit_quote": (conv.get("destacados", {}).get("critica") or [None])[0],
-        "redes": redes, "destacados": dest,
+        "redes": redes, "destacados": dest, "temas_top": temas_top,
     }

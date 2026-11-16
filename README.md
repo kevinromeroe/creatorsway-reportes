@@ -5,6 +5,7 @@ Hecho por Datalítica. Campañas:
 
 - **Juan Food Time × KLAREN'S** (julio a octubre de 2026): un creador, `/klarens-2026/`.
 - **14 creadores × Canola Life** (marzo a agosto de 2026): campaña con varios creadores y KPI de alcance por contrato, `/canola-2026/`.
+- **7 creadores × Premier** (marzo a noviembre de 2026, en ejecución): preinforme de una campaña organizada por acciones del plan (48 acciones, 32 con resultados), `/premier-2026/`.
 
 La raíz `/` es la portada: una tarjeta por campaña ([`templates/portada.html`](templates/portada.html)).
 

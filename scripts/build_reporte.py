@@ -6,6 +6,7 @@ calcula las cifras y escribe <id>/index.html:
   - campaña de un creador (tipo por defecto): pipeline/metrics.py + templates/reporte.html
   - campaña con varios creadores (`tipo: creadores`): pipeline/metrics_creadores.py +
     templates/reporte-creadores.html, que toma los estilos de templates/reporte.html.
+    Con `modelo: plan` (campaña organizada por acciones del plan, ej. Premier) usa pipeline/metrics_plan.py.
 La raíz del sitio (index.html) es la portada: una tarjeta por campaña (templates/portada.html).
 
 Uso:
@@ -22,7 +23,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from pipeline import metrics, metrics_creadores  # noqa: E402
+from pipeline import metrics, metrics_creadores, metrics_plan  # noqa: E402
 from pipeline.util.config import PROJECT_ROOT, campaign_ids, load_campaign, load_client, load_conversation, load_metrics, load_public  # noqa: E402
 from pipeline.util.log import get_logger  # noqa: E402
 
@@ -52,7 +53,7 @@ def render(template: str, data: dict, **extra) -> str:
 def build(campaign_id: str, client: dict) -> dict:
     camp = load_campaign(campaign_id)
     multi = camp.get("tipo") == "creadores"
-    mod = metrics_creadores if multi else metrics
+    mod = (metrics_plan if camp.get("modelo") == "plan" else metrics_creadores) if multi else metrics
     data = mod.build_data(client, camp, load_metrics(campaign_id), load_conversation(campaign_id), load_public(campaign_id))
     out = PROJECT_ROOT / campaign_id / "index.html"
     out.parent.mkdir(exist_ok=True)
@@ -80,6 +81,16 @@ def _lista(xs: list[str]) -> str:
 def tarjeta(cid: str, d: dict) -> dict:
     """Lo que la portada muestra de cada campaña."""
     t = d["totals"]
+    if d.get("modelo") == "plan":
+        crs = sorted(d["creadores"], key=lambda c: -c["alcance"])
+        return {"id": cid, "marca": d["marca"]["nombre"], "logo": d["marca"]["logo"],
+                "logo_ancho": d["marca"].get("logo_forma") != "alto",
+                "quien": f"{len(crs)} creadores", "avatares": [c["avatar"] for c in crs[:4]],
+                "periodo": d["periodo_largo"] + (" · en ejecución" if d.get("estado_campana") else ""),
+                "resumen": f"{d['plan']['total']} acciones contratadas, {d['plan']['con_resultados']} con resultados. "
+                           f"Preinforme: la campaña sigue en ejecución.",
+                "cifras": [[_pct(d["kpi"]["pct"], 0), "del KPI de alcance"], [_short(t["views_all"]), "visualizaciones"],
+                           [_pct(t["er"]), "tasa de interacción"]]}
     if d.get("tipo") == "creadores":
         crs = sorted(d["creadores"], key=lambda c: -c["alcance"])
         return {"id": cid, "marca": d["marca"]["nombre"], "logo": d["marca"]["logo"], "logo_ancho": True,

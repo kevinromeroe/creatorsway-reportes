@@ -1,0 +1,67 @@
+# Campaña con varios creadores organizada por acciones del plan: CreatorsWay × Premier (2026).
+# metricas.yaml (scripts/importar_plan.py) trae las 48 acciones del Excel con su estado, KPI y resultados;
+# publicas.yaml trae las cifras públicas de las publicaciones confirmadas en el scouting
+# (Dashboard Comapan/CreatorsWay-Premier/VALIDACION_SCOUTING_2026-11-15.md).
+# Regla: cada variable con su valor más reciente — lo público (visualizaciones, me gusta, comentarios,
+# compartidos, guardados de TikTok, fecha) cuando la publicación está confirmada; el Excel para alcance e
+# interacciones de Instagram (incluyen guardados, que no son públicos) y para lo no verificado.
+id: premier-2026
+tipo: creadores
+modelo: plan             # usa pipeline/metrics_plan.py
+marca:
+  nombre: Premier
+  handle: premiercolombia
+  logo: assets/logo-premier.png
+  web: https://premier.com.co
+  logo_forma: alto        # logo con girasol: más alto que ancho
+periodo:
+  desde: 2026-03-11
+  hasta: 2026-11-13
+  texto: Mar a nov 2026
+  corte_excel: 2026-11-13
+estado_campana: En ejecución
+
+# `excel` = nombre del talento en el Excel.
+creadores:
+  - {id: juan-food-time, nombre: Juan Food Time, excel: Juan Food TIme, ig: juanfoodtime, tt: juanfoodtime}
+  - {id: tatan-arroyo, nombre: Tatan Arroyo, excel: Tatan Arroyo, ig: tatanarroyo, tt: tatanarroyo}
+  - {id: foggy-reposteria, nombre: Foggy Repostería, excel: Foggy Reposteria, ig: null, tt: foggyreposteria}
+  - {id: jeison-recetas, nombre: Jeison Recetas, excel: Jeison Recetas, ig: jeison_rodriguezchef, tt: jeison_rodriguezchef}
+  - {id: mateito, nombre: Mateito, excel: Mateito, ig: _mateito, tt: _mateito}
+  - {id: colombian-bite, nombre: Colombian Bite, excel: Colombian Bite, ig: colombiabiteclub, tt: null}
+  - {id: luisa-savage-fork, nombre: Luisa The Savage Fork, excel: Luisa The Savage Fork, ig: luisatorres.co, tt: null}
+
+# Reels y TikToks con resultados en el Excel. `fila` = «Origen fila». Sin `codigo` = no encontrada en el
+# scouting: se reporta con las cifras del Excel y se marca «sin verificar».
+piezas:
+  - {fila: "72", creador: jeison-recetas, red: ig, codigo: DZgUOyvgXHG, titulo: Chicken tenders}
+  - {fila: "73", creador: jeison-recetas, red: ig, codigo: DdkP_8Qg4S4, titulo: Patacón con todo}
+  - {fila: "75", creador: jeison-recetas, red: tt, codigo: "7650663912861437202", titulo: Chicken tenders (réplica)}
+  - {fila: "76", creador: jeison-recetas, red: tt, titulo: Réplica en TikTok}
+  - {fila: "77", creador: foggy-reposteria, red: ig, titulo: Reel en colaboración}
+  - {fila: "78", creador: foggy-reposteria, red: tt, codigo: "7622110135216819463", titulo: Hojaldras caseras}
+  - {fila: "81", creador: tatan-arroyo, red: ig, codigo: DVwqnqIje-P, titulo: Pastelitos andinos}
+  - {fila: "82", creador: tatan-arroyo, red: ig, titulo: Reel en colaboración}
+  - {fila: "83", creador: tatan-arroyo, red: tt, codigo: "7641735348158221586", titulo: Pastelitos andinos (réplica)}
+  - {fila: "87", creador: juan-food-time, red: ig, codigo: DXUePsjkV8w, titulo: Papa rellena colombiana}
+  - {fila: "90", creador: juan-food-time, red: tt, codigo: "7630508311686712584", titulo: Papa rellena colombiana}
+  - {fila: "94", creador: mateito, red: ig, codigo: DYFdZIrJtGr, titulo: El secreto de una buena fritanga}
+  - {fila: "95", creador: mateito, red: ig, codigo: Da0hbBwp0tY, titulo: Comida para ver el partido}
+  - {fila: "96", creador: mateito, red: ig, codigo: Dc326mFpwY2, titulo: Mi Cali}
+  - {fila: "97", creador: mateito, red: tt, codigo: "7663159011985952021", titulo: Comida para ver el partido (réplica)}
+  - {fila: "98", creador: mateito, red: tt, codigo: "7681726944773213460", titulo: Mi Cali (réplica)}
+  - {fila: "102", creador: colombian-bite, red: ig, codigo: DXe2XITktOl, titulo: "¿A qué sabe Colombia?"}
+  - {fila: "103", creador: colombian-bite, red: ig, codigo: DZkv27Jh9dQ, titulo: Croquetas de chicharrón con hogao}
+  - {fila: "106", creador: colombian-bite, red: tt, titulo: TikTok}
+  - {fila: "112", creador: luisa-savage-fork, red: ig, codigo: DaieZcpuzun, titulo: Pasteles brasileños}
+  - {fila: "113", creador: luisa-savage-fork, red: ig, codigo: Da8MlB5xm0e, titulo: Flautas ahogadas mexicanas}
+  - {fila: "114", creador: luisa-savage-fork, red: ig, codigo: DdXUqFTRknv, titulo: Idea para regalar o emprender}
+
+# Historias con resultados (solo Excel: ya expiraron).
+historias: ["70", "79", "80", "85", "86", "92", "93", "99", "100", "110"]
+
+# Análisis de comentarios (scripts/analizar_comentarios_creadores.py)
+conversacion:
+  temas_extra: [origen]     # gran parte del debate en «Papa rellena» es de qué país es el plato
+  marca_termino: premier    # nombrar la marca con un elogio cuenta como comentario a favor
+  quitar_duplicados: true  # la paginación de Instagram repitió respuestas en la captura del 15 nov

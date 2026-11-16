@@ -1,0 +1,516 @@
+# Generado por scripts/analizar_comentarios_creadores.py — no editar a mano.
+temas:
+  antojo: Antojo y elogio
+  receta: Preguntas y ajustes de la receta
+  producto: Dudas sobre el producto
+  critica: Críticas y debate sobre el aceite
+  pedido: Piden otra receta
+  preparo: Ya la prepararon
+  humor: Humor y comunidad
+  etiqueta: Etiquetan a otra persona
+  otros: Otros
+  origen: 'Debate: origen y receta tradicional del plato'
+total:
+  publico: 1902
+  total_plataforma: 4052
+  respuestas_creadores: 161
+  preguntas: 110
+  preguntas_respondidas: 11
+  temas:
+    antojo: 649
+    otros: 314
+    origen: 646
+    etiqueta: 37
+    humor: 131
+    receta: 46
+    pedido: 11
+    critica: 54
+    producto: 11
+    preparo: 3
+  tono:
+    positivo: 1
+    negativo: 47
+    duda: 9
+    neutro: 26
+  duda_fuera: 2
+  neg_publicidad: 2
+redes:
+  ig:
+    capturados: 1022
+    total_plataforma: 2423
+    temas:
+      antojo: 510
+      otros: 144
+      origen: 193
+      etiqueta: 13
+      humor: 66
+      receta: 30
+      pedido: 8
+      critica: 49
+      producto: 8
+      preparo: 1
+    tono:
+      positivo: 1
+      negativo: 42
+      duda: 6
+      neutro: 17
+  tt:
+    capturados: 880
+    total_plataforma: 1629
+    temas:
+      antojo: 139
+      otros: 170
+      receta: 16
+      origen: 453
+      humor: 65
+      pedido: 3
+      preparo: 2
+      critica: 5
+      producto: 3
+      etiqueta: 24
+    tono:
+      neutro: 9
+      negativo: 5
+      duda: 3
+piezas:
+  DZgUOyvgXHG:
+    red: ig
+    creador: jeison-recetas
+    capturados: 43
+    total_plataforma: 81
+    temas:
+      antojo: 34
+      otros: 7
+      origen: 1
+      etiqueta: 1
+    tono: {}
+  DdkP_8Qg4S4:
+    red: ig
+    creador: jeison-recetas
+    capturados: 81
+    total_plataforma: 126
+    temas:
+      antojo: 56
+      humor: 10
+      otros: 13
+      receta: 1
+      pedido: 1
+    tono:
+      positivo: 1
+  DVwqnqIje-P:
+    red: ig
+    creador: tatan-arroyo
+    capturados: 266
+    total_plataforma: 850
+    temas:
+      origen: 43
+      antojo: 147
+      receta: 19
+      humor: 6
+      critica: 4
+      otros: 38
+      producto: 1
+      etiqueta: 3
+      pedido: 5
+    tono:
+      negativo: 4
+      duda: 1
+      neutro: 2
+  DXUePsjkV8w:
+    red: ig
+    creador: juan-food-time
+    capturados: 346
+    total_plataforma: 967
+    temas:
+      origen: 147
+      antojo: 84
+      humor: 35
+      receta: 7
+      otros: 49
+      critica: 13
+      producto: 5
+      etiqueta: 4
+      pedido: 1
+      preparo: 1
+    tono:
+      neutro: 5
+      negativo: 10
+      duda: 3
+  DYFdZIrJtGr:
+    red: ig
+    creador: mateito
+    capturados: 36
+    total_plataforma: 81
+    temas:
+      otros: 11
+      antojo: 24
+      humor: 1
+    tono: {}
+  Da0hbBwp0tY:
+    red: ig
+    creador: mateito
+    capturados: 13
+    total_plataforma: 24
+    temas:
+      antojo: 7
+      critica: 2
+      origen: 1
+      otros: 2
+      humor: 1
+    tono:
+      negativo: 2
+      neutro: 1
+  Dc326mFpwY2:
+    red: ig
+    creador: mateito
+    capturados: 33
+    total_plataforma: 56
+    temas:
+      antojo: 10
+      critica: 8
+      otros: 7
+      humor: 5
+      origen: 1
+      etiqueta: 2
+    tono:
+      negativo: 6
+      neutro: 1
+  DXe2XITktOl:
+    red: ig
+    creador: colombian-bite
+    capturados: 50
+    total_plataforma: 62
+    temas:
+      critica: 22
+      pedido: 1
+      antojo: 15
+      humor: 4
+      otros: 7
+      producto: 1
+    tono:
+      negativo: 20
+      neutro: 5
+      duda: 1
+  DZkv27Jh9dQ:
+    red: ig
+    creador: colombian-bite
+    capturados: 29
+    total_plataforma: 39
+    temas:
+      antojo: 21
+      otros: 6
+      humor: 1
+      producto: 1
+    tono:
+      duda: 1
+  DaieZcpuzun:
+    red: ig
+    creador: luisa-savage-fork
+    capturados: 12
+    total_plataforma: 16
+    temas:
+      antojo: 10
+      humor: 1
+      otros: 1
+    tono: {}
+  Da8MlB5xm0e:
+    red: ig
+    creador: luisa-savage-fork
+    capturados: 73
+    total_plataforma: 80
+    temas:
+      antojo: 64
+      receta: 2
+      etiqueta: 3
+      humor: 2
+      otros: 2
+    tono:
+      neutro: 2
+  DdXUqFTRknv:
+    red: ig
+    creador: luisa-savage-fork
+    capturados: 40
+    total_plataforma: 41
+    temas:
+      antojo: 38
+      receta: 1
+      otros: 1
+    tono:
+      neutro: 1
+  '7650663912861437202':
+    red: tt
+    creador: jeison-recetas
+    capturados: 14
+    total_plataforma: 21
+    temas:
+      antojo: 8
+      otros: 5
+      receta: 1
+    tono: {}
+  '7641735348158221586':
+    red: tt
+    creador: tatan-arroyo
+    capturados: 75
+    total_plataforma: 163
+    temas:
+      origen: 19
+      antojo: 24
+      otros: 25
+      humor: 1
+      pedido: 1
+      receta: 4
+      preparo: 1
+    tono:
+      neutro: 4
+  '7630508311686712584':
+    red: tt
+    creador: juan-food-time
+    capturados: 730
+    total_plataforma: 1348
+    temas:
+      origen: 432
+      humor: 54
+      antojo: 83
+      receta: 11
+      otros: 115
+      critica: 5
+      pedido: 2
+      preparo: 1
+      producto: 3
+      etiqueta: 24
+    tono:
+      negativo: 5
+      neutro: 3
+      duda: 3
+  '7663159011985952021':
+    red: tt
+    creador: mateito
+    capturados: 9
+    total_plataforma: 14
+    temas:
+      otros: 4
+      antojo: 3
+      origen: 1
+      humor: 1
+    tono: {}
+  '7681726944773213460':
+    red: tt
+    creador: mateito
+    capturados: 52
+    total_plataforma: 83
+    temas:
+      origen: 1
+      humor: 9
+      otros: 21
+      antojo: 21
+    tono:
+      neutro: 2
+destacados:
+  antojo:
+  - texto: Como extraño mis pastelitos andinos de mi san Cristóbal Venezuela, los
+      pastelitos más ricos son los gochos 🤤
+    me_gusta: 302
+    red: ig
+    pieza: Pastelitos andinos
+    creador: tatan-arroyo
+  - texto: Amigo me estás poniendo la vara alta😍
+    me_gusta: 116
+    red: ig
+    pieza: Papa rellena colombiana
+    creador: juan-food-time
+  - texto: Si el paraíso tuviera sabor, seguramente sería el de este patacón relleno.
+      ¡Qué obra de arte!
+    me_gusta: 46
+    red: ig
+    pieza: Patacón con todo
+    creador: jeison-recetas
+  origen:
+  - texto: Los fritos Colombianos con carne desmechada son mejores que con carne molida,
+      factos
+    me_gusta: 5817
+    red: tt
+    pieza: Papa rellena colombiana
+    creador: juan-food-time
+  - texto: este pitó también es de perú?
+    me_gusta: 1378
+    red: tt
+    pieza: Papa rellena colombiana
+    creador: juan-food-time
+  - texto: La papa rellena no era de Perú??
+    me_gusta: 751
+    red: tt
+    pieza: Papa rellena colombiana
+    creador: juan-food-time
+  humor:
+  - texto: jajajaja sabía que iban a comentar esto
+    me_gusta: 124
+    red: tt
+    pieza: Papa rellena colombiana
+    creador: juan-food-time
+  - texto: Pensé que estaba loco por pensar eso 🤣🤣🤣🤣🤣
+    me_gusta: 88
+    red: tt
+    pieza: Papa rellena colombiana
+    creador: juan-food-time
+  - texto: Confirmo, por eso solo compro los que vende mi abuela 🤣🙌🏽
+    me_gusta: 62
+    red: tt
+    pieza: Papa rellena colombiana
+    creador: juan-food-time
+  receta:
+  - texto: Ufff provoca salir pa la cocina de una muchas gracias 🙌🔥 brother y por
+      el tip de aceite mundial 💪🙏 bendiciones
+    me_gusta: 76
+    red: ig
+    pieza: Papa rellena colombiana
+    creador: juan-food-time
+  - texto: Por fiss la receta de las salsas ??
+    me_gusta: 58
+    red: ig
+    pieza: Pastelitos andinos
+    creador: tatan-arroyo
+  - texto: Como se hace la salsa verde?
+    me_gusta: 53
+    red: ig
+    pieza: Papa rellena colombiana
+    creador: juan-food-time
+  pedido:
+  - texto: Yo hice un chimichurri y así y ufff😮‍💨
+    me_gusta: 7
+    red: ig
+    pieza: ¿A qué sabe Colombia?
+    creador: colombian-bite
+  - texto: Enseñen a hacer esa salsa verde por favor.
+    me_gusta: 1
+    red: tt
+    pieza: Papa rellena colombiana
+    creador: juan-food-time
+  - texto: Receta de la salsa
+    me_gusta: 0
+    red: ig
+    pieza: Patacón con todo
+    creador: jeison-recetas
+  critica:
+  - texto: Excelente pero lo haría en grasa animal el aceite vegetal es veneno
+    me_gusta: 65
+    red: ig
+    pieza: Papa rellena colombiana
+    creador: juan-food-time
+  - texto: Lástima el aceite vegetal, estos aceites son veneno puro, se usaban originalmente
+      para lubricar maquinarias pesadas y motores, lo reemplazaría por manteca de
+      cerdo o grasa de res, lo que nuestras coci
+    me_gusta: 28
+    red: ig
+    pieza: ¿A qué sabe Colombia?
+    creador: colombian-bite
+  - texto: Ese aceite es mas peligroso que la azucar mas bien usen 0w 10 que es lo
+      mismo son buenos para los motores
+    me_gusta: 15
+    red: ig
+    pieza: ¿A qué sabe Colombia?
+    creador: colombian-bite
+  producto:
+  - texto: Sino tengo aceite Premier las puedo hacer?
+    me_gusta: 16
+    red: ig
+    pieza: Papa rellena colombiana
+    creador: juan-food-time
+  - texto: 'Pequeño TIP: desglasa donde hiciste el chicharrón y usa eso tb para la
+      bechamel, y para el roux de la bechamel la misma cantidad de mantequilla q d
+      harina para que no quede esa masa y puedas cocinar b'
+    me_gusta: 3
+    red: ig
+    pieza: Croquetas de chicharrón con hogao
+    creador: colombian-bite
+  - texto: son pepitas q pintan de rojo en Venezuela también se conoce como onoto
+      a veces le decimos color por q es par darle color a las comidas con aceite y
+      así no quedan pálidas se consigue molido también
+    me_gusta: 2
+    red: ig
+    pieza: Pastelitos andinos
+    creador: tatan-arroyo
+  preparo:
+  - texto: siempre me salen estos videos cuando tengo hambre
+    me_gusta: 1
+    red: tt
+    pieza: Papa rellena colombiana
+    creador: juan-food-time
+  - texto: Yo lo conozco por los colombianos. Toda mi vida. Si viene de otros países,eso
+      es historia y entre comer y discutir,me quedo con lo primero. Y no diré más
+      nada.
+    me_gusta: 0
+    red: ig
+    pieza: Papa rellena colombiana
+    creador: juan-food-time
+  - texto: Modificaron el guiso aparte le falto un componente a la cimposicion del
+      pastel y el agua de aceite achotado en tantos años no lo conosia me ceno con
+      ese modelo jejeje 60 años preparando pasteles andin
+    me_gusta: 0
+    red: tt
+    pieza: Pastelitos andinos (réplica)
+    creador: tatan-arroyo
+destacados_tono:
+  positivo:
+  - texto: Es premierrrrr 🔥
+    me_gusta: 2
+    red: ig
+    pieza: Patacón con todo
+    creador: jeison-recetas
+  negativo:
+  - texto: Excelente pero lo haría en grasa animal el aceite vegetal es veneno
+    me_gusta: 65
+    red: ig
+    pieza: Papa rellena colombiana
+    creador: juan-food-time
+  - texto: Lástima el aceite vegetal, estos aceites son veneno puro, se usaban originalmente
+      para lubricar maquinarias pesadas y motores, lo reemplazaría por manteca de
+      cerdo o grasa de res, lo que nuestras coci
+    me_gusta: 28
+    red: ig
+    pieza: ¿A qué sabe Colombia?
+    creador: colombian-bite
+  - texto: Ese aceite es mas peligroso que la azucar mas bien usen 0w 10 que es lo
+      mismo son buenos para los motores
+    me_gusta: 15
+    red: ig
+    pieza: ¿A qué sabe Colombia?
+    creador: colombian-bite
+  duda:
+  - texto: Sino tengo aceite Premier las puedo hacer?
+    me_gusta: 16
+    red: ig
+    pieza: Papa rellena colombiana
+    creador: juan-food-time
+  - texto: 'Pequeño TIP: desglasa donde hiciste el chicharrón y usa eso tb para la
+      bechamel, y para el roux de la bechamel la misma cantidad de mantequilla q d
+      harina para que no quede esa masa y puedas cocinar b'
+    me_gusta: 3
+    red: ig
+    pieza: Croquetas de chicharrón con hogao
+    creador: colombian-bite
+  - texto: son pepitas q pintan de rojo en Venezuela también se conoce como onoto
+      a veces le decimos color por q es par darle color a las comidas con aceite y
+      así no quedan pálidas se consigue molido también
+    me_gusta: 2
+    red: ig
+    pieza: Pastelitos andinos
+    creador: tatan-arroyo
+  neutro:
+  - texto: Ufff provoca salir pa la cocina de una muchas gracias 🙌🔥 brother y por
+      el tip de aceite mundial 💪🙏 bendiciones
+    me_gusta: 76
+    red: ig
+    pieza: Papa rellena colombiana
+    creador: juan-food-time
+  - texto: Jajaja aceite de calidad
+    me_gusta: 5
+    red: ig
+    pieza: ¿A qué sabe Colombia?
+    creador: colombian-bite
+  - texto: no lo estoy diciendo por el ahumado si no por el aceite en si todos los
+      aceites de girasol de uva etc son altamente procesados.. recomienda aceites
+      que envasan en frio como el de coco aguate u oliva..
+    me_gusta: 4
+    red: ig
+    pieza: ¿A qué sabe Colombia?
+    creador: colombian-bite

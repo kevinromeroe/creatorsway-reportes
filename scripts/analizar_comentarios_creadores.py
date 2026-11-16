@@ -44,6 +44,9 @@ TEMAS = {
     "etiqueta": "Etiquetan a otra persona",
     "otros": "Otros",
 }
+# Temas que solo se activan si la campaña los pide (campana.yaml → conversacion.temas_extra)
+TEMAS_EXTRA = {"origen": "Debate: origen y receta tradicional del plato"}
+CFG = {"extra": set(), "marca": "", "dedupe": False}
 
 
 def norm(s: str) -> str:
@@ -53,7 +56,7 @@ def norm(s: str) -> str:
 
 R = lambda p: re.compile(p)  # noqa: E731
 # Menciones del producto: el aceite, el esparcible (margarina de canola), la marca o la pauta.
-MARCA = R(r"canola|canela life|aceite|esparcible|esparcir|margarina|untable|mantequilla|\bproducto\b|grasa|"
+MARCA = R(r"canola|canela life|premier|aceite|esparcible|esparcir|margarina|untable|mantequilla|\bproducto\b|grasa|"
           r"publicidad|anuncio|patrocin|inflamac|arteria|cancer|toxic")
 DEFENSA = R(r"recomendo usar aceite de canola|opcion saludable|no sabia que ese aceite|dejen de satanizar|"
             r"uso la misma marca")
@@ -62,12 +65,17 @@ NEGATIVO = R(r"salud|inflamat|inflamac|arteria|cancer|toxic|intoxic|danin|nociv|
              r"aceites vegetales|grasas vegetales|grasa vegetal|terrible|eliminad|comestible|no va\b|"
              r"me perdiste|todo (iba )?bien (hasta|menos)|nunca mas|mejor (con )?mantequilla|mas sana|"
              r"menos mala|manteca|aceite de coco|de oliva|aguacate|gourmet|estas recomendando|"
-             r"no me gusta freir|sin valores|esencia")
+             r"no me gusta freir|sin valores|esencia|veneno|basura|petroleo|2 tiempos|0w|motor|peligros|"
+             r"grasa (de )?(res|cerdo|puerco|animal)|mantica|menos premier|cualquier aceite menos")
 NEG_EMOJI = set("😢😭😞🥲")
 PUBLICIDAD = R(r"publicidad|anuncio|pagando|patrocin|por plata|pautas|ganarse la plata")
 DUDA = R(r"\?|que es|qtr|significa|se consigue|aclarame|misma duda|se refiere|cantidad")
 FUERA = R(r"miami|\busa\b|mexico|argentin|vzla|venezuela|espana|chile|peru|ecuador")
 ESPARCIBLE = R(r"esparcible|esparcir|untable|margarina")
+ORIGEN = R(r"peru|venezol|bolivi|ecuador|argentin|panama|paraguay|uruguay|tachira|origen|de donde es|nacionalidad|"
+           r"es colombian|plato colombiano|es de colombia|no es de|orgullo (peruano|venezolano|colombiano)|"
+           r"arroz|huevo|desmechad|molida|mechada|alverja|tradicional|original|lleva|no lleva|asi no es|"
+           r"de verdad es|la autentica|la verdadera")
 
 PEDIDO = R(r"ensenanos|ensenamos|ensananos|me ensenas|^ensen|encurtid|en curtidos|^cebolla|hacer la cebolla|las cebollas|^receta|recetas del mundia+l|chimichurri|hagan una|una saludable|receta de postre|recetas del mundial|"
            r"plato de colombia|argentina para cuando|una pasta|toca grabar|me compartes")
@@ -103,6 +111,8 @@ def tono(t: str) -> str | None:
         return "negativo"
     if DUDA.search(t if "?" in t else n):
         return "duda"
+    if CFG["marca"] and CFG["marca"] in n and (POS.search(n) or set(t) & EMOJI_POS):
+        return "positivo"   # nombra a la marca con un elogio
     return "neutro"
 
 
@@ -112,6 +122,8 @@ def tema(t: str, tn: str | None) -> str:
         return "critica"
     if tn == "duda":
         return "producto"
+    if "origen" in CFG["extra"] and ORIGEN.search(n):
+        return "origen"
     letras = re.sub(r"[^a-z]", "", re.sub(r"@\S*", "", n))
     if not letras:  # solo emojis, menciones o vacío (sticker o GIF)
         if n and re.fullmatch(r"(@\S*\s*)+", n):
@@ -148,9 +160,18 @@ def cargar(cid: str) -> dict[str, dict]:
             if line.startswith("#"):
                 code, total = line[1:].split()
                 cur = out[code] = {"red": red, "total": int(total), "cs": []}
+                orig, nuevo, vistos = -1, {}, set()
                 continue
+            orig += 1
             tipo, autor, likes, texto = line.split("|", 3)
-            cur["cs"].append({"i": len(cur["cs"]), "p": int(tipo[1:]) if tipo.startswith("r") else None,
+            # La paginación a veces devuelve el mismo comentario varias veces: se cuenta una sola vez
+            # (solo textos largos o con me gusta, para no fusionar emojis sueltos de personas distintas).
+            clave = (tipo if not tipo.startswith("r") else nuevo.get(int(tipo[1:])), autor, likes, texto)
+            if CFG["dedupe"] and (len(texto) >= 15 or int(likes) > 0) and clave in vistos:
+                continue
+            vistos.add(clave)
+            nuevo[orig] = len(cur["cs"])
+            cur["cs"].append({"i": len(cur["cs"]), "p": nuevo.get(int(tipo[1:])) if tipo.startswith("r") else None,
                               "c": autor == "C", "l": int(likes), "t": texto})
     return out
 
@@ -159,11 +180,18 @@ def main() -> int:
     cid = sys.argv[1]
     muestra = "--muestra" in sys.argv
     camp = load_campaign(cid)
+    cfg = camp.get("conversacion") or {}
+    CFG["extra"] = set(cfg.get("temas_extra") or [])
+    CFG["marca"] = norm(cfg.get("marca_termino") or "")
+    CFG["dedupe"] = bool(cfg.get("quitar_duplicados"))
+    for k in CFG["extra"]:
+        TEMAS[k] = TEMAS_EXTRA[k]
     caps = cargar(cid)
-    piezas = {str(p["codigo"]): p for p in camp["piezas"]}
+    piezas = {str(p["codigo"]): p for p in camp["piezas"] if p.get("codigo")}
     faltan = sorted(set(piezas) - set(caps))
     if faltan:
-        raise SystemExit(f"Faltan comentarios de: {faltan}")
+        print(f"  aviso: sin comentarios capturados de {faltan}; quedan fuera del análisis")
+    caps = {k: v for k, v in caps.items() if k in piezas}
 
     tot_t, tot_tono, sub = Counter(), Counter(), Counter()
     por_red: dict[str, dict] = {}

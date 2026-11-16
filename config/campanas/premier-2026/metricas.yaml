@@ -1,0 +1,633 @@
+# Generado por scripts/importar_plan.py — no editar a mano.
+fuente: Premier 2026 - Base para informe actualizada.xlsx
+importado: '2026-11-15'
+control:
+  kpi: 3655600
+  alcance: 9463783
+  views: 21846672
+  inter: 3583960
+acciones:
+- fila: '70'
+  origen: '70'
+  talento: Jeison Recetas
+  plataforma: Instagram
+  formato: Historia 45"
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 7000
+  alcance: 1837
+  views: 2177
+  inter: 27
+  cuenta: true
+  nota: null
+- fila: '71'
+  origen: '71'
+  talento: Jeison Recetas
+  plataforma: Instagram
+  formato: Historia 45"
+  fecha_excel: null
+  estado: NO EJECUTADO
+  kpi: 7000
+  alcance: null
+  views: null
+  inter: null
+  cuenta: false
+  nota: null
+- fila: '72'
+  origen: '72'
+  talento: Jeison Recetas
+  plataforma: Instagram
+  formato: Reel Collab
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 25000
+  alcance: 32445
+  views: 41775
+  inter: 3258
+  cuenta: true
+  nota: null
+- fila: '73'
+  origen: '73'
+  talento: Jeison Recetas
+  plataforma: Instagram
+  formato: Reel Collab
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 25000
+  alcance: 115267
+  views: 146535
+  inter: 11982
+  cuenta: true
+  nota: null
+- fila: '74'
+  origen: '74'
+  talento: Jeison Recetas
+  plataforma: Instagram
+  formato: Reel Collab
+  fecha_excel: null
+  estado: NO EJECUTADO
+  kpi: 25000
+  alcance: null
+  views: null
+  inter: null
+  cuenta: false
+  nota: null
+- fila: '75'
+  origen: '75'
+  talento: Jeison Recetas
+  plataforma: TikTok
+  formato: Replica Tiktok
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 8000
+  alcance: 57800
+  views: 65000
+  inter: 5399
+  cuenta: true
+  nota: null
+- fila: '76'
+  origen: '76'
+  talento: Jeison Recetas
+  plataforma: TikTok
+  formato: Replica Tiktok
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 8000
+  alcance: 249000
+  views: 249000
+  inter: 14796
+  cuenta: true
+  nota: null
+- fila: '77'
+  origen: '77'
+  talento: Foggy Reposteria
+  plataforma: Instagram
+  formato: Reel Collab
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 200000
+  alcance: 557604
+  views: 5918199
+  inter: 151950
+  cuenta: true
+  nota: null
+- fila: '78'
+  origen: '78'
+  talento: Foggy Reposteria
+  plataforma: TikTok
+  formato: Tiktok
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 130000
+  alcance: 460784
+  views: 2576204
+  inter: 98940
+  cuenta: true
+  nota: null
+- fila: '79'
+  origen: '79'
+  talento: Tatan Arroyo
+  plataforma: Instagram
+  formato: Historia 45"
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 65000
+  alcance: 67823
+  views: 86887
+  inter: 1159
+  cuenta: true
+  nota: null
+- fila: '80'
+  origen: '80'
+  talento: Tatan Arroyo
+  plataforma: Instagram
+  formato: Historia 45"
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 65000
+  alcance: 80306
+  views: 100845
+  inter: 1536
+  cuenta: true
+  nota: null
+- fila: '81'
+  origen: '81'
+  talento: Tatan Arroyo
+  plataforma: Instagram
+  formato: Reel Collab
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 250000
+  alcance: 733991
+  views: 1593858
+  inter: 93141
+  cuenta: true
+  nota: null
+- fila: '82'
+  origen: '82'
+  talento: Tatan Arroyo
+  plataforma: Instagram
+  formato: Reel Collab
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 250000
+  alcance: 285241
+  views: 693779
+  inter: 40338
+  cuenta: true
+  nota: null
+- fila: '83'
+  origen: '83'
+  talento: Tatan Arroyo
+  plataforma: TikTok
+  formato: Replica Tiktok
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 100000
+  alcance: 88800
+  views: 97000
+  inter: 5383
+  cuenta: true
+  nota: null
+- fila: '84'
+  origen: '84'
+  talento: Tatan Arroyo
+  plataforma: TikTok
+  formato: Replica Tiktok
+  fecha_excel: null
+  estado: SIN ESTADO
+  kpi: 100000
+  alcance: null
+  views: null
+  inter: null
+  cuenta: false
+  nota: null
+- fila: '85'
+  origen: '85'
+  talento: Juan Food TIme
+  plataforma: Instagram
+  formato: Historia 45"
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 90000
+  alcance: 72040
+  views: 82635
+  inter: 654
+  cuenta: true
+  nota: null
+- fila: '86'
+  origen: '86'
+  talento: Juan Food TIme
+  plataforma: Instagram
+  formato: Historia 45"
+  fecha_excel: '2026-11-12'
+  estado: EJECUTADO
+  kpi: 90000
+  alcance: 37876
+  views: null
+  inter: null
+  cuenta: true
+  nota: 'Ajuste informado: historia publicada el 12-nov-2026; alcance 37.876.'
+- fila: '87'
+  origen: '87'
+  talento: Juan Food TIme
+  plataforma: Instagram
+  formato: Reel Collab
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 300000
+  alcance: 1282155
+  views: 4317417
+  inter: 258225
+  cuenta: true
+  nota: null
+- fila: '88'
+  origen: '88'
+  talento: Juan Food TIme
+  plataforma: Instagram
+  formato: Reel Collab
+  fecha_excel: null
+  estado: EN APROBACIÓN
+  kpi: 300000
+  alcance: null
+  views: null
+  inter: null
+  cuenta: false
+  nota: null
+- fila: '89'
+  origen: '89'
+  talento: Juan Food TIme
+  plataforma: Instagram
+  formato: Reel Collab
+  fecha_excel: null
+  estado: NO EJECUTADO
+  kpi: 300000
+  alcance: null
+  views: null
+  inter: null
+  cuenta: false
+  nota: null
+- fila: '90'
+  origen: '90'
+  talento: Juan Food TIme
+  plataforma: TikTok
+  formato: Replica Tiktok
+  fecha_excel: null
+  estado: EN APROBACIÓN
+  kpi: 150000
+  alcance: 4987659
+  views: 5300760
+  inter: 2869357
+  cuenta: true
+  nota: null
+- fila: '91'
+  origen: '91'
+  talento: Juan Food TIme
+  plataforma: TikTok
+  formato: Replica Tiktok
+  fecha_excel: null
+  estado: NO EJECUTADO
+  kpi: 150000
+  alcance: null
+  views: null
+  inter: null
+  cuenta: false
+  nota: null
+- fila: '92'
+  origen: '92'
+  talento: Mateito
+  plataforma: Instagram
+  formato: Historia 45"
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 30000
+  alcance: 6758
+  views: 7591
+  inter: 193
+  cuenta: true
+  nota: null
+- fila: '93'
+  origen: '93'
+  talento: Mateito
+  plataforma: Instagram
+  formato: Historia 45"
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 30000
+  alcance: 7883
+  views: 9676
+  inter: 102
+  cuenta: true
+  nota: null
+- fila: '94'
+  origen: '94'
+  talento: Mateito
+  plataforma: Instagram
+  formato: Reel Collab
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 120000
+  alcance: 28790
+  views: 74963
+  inter: 4224
+  cuenta: true
+  nota: null
+- fila: '95'
+  origen: '95'
+  talento: Mateito
+  plataforma: Instagram
+  formato: Reel Collab
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 120000
+  alcance: 33983
+  views: 56482
+  inter: 955
+  cuenta: true
+  nota: null
+- fila: '96'
+  origen: '96'
+  talento: Mateito
+  plataforma: Instagram
+  formato: Reel Collab
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 120000
+  alcance: 71758
+  views: 147531
+  inter: 7716
+  cuenta: true
+  nota: null
+- fila: '97'
+  origen: '97'
+  talento: Mateito
+  plataforma: TikTok
+  formato: Replica Tiktok
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 43000
+  alcance: 27800
+  views: 28100
+  inter: 1845
+  cuenta: true
+  nota: null
+- fila: '98'
+  origen: '98'
+  talento: Mateito
+  plataforma: TikTok
+  formato: Replica Tiktok
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 43000
+  alcance: 61800
+  views: 61300
+  inter: 4943
+  cuenta: true
+  nota: null
+- fila: '99'
+  origen: '99'
+  talento: Colombian Bite
+  plataforma: Instagram
+  formato: Historia 45"
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 2000
+  alcance: 3589
+  views: 4495
+  inter: 95
+  cuenta: true
+  nota: null
+- fila: '100'
+  origen: '100'
+  talento: Colombian Bite
+  plataforma: Instagram
+  formato: Historia 45"
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 2000
+  alcance: 1378
+  views: 1732
+  inter: 62
+  cuenta: true
+  nota: null
+- fila: '101'
+  origen: '101'
+  talento: Colombian Bite
+  plataforma: Instagram
+  formato: Historia 45"
+  fecha_excel: null
+  estado: NO EJECUTADO
+  kpi: 2000
+  alcance: null
+  views: null
+  inter: null
+  cuenta: false
+  nota: null
+- fila: '102'
+  origen: '102'
+  talento: Colombian Bite
+  plataforma: Instagram
+  formato: Reel Collab
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 29900
+  alcance: 21259
+  views: 33026
+  inter: 1928
+  cuenta: true
+  nota: null
+- fila: '103'
+  origen: '103'
+  talento: Colombian Bite
+  plataforma: Instagram
+  formato: Reel Collab
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 29900
+  alcance: 17286
+  views: 26160
+  inter: 1877
+  cuenta: true
+  nota: null
+- fila: '104'
+  origen: '104'
+  talento: Colombian Bite
+  plataforma: Instagram
+  formato: Reel Collab
+  fecha_excel: null
+  estado: EN APROBACIÓN
+  kpi: 29900
+  alcance: null
+  views: null
+  inter: null
+  cuenta: false
+  nota: null
+- fila: '105'
+  origen: '105'
+  talento: Colombian Bite
+  plataforma: Instagram
+  formato: Reel Collab
+  fecha_excel: null
+  estado: NO EJECUTADO
+  kpi: 29900
+  alcance: null
+  views: null
+  inter: null
+  cuenta: false
+  nota: null
+- fila: '106'
+  origen: '106'
+  talento: Colombian Bite
+  plataforma: TikTok
+  formato: Tiktok
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 1000
+  alcance: 3000
+  views: 3454
+  inter: 270
+  cuenta: true
+  nota: null
+- fila: '107'
+  origen: '107'
+  talento: Colombian Bite
+  plataforma: TikTok
+  formato: Tiktok
+  fecha_excel: null
+  estado: EN APROBACIÓN
+  kpi: 1000
+  alcance: null
+  views: null
+  inter: null
+  cuenta: false
+  nota: null
+- fila: '108'
+  origen: '108'
+  talento: Colombian Bite
+  plataforma: TikTok
+  formato: Tiktok
+  fecha_excel: null
+  estado: EN APROBACIÓN
+  kpi: 1000
+  alcance: null
+  views: null
+  inter: null
+  cuenta: false
+  nota: null
+- fila: '109'
+  origen: '109'
+  talento: Colombian Bite
+  plataforma: TikTok
+  formato: Tiktok
+  fecha_excel: null
+  estado: NO EJECUTADO
+  kpi: 1000
+  alcance: null
+  views: null
+  inter: null
+  cuenta: false
+  nota: null
+- fila: '110'
+  origen: '110'
+  talento: Luisa The Savage Fork
+  plataforma: Instagram
+  formato: Historia 45"
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 15000
+  alcance: null
+  views: 8309
+  inter: 11
+  cuenta: true
+  nota: null
+- fila: '111'
+  origen: '111'
+  talento: Luisa The Savage Fork
+  plataforma: Instagram
+  formato: Historia 45"
+  fecha_excel: null
+  estado: NO EJECUTADO
+  kpi: 15000
+  alcance: null
+  views: null
+  inter: null
+  cuenta: false
+  nota: null
+- fila: '112'
+  origen: '112'
+  talento: Luisa The Savage Fork
+  plataforma: Instagram
+  formato: Reel Collab
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 60000
+  alcance: 23934
+  views: 43646
+  inter: 1601
+  cuenta: true
+  nota: null
+- fila: '113'
+  origen: '113'
+  talento: Luisa The Savage Fork
+  plataforma: Instagram
+  formato: Reel Collab
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 60000
+  alcance: 33688
+  views: 49066
+  inter: 1282
+  cuenta: true
+  nota: null
+- fila: '114'
+  origen: '114'
+  talento: Luisa The Savage Fork
+  plataforma: Instagram
+  formato: Reel Collab
+  fecha_excel: null
+  estado: EJECUTADO
+  kpi: 60000
+  alcance: 10249
+  views: 19070
+  inter: 711
+  cuenta: true
+  nota: null
+- fila: '115'
+  origen: '115'
+  talento: Luisa The Savage Fork
+  plataforma: TikTok
+  formato: Replica Tiktok
+  fecha_excel: null
+  estado: EN APROBACIÓN
+  kpi: 50000
+  alcance: null
+  views: null
+  inter: null
+  cuenta: false
+  nota: null
+- fila: '116'
+  origen: '116'
+  talento: Luisa The Savage Fork
+  plataforma: TikTok
+  formato: Replica Tiktok
+  fecha_excel: null
+  estado: NO EJECUTADO
+  kpi: 50000
+  alcance: null
+  views: null
+  inter: null
+  cuenta: false
+  nota: null
+- fila: E3-1
+  origen: Escenario 3
+  talento: Tatan Arroyo
+  plataforma: Instagram
+  formato: Historia 45"
+  fecha_excel: null
+  estado: PENDIENTE DE REGISTRO
+  kpi: 65000
+  alcance: null
+  views: null
+  inter: null
+  cuenta: false
+  nota: Acción del Escenario 3. Sin fecha, estado ni métricas en el tráfico.
