@@ -10,17 +10,17 @@
 # Facebook:  página oficial "Juan FoodTime" (facebook.com/foodtimecali). Visualizaciones =
 #            fb_play_count de la API de Instagram; reacciones, comentarios y compartidos de la
 #            página del reel. Facebook muestra abreviadas las reacciones desde 10 mil.
-capturado: 2026-11-14
+capturado: 2026-11-16
 instagram:
-  2026-07-09: {views: 1717105, likes: 113461, comments: 391, shares: 56481}
-  2026-08-23: {views: 547102, likes: 33357, comments: 217, shares: 10638}
-  2026-09-27: {views: 230716, likes: 5947, comments: 82, shares: 327}
-  2026-10-13: {views: 472167, likes: 22238, comments: 79, shares: 4728}
+  2026-07-09: {views: 1718645, likes: 113461, comments: 391, shares: 56481}
+  2026-08-23: {views: 552023, likes: 33357, comments: 217, shares: 10638}
+  2026-09-27: {views: 231410, likes: 5947, comments: 82, shares: 327}
+  2026-10-13: {views: 473674, likes: 22238, comments: 79, shares: 4728}
 tiktok:
-  2026-07-09: {views: 2000000, likes: 156400, comments: 338, shares: 48600, saves: 92653}
-  2026-08-23: {views: 615600, likes: 41400, comments: 170, shares: 11100, saves: 17415}
-  2026-09-27: {views: 175800, likes: 8647, comments: 75, shares: 361, saves: 412}
-  2026-10-13: {views: 306000, likes: 16600, comments: 53, shares: 2503, saves: 7785}
+  2026-07-09: {views: 2000000, likes: 156500, comments: 338, shares: 48600, saves: 92687}
+  2026-08-23: {views: 616500, likes: 41500, comments: 170, shares: 11100, saves: 17436}
+  2026-09-27: {views: 176700, likes: 8698, comments: 75, shares: 362, saves: 413}
+  2026-10-13: {views: 310800, likes: 16900, comments: 55, shares: 2535, saves: 7941}
 facebook:
   2026-07-09: {url: "https://www.facebook.com/reel/1010693765049546", views: 902589, likes: 27300, likes_aprox: true, comments: 81, shares: 2497}
   2026-08-23: {url: "https://www.facebook.com/reel/1072008728719076", views: 546687, likes: 10000, likes_aprox: true, comments: 60, shares: 950}
