@@ -11,7 +11,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from pipeline.metrics_plan import build_data  # noqa: E402
-from pipeline.util.config import load_campaign, load_client, load_conversation, load_metrics, load_public  # noqa: E402
+from pipeline.util.config import load_campaign, load_client, load_conversation  # noqa: E402
+from tests import foto  # noqa: E402
 
 CID = "premier-2026"
 
@@ -19,8 +20,9 @@ CID = "premier-2026"
 class TestPremier(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.met = load_metrics(CID)
-        cls.d = build_data(load_client(), load_campaign(CID), cls.met, load_conversation(CID), load_public(CID))
+        # Foto fija (corte aprobado del 15-nov), para que las actualizaciones automáticas no rompan el cuadre
+        cls.met = foto.metricas(CID)
+        cls.d = build_data(load_client(), load_campaign(CID), cls.met, load_conversation(CID), foto.publicas(CID))
 
     def test_importacion_cuadra_con_la_hoja_resumen(self):
         c = self.met["control"]

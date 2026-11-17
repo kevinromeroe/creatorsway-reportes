@@ -1,4 +1,4 @@
-"""Foto aprobada (9-nov-2026) de las cifras de cada campaña, para las pruebas de cuadre.
+"""Foto aprobada (9-nov-2026; premier-2026: 15-nov-2026) de las cifras de cada campaña, para las pruebas de cuadre.
 
 Las cifras cambian en cada actualización automática (lunes y jueves); las pruebas de cuadre comparan el cálculo
 contra esta foto fija. Si se aprueba un corte nuevo como referencia, se copia aquí y se actualizan las cifras
