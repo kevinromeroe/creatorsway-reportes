@@ -36,16 +36,16 @@ class TestPremier(unittest.TestCase):
 
     def test_kpi(self):
         k = self.d["kpi"]
-        self.assertEqual((k["kpi"], k["alcance"], k["piezas"], k["cumplen"]), (3_655_600, 9_463_783, 32, 15))
-        self.assertAlmostEqual(k["pct"], 2.5888, places=4)
+        self.assertEqual((k["kpi"], k["alcance"], k["piezas"], k["cumplen"]), (3_555_600, 9_463_783, 32, 15))  # 18-nov: sin la 2.ª réplica de Tatan (excluir)
+        self.assertAlmostEqual(k["pct"], 2.6617, places=4)  # 18-nov: KPI sin la fila 84
         self.assertEqual(k["top_pieza"]["r"], 4_987_659)
-        self.assertAlmostEqual(k["sin_macro"]["pct"], 1.2245, places=4)
+        self.assertAlmostEqual(k["sin_macro"]["pct"], 1.2589, places=4)  # 18-nov: KPI sin la fila 84
 
     def test_plan(self):
         p = self.d["plan"]
-        self.assertEqual((p["total"], p["con_resultados"], p["faltan"], p["kpi_faltante"]), (48, 32, 16, 1_126_800))
+        self.assertEqual((p["total"], p["con_resultados"], p["faltan"], p["kpi_faltante"]), (47, 32, 15, 1_026_800))  # 18-nov: fila 84 excluida
         self.assertEqual({e["k"]: e["n"] for e in p["estados"]},
-                         {"EJECUTADO": 31, "EN APROBACIÓN": 6, "NO EJECUTADO": 9, "PENDIENTE DE REGISTRO": 1, "SIN ESTADO": 1})
+                         {"EJECUTADO": 31, "EN APROBACIÓN": 6, "NO EJECUTADO": 9, "PENDIENTE DE REGISTRO": 1})  # 18-nov: fila 84 (SIN ESTADO) excluida
 
     def test_verificacion(self):
         P = self.d["pieces"]
@@ -64,7 +64,7 @@ class TestPremier(unittest.TestCase):
     def test_creadores_que_cumplen(self):
         cumplen = {c["nombre"] for c in self.d["creadores"] if c["cumple"]}
         self.assertEqual(cumplen, {"Juan Food Time", "Jeison Recetas", "Foggy Repostería", "Tatan Arroyo"})
-        self.assertEqual(sum(c["kpi"] for c in self.d["creadores"]), 3_655_600)
+        self.assertEqual(sum(c["kpi"] for c in self.d["creadores"]), 3_555_600)
 
     def test_conversacion(self):
         c = self.d["conv"]

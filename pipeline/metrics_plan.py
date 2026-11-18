@@ -48,7 +48,9 @@ def build_data(client: dict, camp: dict, met: dict, conv: dict | None = None, pu
     cr = {c["id"]: {**c, "avatar": f"assets/{camp['id']}/avatar-{c.get('ig') or c.get('tt')}.jpg", "tipo": "Contratado"}
           for c in camp["creadores"]}
     por_excel = {c["excel"]: c["id"] for c in camp["creadores"]}
-    acc = {a["fila"]: {**a, "creador": por_excel[a["talento"]]} for a in met["acciones"]}
+    # «excluir» en campana.yaml: acciones que el cliente confirmó que no existen (no se borran del Excel ni de metricas.yaml)
+    excluir = {str(k) for k in (camp.get("excluir") or {})}
+    acc = {a["fila"]: {**a, "creador": por_excel[a["talento"]]} for a in met["acciones"] if str(a["fila"]) not in excluir}
 
     def kpi_out(a):
         k, al = a["kpi"], a["alcance"]

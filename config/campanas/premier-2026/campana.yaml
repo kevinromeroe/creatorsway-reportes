@@ -57,6 +57,10 @@ piezas:
   - {fila: "113", creador: luisa-savage-fork, red: ig, codigo: Da8MlB5xm0e, titulo: Flautas ahogadas mexicanas}
   - {fila: "114", creador: luisa-savage-fork, red: ig, codigo: DdXUqFTRknv, titulo: Idea para regalar o emprender}
 
+# Acciones del Excel que no existen (confirmado por el creador); siguen en el Excel y en metricas.yaml.
+excluir:
+  "84": "Juan Food Time confirmó el 18-nov-2026 que Tatan Arroyo tiene 1 sola réplica en TikTok (la fila 83)"
+
 # Historias con resultados (solo Excel: ya expiraron).
 historias: ["70", "79", "80", "85", "86", "92", "93", "99", "100", "110"]
 
