@@ -1,12 +1,12 @@
 # Generado por scripts/importar_excel.py — no editar a mano.
 fuente: Informe KLAREN'S — métricas de contenido.xlsx
-importado: '2026-11-16'
+importado: '2026-11-19'
 instagram:
 - id: IG-KLR-2026-07-09
   fecha: '2026-07-09'
   nombre: 20 almuerzos que parecen fat pero son fit
   url: https://www.instagram.com/reel/DalBzN8R7F5/
-  views: 1718645
+  views: 1721820
   reach: 1216627
   likes: 113461
   comments: 391
@@ -18,15 +18,15 @@ instagram:
   collab: klarenscol
   precision: Aproximado en métricas abreviadas
   fb_views: Sí
-  corte: '2026-11-16'
-  fuente_dato: 'Públicas Datalítica 2026-11-16: visualizaciones (solo Instagram),
+  corte: '2026-11-19'
+  fuente_dato: 'Públicas Datalítica 2026-11-19: visualizaciones (solo Instagram),
     me gusta, comentarios y compartidos · Captura Instagram: alcance, reposts, guardados
     y demás'
 - id: IG-KLR-2026-08-23
   fecha: '2026-08-23'
   nombre: Cheesecake de bocadillo con queso
   url: https://www.instagram.com/reel/DcY5_btRhPG/
-  views: 552023
+  views: 560383
   reach: 389666
   likes: 33357
   comments: 217
@@ -38,15 +38,15 @@ instagram:
   collab: klarenscol
   precision: Aproximado en métricas abreviadas
   fb_views: Sí
-  corte: '2026-11-16'
-  fuente_dato: 'Públicas Datalítica 2026-11-16: visualizaciones (solo Instagram),
+  corte: '2026-11-19'
+  fuente_dato: 'Públicas Datalítica 2026-11-19: visualizaciones (solo Instagram),
     me gusta, comentarios y compartidos · Captura Instagram: alcance, reposts, guardados
     y demás'
 - id: IG-KLR-2026-09-27
   fecha: '2026-09-27'
   nombre: Cómo se fabrica el suero costeño / sour cream
   url: https://www.instagram.com/reel/DdzAwpCx5al/
-  views: 231410
+  views: 249116
   reach: 164615
   likes: 5947
   comments: 82
@@ -58,15 +58,15 @@ instagram:
   collab: klarenscol
   precision: Aproximado en métricas abreviadas
   fb_views: Sí
-  corte: '2026-11-16'
-  fuente_dato: 'Públicas Datalítica 2026-11-16: visualizaciones (solo Instagram),
+  corte: '2026-11-19'
+  fuente_dato: 'Públicas Datalítica 2026-11-19: visualizaciones (solo Instagram),
     me gusta, comentarios y compartidos · Captura Instagram: alcance, reposts, guardados
     y demás'
 - id: IG-KLR-2026-10-13
   fecha: '2026-10-13'
   nombre: Ossobuco con puré
   url: https://www.instagram.com/reel/DecQ04yxnfm/
-  views: 473674
+  views: 494209
   reach: 329531
   likes: 22238
   comments: 79
@@ -78,8 +78,8 @@ instagram:
   collab: charliepessellini; klarenscol
   precision: Aproximado en métricas abreviadas
   fb_views: Sí
-  corte: '2026-11-16'
-  fuente_dato: 'Públicas Datalítica 2026-11-16: visualizaciones (solo Instagram),
+  corte: '2026-11-19'
+  fuente_dato: 'Públicas Datalítica 2026-11-19: visualizaciones (solo Instagram),
     me gusta, comentarios y compartidos · Captura Instagram: alcance, reposts, guardados
     y demás'
 tiktok:
@@ -91,10 +91,10 @@ tiktok:
   dur_s: 43.13
   views: 2000000
   reach: 1700000
-  likes: 156500
+  likes: 156600
   comments: 338
   shares: 48600
-  saves: 92687
+  saves: 92747
   new_viewers: 0.1
   returning_viewers: 0.9
   non_followers: 0.86
@@ -102,8 +102,8 @@ tiktok:
   men: 0.34
   women: 0.66
   precision: Aproximado en K/M
-  corte: '2026-11-16'
-  fuente_dato: 'Públicas Datalítica 2026-11-16: duración, visualizaciones, me gusta,
+  corte: '2026-11-19'
+  fuente_dato: 'Públicas Datalítica 2026-11-19: duración, visualizaciones, me gusta,
     comentarios, compartidos y guardados · Captura TikTok Studio: alcance y audiencia'
 - id: TT-KLR-2026-08-23
   fecha: '2026-08-23'
@@ -111,12 +111,12 @@ tiktok:
   nombre: Cheesecake con Klarens
   url: https://vt.tiktok.com/ZSp2mBNdD/
   dur_s: 57.37
-  views: 616500
+  views: 617200
   reach: 585100
   likes: 41500
   comments: 170
   shares: 11100
-  saves: 17436
+  saves: 17453
   new_viewers: 0.05
   returning_viewers: 0.95
   non_followers: 0.78
@@ -124,8 +124,8 @@ tiktok:
   men: 0.45
   women: 0.55
   precision: Aproximado en K/M
-  corte: '2026-11-16'
-  fuente_dato: 'Públicas Datalítica 2026-11-16: duración, visualizaciones, me gusta,
+  corte: '2026-11-19'
+  fuente_dato: 'Públicas Datalítica 2026-11-19: duración, visualizaciones, me gusta,
     comentarios, compartidos y guardados · Captura TikTok Studio: alcance y audiencia'
 - id: TT-KLR-2026-09-27
   fecha: '2026-09-27'
@@ -133,9 +133,9 @@ tiktok:
   nombre: Cómo se fabrica el suero costeño / sour cream
   url: https://vt.tiktok.com/ZSp2aT1k8/
   dur_s: 74.27
-  views: 176700
+  views: 177400
   reach: 162100
-  likes: 8698
+  likes: 8722
   comments: 75
   shares: 362
   saves: 413
@@ -146,8 +146,8 @@ tiktok:
   men: 0.54
   women: 0.45
   precision: Aproximado en K
-  corte: '2026-11-16'
-  fuente_dato: 'Públicas Datalítica 2026-11-16: duración, visualizaciones, me gusta,
+  corte: '2026-11-19'
+  fuente_dato: 'Públicas Datalítica 2026-11-19: duración, visualizaciones, me gusta,
     comentarios, compartidos y guardados · Captura TikTok Studio: alcance y audiencia'
 - id: TT-KLR-2026-10-13
   fecha: '2026-10-13'
@@ -155,12 +155,12 @@ tiktok:
   nombre: Ossobuco con puré
   url: https://vt.tiktok.com/ZSp2agTLL/
   dur_s: 54.77
-  views: 310800
+  views: 311400
   reach: 281600
   likes: 16900
   comments: 55
-  shares: 2535
-  saves: 7941
+  shares: 2540
+  saves: 7955
   new_viewers: 0.04
   returning_viewers: 0.96
   non_followers: 0.74
@@ -168,8 +168,8 @@ tiktok:
   men: 0.5
   women: 0.5
   precision: Aproximado en K
-  corte: '2026-11-16'
-  fuente_dato: 'Públicas Datalítica 2026-11-16: duración, visualizaciones, me gusta,
+  corte: '2026-11-19'
+  fuente_dato: 'Públicas Datalítica 2026-11-19: duración, visualizaciones, me gusta,
     comentarios, compartidos y guardados · Captura TikTok Studio: alcance y audiencia'
 historias:
 - id: IGS-KLR-2026-07-09-01
@@ -322,8 +322,8 @@ facebook:
   comments: 81
   shares: 2497
   precision: 'Reacciones aproximadas: Facebook las abrevia desde 10 mil'
-  corte: '2026-11-16'
-  fuente_dato: 'Públicas Datalítica 2026-11-16: página de Facebook del creador (visualizaciones
+  corte: '2026-11-19'
+  fuente_dato: 'Públicas Datalítica 2026-11-19: página de Facebook del creador (visualizaciones
     de la API de Instagram; reacciones, comentarios y compartidos del reel)'
 - id: FB-KLR-2026-08-23
   fecha: '2026-08-23'
@@ -334,8 +334,8 @@ facebook:
   comments: 60
   shares: 950
   precision: 'Reacciones aproximadas: Facebook las abrevia desde 10 mil'
-  corte: '2026-11-16'
-  fuente_dato: 'Públicas Datalítica 2026-11-16: página de Facebook del creador (visualizaciones
+  corte: '2026-11-19'
+  fuente_dato: 'Públicas Datalítica 2026-11-19: página de Facebook del creador (visualizaciones
     de la API de Instagram; reacciones, comentarios y compartidos del reel)'
 - id: FB-KLR-2026-09-27
   fecha: '2026-09-27'
@@ -346,8 +346,8 @@ facebook:
   comments: 10
   shares: 15
   precision: Exacto
-  corte: '2026-11-16'
-  fuente_dato: 'Públicas Datalítica 2026-11-16: página de Facebook del creador (visualizaciones
+  corte: '2026-11-19'
+  fuente_dato: 'Públicas Datalítica 2026-11-19: página de Facebook del creador (visualizaciones
     de la API de Instagram; reacciones, comentarios y compartidos del reel)'
 - id: FB-KLR-2026-10-13
   fecha: '2026-10-13'
@@ -358,6 +358,6 @@ facebook:
   comments: 18
   shares: 688
   precision: Exacto
-  corte: '2026-11-16'
-  fuente_dato: 'Públicas Datalítica 2026-11-16: página de Facebook del creador (visualizaciones
+  corte: '2026-11-19'
+  fuente_dato: 'Públicas Datalítica 2026-11-19: página de Facebook del creador (visualizaciones
     de la API de Instagram; reacciones, comentarios y compartidos del reel)'

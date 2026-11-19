@@ -2,24 +2,24 @@
 # leídas por Datalítica con Claude en Chrome el 15 de noviembre de 2026.
 # Instagram: /api/v1/media/<id>/info/ → views = solo Instagram (ig_play_count), fb_views = publicación cruzada a Facebook.
 # TikTok: datos de la página del video (statsV2). Fecha en hora de Bogotá.
-capturado: 2026-11-16
+capturado: 2026-11-19
 instagram:
-  DZgUOyvgXHG: {fecha: 2026-06-12, cuenta: jeison_rodriguezchef, coautor: premiercolombia, views: 43739, fb_views: 0, likes: 1815, comments: 81, shares: 458, dur_s: 69}
-  DdkP_8Qg4S4: {fecha: 2026-09-21, cuenta: jeison_rodriguezchef, coautor: premiercolombia, views: 183248, fb_views: 0, likes: 8321, comments: 126, shares: 3303, dur_s: 68}
-  DVwqnqIje-P: {fecha: 2026-03-11, cuenta: tatanarroyo, coautor: premiercolombia, views: 983750, fb_views: 629153, likes: 50051, comments: 850, shares: 20170, dur_s: 90}
-  DXUePsjkV8w: {fecha: 2026-04-19, cuenta: juanfoodtime, coautor: premiercolombia, views: 2006064, fb_views: 2541179, likes: 194953, comments: 967, shares: 30685, dur_s: 43}
-  DYFdZIrJtGr: {fecha: 2026-05-08, cuenta: _mateito, coautor: "premiercolombia,fritangalacalidosa", views: 46881, fb_views: 45409, likes: 4487, comments: 81, shares: 312, dur_s: 53}
-  Da0hbBwp0tY: {fecha: 2026-07-15, cuenta: _mateito, coautor: premiercolombia, views: 45510, fb_views: 15290, likes: 875, comments: 24, shares: 32, dur_s: 45}
-  Dc326mFpwY2: {fecha: 2026-09-04, cuenta: _mateito, coautor: premiercolombia, views: 107341, fb_views: 72467, likes: 8997, comments: 56, shares: 238, dur_s: 53}
-  DXe2XITktOl: {fecha: 2026-04-23, cuenta: colombiabiteclub, coautor: premiercolombia, views: 38409, fb_views: 2330, likes: 1372, comments: 62, shares: 345, dur_s: 49}
-  DZkv27Jh9dQ: {fecha: 2026-06-14, cuenta: colombiabiteclub, coautor: null, views: 29269, fb_views: 1360, likes: 1239, comments: 39, shares: 319, dur_s: 101}
-  DaieZcpuzun: {fecha: 2026-07-08, cuenta: luisatorres.co, coautor: null, views: 34663, fb_views: 11340, likes: 1013, comments: 16, shares: 142, dur_s: 67}
-  Da8MlB5xm0e: {fecha: 2026-07-18, cuenta: luisatorres.co, coautor: premiercolombia, views: 51343, fb_views: 0, likes: 701, comments: 80, shares: 190, dur_s: 69}
-  DdXUqFTRknv: {fecha: 2026-09-16, cuenta: luisatorres.co, coautor: null, views: 14007, fb_views: 5180, likes: 409, comments: 41, shares: 74, dur_s: 66}
+  DZgUOyvgXHG: {fecha: 2026-06-12, cuenta: jeison_rodriguezchef, coautor: premiercolombia, views: 43768, fb_views: 0, likes: 1815, comments: 81, shares: 458, dur_s: 69}
+  DdkP_8Qg4S4: {fecha: 2026-09-21, cuenta: jeison_rodriguezchef, coautor: premiercolombia, views: 184863, fb_views: 0, likes: 8391, comments: 126, shares: 3303, dur_s: 68}
+  DVwqnqIje-P: {fecha: 2026-03-11, cuenta: tatanarroyo, coautor: premiercolombia, views: 983833, fb_views: 629153, likes: 50051, comments: 850, shares: 20170, dur_s: 90}
+  DXUePsjkV8w: {fecha: 2026-04-19, cuenta: juanfoodtime, coautor: premiercolombia, views: 2006861, fb_views: 2541179, likes: 194953, comments: 967, shares: 30685, dur_s: 43}
+  DYFdZIrJtGr: {fecha: 2026-05-08, cuenta: _mateito, coautor: "premiercolombia,fritangalacalidosa", views: 46887, fb_views: 45409, likes: 4487, comments: 81, shares: 312, dur_s: 53}
+  Da0hbBwp0tY: {fecha: 2026-07-15, cuenta: _mateito, coautor: premiercolombia, views: 45515, fb_views: 15290, likes: 875, comments: 24, shares: 32, dur_s: 45}
+  Dc326mFpwY2: {fecha: 2026-09-04, cuenta: _mateito, coautor: premiercolombia, views: 107403, fb_views: 72467, likes: 8997, comments: 56, shares: 238, dur_s: 53}
+  DXe2XITktOl: {fecha: 2026-04-23, cuenta: colombiabiteclub, coautor: premiercolombia, views: 38414, fb_views: 2330, likes: 1372, comments: 62, shares: 345, dur_s: 49}
+  DZkv27Jh9dQ: {fecha: 2026-06-14, cuenta: colombiabiteclub, coautor: null, views: 29275, fb_views: 1360, likes: 1239, comments: 39, shares: 319, dur_s: 101}
+  DaieZcpuzun: {fecha: 2026-07-08, cuenta: luisatorres.co, coautor: null, views: 34688, fb_views: 11340, likes: 1013, comments: 16, shares: 142, dur_s: 67}
+  Da8MlB5xm0e: {fecha: 2026-07-18, cuenta: luisatorres.co, coautor: premiercolombia, views: 51380, fb_views: 0, likes: 701, comments: 80, shares: 190, dur_s: 69}
+  DdXUqFTRknv: {fecha: 2026-09-16, cuenta: luisatorres.co, coautor: null, views: 14076, fb_views: 5180, likes: 409, comments: 41, shares: 74, dur_s: 66}
 tiktok:
   "7622110135216819463": {fecha: 2026-03-28, cuenta: foggyreposteria, views: 8000000, likes: 175900, comments: 1183, shares: 5695, saves: 26318, dur_s: 32}
-  "7630508311686712584": {fecha: 2026-04-19, cuenta: juanfoodtime, views: 5700000, likes: 293200, comments: 1350, shares: 46000, saves: 86142, dur_s: 43}
-  "7641735348158221586": {fecha: 2026-05-19, cuenta: tatanarroyo, views: 379100, likes: 13700, comments: 163, shares: 4901, saves: 5753, dur_s: 89}
-  "7650663912861437202": {fecha: 2026-06-13, cuenta: jeison_rodriguezchef, views: 92700, likes: 4250, comments: 21, shares: 1818, saves: 1878, dur_s: 68}
-  "7663159011985952021": {fecha: 2026-07-16, cuenta: _mateito, views: 32900, likes: 2042, comments: 23, shares: 29, saves: 117, dur_s: 45}
-  "7681726944773213460": {fecha: 2026-09-04, cuenta: _mateito, views: 119600, likes: 9425, comments: 83, shares: 286, saves: 468, dur_s: 53}
+  "7630508311686712584": {fecha: 2026-04-19, cuenta: juanfoodtime, views: 5700000, likes: 293300, comments: 1350, shares: 46000, saves: 86191, dur_s: 43}
+  "7641735348158221586": {fecha: 2026-05-19, cuenta: tatanarroyo, views: 379400, likes: 13700, comments: 163, shares: 4903, saves: 5758, dur_s: 89}
+  "7650663912861437202": {fecha: 2026-06-13, cuenta: jeison_rodriguezchef, views: 92800, likes: 4252, comments: 21, shares: 1820, saves: 1879, dur_s: 68}
+  "7663159011985952021": {fecha: 2026-07-16, cuenta: _mateito, views: 32900, likes: 2044, comments: 23, shares: 29, saves: 117, dur_s: 45}
+  "7681726944773213460": {fecha: 2026-09-04, cuenta: _mateito, views: 119900, likes: 9444, comments: 83, shares: 286, saves: 469, dur_s: 53}
